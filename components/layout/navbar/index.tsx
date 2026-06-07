@@ -1,60 +1,31 @@
-import CartModal from "components/cart/modal";
-import LogoSquare from "components/logo-square";
-import { getMenu } from "lib/shopify";
-import { Menu } from "lib/shopify/types";
 import Link from "next/link";
-import { Suspense } from "react";
-import MobileMenu from "./mobile-menu";
-import Search, { SearchSkeleton } from "./search";
 
-const { SITE_NAME } = process.env;
+const navItems = [
+  { title: "Health & Care", path: "/search/health-care" },
+  { title: "Hot Deals", path: "/search/seasonal-hot-deals" },
+  { title: "Contact", path: "/#contact" },
+];
 
 export async function Navbar() {
-  const menu = await getMenu("next-js-frontend-header-menu");
-
   return (
-    <nav className="relative flex items-center justify-between p-4 lg:px-6">
-      <div className="block flex-none md:hidden">
-        <Suspense fallback={null}>
-          <MobileMenu menu={menu} />
-        </Suspense>
-      </div>
-      <div className="flex w-full items-center">
-        <div className="flex w-full md:w-1/3">
-          <Link
-            href="/"
-            prefetch={true}
-            className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
-          >
-            <LogoSquare />
-            <div className="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block">
-              {SITE_NAME}
-            </div>
-          </Link>
-          {menu.length ? (
-            <ul className="hidden gap-6 text-sm md:flex md:items-center">
-              {menu.map((item: Menu) => (
-                <li key={item.title}>
-                  <Link
-                    href={item.path}
-                    prefetch={true}
-                    className="text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
-                  >
-                    {item.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+    <nav className="sticky top-0 z-50 border-b border-neutral-200 bg-white/90 backdrop-blur">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6 lg:px-8">
+        <Link href="/" className="text-sm font-semibold uppercase tracking-wide text-neutral-950">
+          Independent Shop
+        </Link>
+        <div className="hidden items-center gap-6 md:flex">
+          {navItems.map((item) => (
+            <Link key={item.title} href={item.path} className="text-sm text-neutral-600 hover:text-neutral-950">
+              {item.title}
+            </Link>
+          ))}
         </div>
-        <div className="hidden justify-center md:flex md:w-1/3">
-          <Suspense fallback={<SearchSkeleton />}>
-            <Search />
-          </Suspense>
-        </div>
-        <div className="flex justify-end md:w-1/3">
-          <CartModal />
-        </div>
+        <a
+          href="https://wa.me/0000000000"
+          className="rounded-full bg-green-500 px-4 py-2 text-sm font-semibold text-white hover:bg-green-400"
+        >
+          WhatsApp
+        </a>
       </div>
     </nav>
   );

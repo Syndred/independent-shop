@@ -38,6 +38,7 @@ const products: Product[] = [
     variants: [
       {
         id: "var-1",
+        sku: "POX-001-BLK",
         title: "Default Title",
         availableForSale: true,
         selectedOptions: [{ name: "Color", value: "Black" }],
@@ -67,13 +68,14 @@ const products: Product[] = [
     variants: [
       {
         id: "var-2",
+        sku: "KPOX-001-BLU",
         title: "Default Title",
         availableForSale: true,
         selectedOptions: [{ name: "Color", value: "Blue" }],
         price: money("34.99"),
       },
     ],
-    featuredImage: imageTwo("Kids Pulse Oximeter"),
+    featuredImage: imageOne("Kids Pulse Oximeter"),
     images: [imageOne("Kids Pulse Oximeter"), imageTwo("Kids Pulse Oximeter")],
     seo: { title: "Kids Pulse Oximeter", description: "Kids pulse oximeter" },
     tags: ["health"],
@@ -95,6 +97,7 @@ const products: Product[] = [
     variants: [
       {
         id: "var-3",
+        sku: "SPK-001-WHT",
         title: "Default Title",
         availableForSale: true,
         selectedOptions: [{ name: "Color", value: "White" }],
@@ -157,7 +160,7 @@ const menu: Menu[] = [
 
 const emptyCart = (): Cart => ({
   id: "demo-cart",
-  checkoutUrl: "/checkout",
+  checkoutUrl: "/contact",
   totalQuantity: 0,
   lines: [],
   cost: {
@@ -190,7 +193,7 @@ export async function getCart(): Promise<Cart | undefined> {
 export async function getCollection(
   handle: string,
 ): Promise<Collection | undefined> {
-  return collections.find((collection) => collection.handle === handle);
+  return collections.find((collection) => collection.handle === handle) ?? undefined;
 }
 
 export async function getCollectionProducts({
@@ -201,7 +204,7 @@ export async function getCollectionProducts({
   sortKey?: string;
 }): Promise<Product[]> {
   if (collection === "health-care") return products.slice(0, 2);
-  if (collection === "seasonal-hot-deals") return products[2] ? [products[2]] : [];
+  if (collection === "seasonal-hot-deals") return [products[2]!];
   return products;
 }
 

@@ -28,6 +28,7 @@ export default async function ProductPage(props: {
 
   const relatedProducts = await getProductRecommendations(product.id);
   const price = product.priceRange.maxVariantPrice.amount;
+  const sku = product.variants[0]?.sku ?? "N/A";
 
   return (
     <>
@@ -39,9 +40,9 @@ export default async function ProductPage(props: {
               <h1 className="mt-4 text-4xl font-semibold text-neutral-950">{product.title}</h1>
               <p className="mt-4 max-w-xl text-base leading-7 text-neutral-700">{product.description}</p>
               <div className="mt-8 flex flex-wrap gap-3 text-sm text-neutral-700">
-                <span className="rounded-full bg-white px-4 py-2">Precision focused</span>
+                <span className="rounded-full bg-white px-4 py-2">SKU: {sku}</span>
                 <span className="rounded-full bg-white px-4 py-2">Family friendly</span>
-                <span className="rounded-full bg-white px-4 py-2">Easy to carry</span>
+                <span className="rounded-full bg-white px-4 py-2">Portable</span>
               </div>
               <p className="mt-10 text-4xl font-semibold text-neutral-950">${price}</p>
             </div>
@@ -58,7 +59,7 @@ export default async function ProductPage(props: {
 
           <div className="space-y-8">
             <div>
-              <p className="text-sm font-medium uppercase tracking-wide text-blue-700">Why people buy this</p>
+              <p className="text-sm font-medium uppercase tracking-wide text-blue-700">What you get</p>
               <ul className="mt-4 space-y-3 text-sm leading-6 text-neutral-700">
                 <li>• Quick daily oxygen checks without a complicated setup</li>
                 <li>• Good fit for adults, kids, and family use cases</li>
@@ -73,12 +74,21 @@ export default async function ProductPage(props: {
               </div>
             </div>
 
+            <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700">
+              <p className="font-semibold text-neutral-950">How to order</p>
+              <ol className="mt-3 list-decimal space-y-2 pl-5">
+                <li>Pick the product and confirm the SKU above.</li>
+                <li>Tap WhatsApp or email support to confirm availability.</li>
+                <li>We send the order link / checkout details right after confirmation.</li>
+              </ol>
+            </div>
+
             <div className="grid gap-3 sm:grid-cols-2">
               <a
                 href="https://wa.me/0000000000"
                 className="rounded-full bg-green-500 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-green-400"
               >
-                Ask on WhatsApp
+                Order on WhatsApp
               </a>
               <a
                 href="mailto:support@independent-shop.com"
@@ -88,9 +98,11 @@ export default async function ProductPage(props: {
               </a>
             </div>
 
-            <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700">
+            <div className="rounded-2xl border border-neutral-200 bg-white p-5 text-sm text-neutral-700">
               <p className="font-semibold text-neutral-950">Shipping and returns</p>
-              <p className="mt-2">Fast response support, clear product info, and simple next-step contact before you order.</p>
+              <p className="mt-2">
+                Fast response support, clear product info, and simple next-step contact before you order.
+              </p>
             </div>
           </div>
         </div>

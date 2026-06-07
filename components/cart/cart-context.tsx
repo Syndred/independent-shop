@@ -84,6 +84,7 @@ function createOrUpdateCartItem(
     },
     merchandise: {
       id: variant.id,
+      sku: variant.sku,
       title: variant.title,
       selectedOptions: variant.selectedOptions,
       product: {

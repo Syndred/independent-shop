@@ -8,6 +8,7 @@ import type {
 } from "lib/shopify/types";
 import React, {
   createContext,
+  startTransition,
   use,
   useContext,
   useMemo,
@@ -218,14 +219,18 @@ export function useCart() {
   );
 
   const updateCartItem = (merchandiseId: string, updateType: UpdateType) => {
-    updateOptimisticCart({
-      type: "UPDATE_ITEM",
-      payload: { merchandiseId, updateType },
+    startTransition(() => {
+      updateOptimisticCart({
+        type: "UPDATE_ITEM",
+        payload: { merchandiseId, updateType },
+      });
     });
   };
 
   const addCartItem = (variant: ProductVariant, product: Product) => {
-    updateOptimisticCart({ type: "ADD_ITEM", payload: { variant, product } });
+    startTransition(() => {
+      updateOptimisticCart({ type: "ADD_ITEM", payload: { variant, product } });
+    });
   };
 
   return useMemo(

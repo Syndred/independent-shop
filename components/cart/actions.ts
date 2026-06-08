@@ -1,36 +1,85 @@
 "use server";
 
+import {
+  addLineToCart,
+  ensureCartCookie,
+  removeLineFromCart,
+  updateLineQuantity,
+} from "lib/catalog/cart";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+function revalidateCart() {
+  revalidatePath("/", "layout");
+}
+
 export async function addItem(
-  prevState: any,
-  selectedVariantId: string | undefined,
+  _prevState: unknown,
+  payload:
+    | string
+    | undefined
+    | { selectedVariantId: string | undefined; quantity?: number },
 ) {
+  const selectedVariantId =
+    typeof payload === "object" && payload !== null
+      ? payload.selectedVariantId
+      : payload;
+  const quantity =
+    typeof payload === "object" && payload !== null
+      ? Math.max(1, payload.quantity ?? 1)
+      : 1;
+
   if (!selectedVariantId) {
     return "Error adding item to cart";
   }
 
-  return `Added SKU ${selectedVariantId}`;
+  try {
+    for (let i = 0; i < quantity; i++) {
+      await addLineToCart(selectedVariantId);
+    }
+    revalidateCart();
+    return "Added to cart";
+  } catch {
+    return "Error adding item to cart";
+  }
 }
 
-export async function removeItem(prevState: any, merchandiseId: string) {
-  return `Removed ${merchandiseId}`;
+export async function removeItem(_prevState: unknown, merchandiseId: string) {
+  try {
+    await removeLineFromCart(merchandiseId);
+    revalidateCart();
+    return "Removed item";
+  } catch {
+    return "Error removing item";
+  }
 }
 
 export async function updateItemQuantity(
-  prevState: any,
+  _prevState: unknown,
   payload: {
     merchandiseId: string;
     quantity: number;
   },
 ) {
-  return `Updated ${payload.merchandiseId} to ${payload.quantity}`;
+  try {
+    await updateLineQuantity(payload.merchandiseId, payload.quantity);
+    revalidateCart();
+    return "Updated quantity";
+  } catch {
+    return "Error updating quantity";
+  }
 }
 
 export async function redirectToCheckout() {
-  redirect("/contact");
+  redirect("/checkout");
 }
 
 export async function createCartAndSetCookie() {
-  return;
+  await ensureCartCookie();
+}
+
+export async function clearCartAfterOrder() {
+  const { clearCart } = await import("lib/catalog/cart");
+  await clearCart();
+  revalidateCart();
 }

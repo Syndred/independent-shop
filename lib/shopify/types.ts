@@ -69,9 +69,16 @@ export type Page = {
   updatedAt: string;
 };
 
+export type ProductMedia = {
+  main: Image[];
+  sku: Image[];
+  detail: Image | null;
+};
+
 export type Product = Omit<ShopifyProduct, "variants" | "images"> & {
   variants: ProductVariant[];
   images: Image[];
+  media: ProductMedia;
 };
 
 export type ProductOption = {
@@ -90,6 +97,7 @@ export type ProductVariant = {
     value: string;
   }[];
   price: Money;
+  image?: Image;
 };
 
 export type SEO = {

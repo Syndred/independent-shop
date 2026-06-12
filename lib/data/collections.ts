@@ -29,7 +29,11 @@ export const collections: Collection[] = [
 ];
 
 export function getCollectionProductsByHandle(collection: string) {
-  if (collection === "health-care") return products.slice(0, 2);
-  if (collection === "seasonal-hot-deals") return [products[2]!];
+  if (collection === "health-care") {
+    return products.filter((product) => product.tags.includes("health"));
+  }
+  if (collection === "seasonal-hot-deals") {
+    return products.filter((product) => product.tags.includes("seasonal"));
+  }
   return products;
 }

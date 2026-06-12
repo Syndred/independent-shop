@@ -30,6 +30,14 @@ const threeVariants = buildSkuVariants(
 );
 const threeMedia = buildProductMedia("three", "Mini Bluetooth Speaker");
 
+const fourVariants = buildSkuVariants(
+  "four",
+  "Advanced Pulse Oximeter",
+  "POX-004",
+  "39.99",
+);
+const fourMedia = buildProductMedia("four", "Advanced Pulse Oximeter");
+
 export const products: Product[] = [
   {
     id: "pulse-ox-001",
@@ -98,6 +106,31 @@ export const products: Product[] = [
     media: threeMedia,
     seo: { title: "Mini Bluetooth Speaker", description: "Seasonal product" },
     tags: ["seasonal"],
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "pulse-ox-004",
+    handle: "advanced-pulse-oximeter",
+    availableForSale: true,
+    title: "Advanced Pulse Oximeter",
+    description:
+      "High-clarity display and refined build for daily SpO2 monitoring at home or on the go.",
+    descriptionHtml:
+      "<p>High-clarity display and refined build for daily SpO2 monitoring at home or on the go.</p><ul><li>Crisp OLED readout</li><li>One-button operation</li><li>Travel-ready size</li></ul>",
+    options: fourVariants.options,
+    priceRange: {
+      maxVariantPrice: money("39.99"),
+      minVariantPrice: money("39.99"),
+    },
+    variants: fourVariants.variants,
+    featuredImage: fourMedia.main[0]!,
+    images: fourMedia.main,
+    media: fourMedia,
+    seo: {
+      title: "Advanced Pulse Oximeter",
+      description: "Advanced home pulse oximeter",
+    },
+    tags: ["health", "featured"],
     updatedAt: new Date().toISOString(),
   },
 ];

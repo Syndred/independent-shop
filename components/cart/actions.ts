@@ -74,6 +74,26 @@ export async function redirectToCheckout() {
   redirect("/checkout");
 }
 
+export async function buyNow(formData: FormData) {
+  const selectedVariantId = String(formData.get("selectedVariantId") ?? "");
+  const quantity = Math.max(1, Number(formData.get("quantity")) || 1);
+
+  if (!selectedVariantId) {
+    redirect("/search");
+  }
+
+  try {
+    for (let i = 0; i < quantity; i++) {
+      await addLineToCart(selectedVariantId);
+    }
+    revalidateCart();
+  } catch {
+    redirect("/search");
+  }
+
+  redirect("/checkout");
+}
+
 export async function createCartAndSetCookie() {
   await ensureCartCookie();
 }

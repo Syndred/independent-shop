@@ -1,6 +1,6 @@
 import Footer from "components/layout/footer";
-import { ProductBreadcrumb } from "components/product/product-breadcrumb";
-import { ProductCard } from "components/product/product-card";
+import { RevealInView } from "components/motion/fade-in";
+import { AnimatedProductGrid } from "components/motion/stagger-grid";
 import { ProductDescriptionTabs } from "components/product/product-description-tabs";
 import { ProductGallery } from "components/product/product-gallery";
 import { ProductPurchasePanel } from "components/product/product-purchase-panel";
@@ -33,33 +33,37 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
 
   return (
     <>
-      <div className="mx-auto max-w-6xl px-4 py-8 md:px-6 lg:px-8">
-        <ProductBreadcrumb title={product.title} />
+      <div className="container-site section-pad pb-8 md:pb-10">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,380px)] lg:items-start lg:gap-10 xl:gap-14">
+          <div className="min-w-0 lg:col-start-1 lg:row-start-1">
+            <Suspense fallback={null}>
+              <ProductGallery media={product.media} />
+            </Suspense>
+          </div>
 
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
-          <Suspense fallback={null}>
-            <ProductGallery media={product.media} />
-          </Suspense>
+          <aside className="min-w-0 lg:sticky lg:top-32 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start">
+            <div className="border border-border bg-card p-6 md:p-8">
+              <Suspense fallback={null}>
+                <ProductPurchasePanel product={product} />
+              </Suspense>
+            </div>
+          </aside>
 
-          <Suspense fallback={null}>
-            <ProductPurchasePanel product={product} />
-          </Suspense>
+          <div className="min-w-0 lg:col-start-1 lg:row-start-2">
+            <ProductDescriptionTabs product={product} />
+          </div>
         </div>
 
-        <ProductDescriptionTabs product={product} />
-
         {relatedProducts.length ? (
-          <section className="mt-16 border-t border-neutral-200 pt-12">
-            <h2 className="text-lg font-normal text-neutral-900">Related Products</h2>
-            <div className="mt-8 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-              {relatedProducts.map((related) => (
-                <ProductCard
-                  key={related.handle}
-                  product={related}
-                />
-              ))}
+          <RevealInView className="mt-16 border-t border-border pt-12">
+            <h2 className="font-serif text-xl text-foreground md:text-2xl">You may also like</h2>
+            <div className="mt-8">
+              <AnimatedProductGrid
+                products={relatedProducts}
+                columns={4}
+              />
             </div>
-          </section>
+          </RevealInView>
         ) : null}
       </div>
       <Footer />

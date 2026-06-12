@@ -10,10 +10,19 @@ import {
 import type { Cart } from "lib/shopify/types";
 import { whatsappOrderUrl } from "lib/site-config";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
 
 const inputClassName =
-  "w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-950 outline-none transition placeholder:text-neutral-400 focus:border-neutral-950";
+  "w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm text-ink outline-none transition placeholder:text-neutral-400 focus:border-accent focus:ring-2 focus:ring-accent/20";
+
+function Field({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <label className="text-sm font-medium text-ink">{label}</label>
+      {children}
+    </div>
+  );
+}
 
 export function CheckoutForm({ cart }: { cart: Cart }) {
   const router = useRouter();
@@ -73,25 +82,25 @@ export function CheckoutForm({ cart }: { cart: Cart }) {
 
   return (
     <>
-      <div className="mt-8 border-t border-neutral-200 pt-8">
+      <div className="mt-8 rounded-2xl border border-neutral-200 bg-white p-6">
         <ul className="space-y-3 text-sm">
           {cart.lines.map((item) => (
             <li
               key={item.merchandise.id}
               className="flex items-start justify-between gap-4"
             >
-              <span className="text-neutral-600">
+              <span className="text-ink-muted">
                 {item.quantity}× {item.merchandise.product.title}
               </span>
               <Price
                 amount={item.cost.totalAmount.amount}
                 currencyCode={item.cost.totalAmount.currencyCode}
-                className="text-neutral-950"
+                className="text-ink"
               />
             </li>
           ))}
         </ul>
-        <div className="mt-4 flex justify-between border-t border-neutral-200 pt-4 text-sm font-medium">
+        <div className="mt-4 flex justify-between border-t border-neutral-200 pt-4 text-sm font-medium text-ink">
           <span>Total</span>
           <Price
             amount={cart.cost.totalAmount.amount}
@@ -102,73 +111,83 @@ export function CheckoutForm({ cart }: { cart: Cart }) {
 
       <form
         onSubmit={handleSubmit}
-        className="mt-8 grid gap-3"
+        className="mt-8 grid gap-4"
       >
-        <input
-          name="fullName"
-          className={inputClassName}
-          placeholder="Full name"
-          required
-        />
-        <input
-          name="email"
-          type="email"
-          className={inputClassName}
-          placeholder="Email"
-          required
-        />
-        <input
-          name="phone"
-          className={inputClassName}
-          placeholder="Phone"
-          required
-        />
-        <input
-          name="address"
-          className={inputClassName}
-          placeholder="Address"
-          required
-        />
-        <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="Full name">
           <input
-            name="city"
+            name="fullName"
             className={inputClassName}
-            placeholder="City"
             required
           />
+        </Field>
+        <Field label="Email">
           <input
-            name="postalCode"
+            name="email"
+            type="email"
             className={inputClassName}
-            placeholder="Postal code"
             required
           />
+        </Field>
+        <Field label="Phone">
+          <input
+            name="phone"
+            type="tel"
+            className={inputClassName}
+            required
+          />
+        </Field>
+        <Field label="Address">
+          <input
+            name="address"
+            className={inputClassName}
+            required
+          />
+        </Field>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="City">
+            <input
+              name="city"
+              className={inputClassName}
+              required
+            />
+          </Field>
+          <Field label="Postal code">
+            <input
+              name="postalCode"
+              className={inputClassName}
+              required
+            />
+          </Field>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <input
-            name="state"
-            className={inputClassName}
-            placeholder="State"
-            required
-          />
-          <input
-            name="country"
-            className={inputClassName}
-            placeholder="Country"
-            required
-          />
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="State">
+            <input
+              name="state"
+              className={inputClassName}
+              required
+            />
+          </Field>
+          <Field label="Country">
+            <input
+              name="country"
+              className={inputClassName}
+              required
+            />
+          </Field>
         </div>
-        <textarea
-          name="notes"
-          className={`min-h-24 resize-none ${inputClassName}`}
-          placeholder="Notes (optional)"
-        />
+        <Field label="Notes (optional)">
+          <textarea
+            name="notes"
+            className={`min-h-24 resize-none ${inputClassName}`}
+          />
+        </Field>
 
         {error ? <p className="text-sm text-red-600">{error}</p> : null}
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-2 rounded-full bg-neutral-950 py-3.5 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:opacity-50"
+          className="btn-accent mt-2 w-full disabled:opacity-50"
         >
           {isSubmitting ? "Placing order…" : "Place order via WhatsApp"}
         </button>

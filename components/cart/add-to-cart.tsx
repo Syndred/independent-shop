@@ -2,10 +2,9 @@
 
 import { MinusIcon, PlusIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import { addItem } from "components/cart/actions";
+import { addItem, buyNow } from "components/cart/actions";
 import { Product, ProductVariant } from "lib/shopify/types";
 import { whatsappOrderUrl } from "lib/site-config";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useActionState, useMemo, useState } from "react";
 import { useCart } from "./cart-context";
@@ -22,7 +21,7 @@ function SubmitButton({
       <button
         disabled
         type="submit"
-        className="flex h-11 flex-1 items-center justify-center gap-2 bg-neutral-300 text-sm font-medium text-neutral-500"
+        className="flex h-11 flex-1 items-center justify-center gap-2 bg-muted text-sm font-medium text-muted-foreground"
       >
         <ShoppingCartIcon className="h-4 w-4" />
         Out of stock
@@ -35,7 +34,7 @@ function SubmitButton({
       <button
         disabled
         type="submit"
-        className="flex h-11 flex-1 items-center justify-center gap-2 bg-neutral-300 text-sm font-medium text-neutral-500"
+        className="flex h-11 flex-1 items-center justify-center gap-2 bg-muted text-sm font-medium text-muted-foreground"
       >
         <ShoppingCartIcon className="h-4 w-4" />
         Select an option
@@ -46,7 +45,7 @@ function SubmitButton({
   return (
     <button
       type="submit"
-      className="flex h-11 flex-1 items-center justify-center gap-2 bg-neutral-900 text-sm font-medium text-white transition hover:bg-neutral-800"
+      className="flex h-11 flex-1 items-center justify-center gap-2 bg-foreground text-sm font-medium text-background transition hover:bg-primary"
     >
       <ShoppingCartIcon className="h-4 w-4" />
       Add to Cart
@@ -82,17 +81,18 @@ export function AddToCart({ product }: { product: Product }) {
     selectedVariant?.price.amount ?? product.priceRange.maxVariantPrice.amount,
   );
   const totalPrice = (unitPrice * quantity).toFixed(2);
+  const canPurchase = availableForSale && selectedVariantId;
 
   return (
     <div>
       <div className="flex flex-wrap items-center gap-4 text-sm">
-        <span className="text-neutral-500">Qty</span>
-        <div className="flex h-10 items-stretch border border-neutral-300">
+        <span className="text-muted-foreground">Qty</span>
+        <div className="flex h-10 items-stretch overflow-hidden border border-border">
           <button
             type="button"
             aria-label="Decrease quantity"
             onClick={() => setQuantity((value) => Math.max(1, value - 1))}
-            className="flex w-10 items-center justify-center text-neutral-600 transition hover:bg-neutral-50"
+            className="flex w-10 items-center justify-center text-foreground transition hover:bg-muted"
           >
             <MinusIcon className="h-4 w-4" />
           </button>
@@ -100,19 +100,19 @@ export function AddToCart({ product }: { product: Product }) {
             readOnly
             value={quantity}
             aria-label="Quantity"
-            className="w-12 border-x border-neutral-300 text-center text-neutral-900"
+            className="w-12 border-x border-border text-center text-foreground"
           />
           <button
             type="button"
             aria-label="Increase quantity"
             onClick={() => setQuantity((value) => value + 1)}
-            className="flex w-10 items-center justify-center text-neutral-600 transition hover:bg-neutral-50"
+            className="flex w-10 items-center justify-center text-foreground transition hover:bg-muted"
           >
             <PlusIcon className="h-4 w-4" />
           </button>
         </div>
-        <span className="text-neutral-500">
-          Total <strong className="font-medium text-neutral-900">${totalPrice}</strong>
+        <span className="text-muted-foreground">
+          Total <strong className="font-medium text-foreground">${totalPrice}</strong>
         </span>
       </div>
 
@@ -143,22 +143,35 @@ export function AddToCart({ product }: { product: Product }) {
       </div>
 
       <div className="mt-3 grid gap-3 sm:grid-cols-2">
-        <Link
-          href="/checkout"
-          className={clsx(
-            "flex h-11 items-center justify-center text-sm font-medium text-white transition",
-            selectedVariantId
-              ? "bg-orange-500 hover:bg-orange-600"
-              : "pointer-events-none bg-orange-300",
-          )}
-        >
-          Buy Now
-        </Link>
+        <form action={buyNow}>
+          <input
+            type="hidden"
+            name="selectedVariantId"
+            value={selectedVariantId ?? ""}
+          />
+          <input
+            type="hidden"
+            name="quantity"
+            value={quantity}
+          />
+          <button
+            type="submit"
+            disabled={!canPurchase}
+            className={clsx(
+              "flex h-11 w-full items-center justify-center text-sm font-medium uppercase tracking-widest text-primary-foreground transition",
+              canPurchase
+                ? "bg-primary hover:bg-foreground"
+                : "cursor-not-allowed bg-muted text-muted-foreground",
+            )}
+          >
+            Buy Now
+          </button>
+        </form>
         <a
           href={whatsappOrderUrl(
             `Hi, I'd like to order ${product.title}${sku ? ` (${sku})` : ""} x${quantity}.`,
           )}
-          className="flex h-11 items-center justify-center border border-neutral-300 text-sm font-medium text-neutral-700 transition hover:border-neutral-900 hover:text-neutral-900"
+          className="flex h-11 items-center justify-center border border-border text-sm font-medium uppercase tracking-widest text-foreground transition hover:border-primary hover:text-primary"
         >
           WhatsApp
         </a>

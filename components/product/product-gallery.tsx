@@ -3,6 +3,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import type { ProductMedia } from "lib/shopify/types";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -11,6 +12,7 @@ export function ProductGallery({ media }: { media: ProductMedia }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const searchParams = useSearchParams();
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     const style = searchParams.get("style");
@@ -52,13 +54,24 @@ export function ProductGallery({ media }: { media: ProductMedia }) {
 
   return (
     <div>
-      <div className="flex aspect-square items-center justify-center border border-neutral-200 bg-white p-6">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={activeImage.url}
-          alt={activeImage.altText}
-          className="max-h-full max-w-full object-contain"
-        />
+      <div className="relative flex aspect-[4/3] max-h-[min(480px,58vh)] items-center justify-center border border-border bg-card p-4 sm:p-6">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeImage.url}
+            initial={reduce ? false : { opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={reduce ? undefined : { opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="flex h-full w-full items-center justify-center"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={activeImage.url}
+              alt={activeImage.altText}
+              className="max-h-full max-w-full object-contain"
+            />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {images.length > 1 ? (
@@ -67,7 +80,7 @@ export function ProductGallery({ media }: { media: ProductMedia }) {
             type="button"
             onClick={() => goTo(activeIndex - 1)}
             aria-label="Previous image"
-            className="flex h-10 w-10 shrink-0 items-center justify-center border border-neutral-200 text-neutral-500 transition hover:border-neutral-400 hover:text-neutral-900"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-200 text-ink-muted transition hover:border-accent/40 hover:text-ink active:scale-[0.98]"
           >
             <ChevronLeftIcon className="h-5 w-5" />
           </button>
@@ -83,10 +96,10 @@ export function ProductGallery({ media }: { media: ProductMedia }) {
                 onClick={() => setActiveIndex(index)}
                 aria-label={`View image ${index + 1}`}
                 className={clsx(
-                  "h-16 w-16 shrink-0 overflow-hidden border bg-white p-1 transition",
+                  "h-16 w-16 shrink-0 overflow-hidden rounded-xl border bg-white p-1 transition active:scale-[0.98]",
                   index === activeIndex
-                    ? "border-neutral-900"
-                    : "border-neutral-200 hover:border-neutral-400",
+                    ? "border-accent ring-2 ring-accent/20"
+                    : "border-neutral-200 hover:border-accent/40",
                 )}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -103,7 +116,7 @@ export function ProductGallery({ media }: { media: ProductMedia }) {
             type="button"
             onClick={() => goTo(activeIndex + 1)}
             aria-label="Next image"
-            className="flex h-10 w-10 shrink-0 items-center justify-center border border-neutral-200 text-neutral-500 transition hover:border-neutral-400 hover:text-neutral-900"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-200 text-ink-muted transition hover:border-accent/40 hover:text-ink active:scale-[0.98]"
           >
             <ChevronRightIcon className="h-5 w-5" />
           </button>

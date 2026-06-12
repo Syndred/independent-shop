@@ -48,8 +48,9 @@ export function VariantSelector({
     <div className="space-y-5">
       {options.map((option) => (
         <div key={option.id}>
-          <p className="mb-3 text-sm text-neutral-800">
-            <span className="text-red-500">*</span> {option.name}
+          <p className="mb-3 text-sm font-medium text-ink">
+            {option.name}
+            <span className="text-accent"> *</span>
           </p>
           <div className="flex flex-wrap gap-2">
             {option.values.map((value) => {
@@ -83,11 +84,11 @@ export function VariantSelector({
                   aria-disabled={!isAvailableForSale}
                   disabled={!isAvailableForSale}
                   title={`${option.name} ${value}${!isAvailableForSale ? " (Out of Stock)" : ""}`}
-                  className={clsx("transition", {
-                    "min-h-10 min-w-10 border px-4 py-2 text-sm": !variant?.image,
-                    "h-14 w-14 overflow-hidden border p-1": variant?.image,
-                    "border-neutral-900 ring-1 ring-neutral-900": isActive,
-                    "border-neutral-300 hover:border-neutral-500": !isActive && isAvailableForSale,
+                  className={clsx("transition active:scale-[0.98]", {
+                    "min-h-10 min-w-10 rounded-full border px-4 py-2 text-sm": !variant?.image,
+                    "h-14 w-14 overflow-hidden rounded-xl border p-1": variant?.image,
+                    "border-accent bg-accent-muted ring-2 ring-accent/20": isActive,
+                    "border-neutral-300 hover:border-accent/50": !isActive && isAvailableForSale,
                     "cursor-not-allowed border-neutral-200 opacity-40 line-through":
                       !isAvailableForSale,
                   })}

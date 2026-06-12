@@ -1,6 +1,7 @@
 "use client";
 
 import Footer from "components/layout/footer";
+import { FadeIn } from "components/motion/fade-in";
 import Price from "components/price";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -46,34 +47,36 @@ function SuccessContent() {
 
   if (!orderId) {
     return (
-      <div className="text-center">
-        <h1 className="text-2xl font-medium text-neutral-950">Order not found</h1>
+      <FadeIn className="text-center">
+        <h1 className="text-2xl font-medium text-ink">Order not found</h1>
         <Link
           href="/search/health-care"
-          className="mt-8 inline-block rounded-full bg-neutral-950 px-6 py-3 text-sm font-medium text-white"
+          className="btn-primary mt-8"
         >
           Continue shopping
         </Link>
-      </div>
+      </FadeIn>
     );
   }
 
   return (
-    <div>
-      <p className="text-sm text-neutral-400">{orderId}</p>
-      <h1 className="mt-2 text-3xl font-medium tracking-tight text-neutral-950">Order placed</h1>
-      <p className="mt-3 text-neutral-500">
+    <FadeIn>
+      <p className="text-sm font-medium text-accent">{orderId}</p>
+      <h1 className="mt-2 text-3xl font-medium tracking-tight text-ink md:text-4xl">
+        Order placed
+      </h1>
+      <p className="mt-3 text-ink-muted">
         We received your order. Confirm on WhatsApp to finalize shipping.
       </p>
 
       {order ? (
         <div className="mt-10 space-y-8 border-t border-neutral-200 pt-10">
           <div className="text-sm">
-            <p className="text-neutral-400">Ship to</p>
-            <p className="mt-2 font-medium text-neutral-950">{order.checkout.fullName}</p>
-            <p className="text-neutral-500">{order.checkout.email}</p>
-            <p className="text-neutral-500">{order.checkout.phone}</p>
-            <p className="mt-2 text-neutral-500">
+            <p className="text-ink-muted">Ship to</p>
+            <p className="mt-2 font-medium text-ink">{order.checkout.fullName}</p>
+            <p className="text-ink-muted">{order.checkout.email}</p>
+            <p className="text-ink-muted">{order.checkout.phone}</p>
+            <p className="mt-2 text-ink-muted">
               {order.checkout.address}, {order.checkout.city}, {order.checkout.state}{" "}
               {order.checkout.postalCode}, {order.checkout.country}
             </p>
@@ -86,7 +89,7 @@ function SuccessContent() {
                   key={item.merchandise.sku}
                   className="flex justify-between gap-4"
                 >
-                  <span className="text-neutral-600">
+                  <span className="text-ink-muted">
                     {item.quantity}× {item.merchandise.product.title}
                   </span>
                   <Price
@@ -96,7 +99,7 @@ function SuccessContent() {
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex justify-between border-t border-neutral-200 pt-4 font-medium">
+            <div className="mt-4 flex justify-between border-t border-neutral-200 pt-4 font-medium text-ink">
               <span>Total</span>
               <Price
                 amount={order.cart.cost.totalAmount.amount}
@@ -109,21 +112,23 @@ function SuccessContent() {
 
       <Link
         href="/search/health-care"
-        className="mt-10 inline-block rounded-full bg-neutral-950 px-6 py-3 text-sm font-medium text-white transition hover:bg-neutral-800"
+        className="btn-primary mt-10"
       >
         Continue shopping
       </Link>
-    </div>
+    </FadeIn>
   );
 }
 
 export default function CheckoutSuccessPage() {
   return (
     <>
-      <div className="mx-auto max-w-lg px-4 py-12 md:px-6 lg:px-8">
-        <Suspense fallback={null}>
-          <SuccessContent />
-        </Suspense>
+      <div className="container-site section-pad py-12 md:py-14">
+        <div className="mx-auto max-w-lg">
+          <Suspense fallback={null}>
+            <SuccessContent />
+          </Suspense>
+        </div>
       </div>
       <Footer />
     </>

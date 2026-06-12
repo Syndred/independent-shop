@@ -1,19 +1,23 @@
 "use client";
 
+import { FadeIn } from "components/motion/fade-in";
+
 export default function Error({ reset }: { reset: () => void }) {
   return (
-    <div className="mx-auto my-4 flex max-w-xl flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 dark:border-neutral-800 dark:bg-black">
-      <h2 className="text-xl font-bold">Oh no!</h2>
-      <p className="my-2">
-        There was an issue with our storefront. This could be a temporary issue,
-        please try your action again.
-      </p>
-      <button
-        className="mx-auto mt-4 flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white hover:opacity-90"
-        onClick={() => reset()}
-      >
-        Try Again
-      </button>
+    <div className="container-site section-pad py-16">
+      <FadeIn className="mx-auto max-w-xl rounded-2xl border border-neutral-200 bg-white p-8 md:p-12">
+        <h2 className="text-xl font-medium text-ink">Something went wrong</h2>
+        <p className="mt-3 text-ink-muted">
+          There was an issue with our storefront. Please try your action again.
+        </p>
+        <button
+          type="button"
+          className="btn-accent mt-6 w-full sm:w-auto"
+          onClick={() => reset()}
+        >
+          Try again
+        </button>
+      </FadeIn>
     </div>
   );
 }

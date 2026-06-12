@@ -1,12 +1,20 @@
 import { CartProvider } from "components/cart/cart-context";
+import { MainShell } from "components/layout/main-shell";
 import { Navbar } from "components/layout/navbar";
-import { GeistSans } from "geist/font/sans";
 import { getCart } from "lib/shopify";
 import { siteConfig } from "lib/site-config";
 import { baseUrl } from "lib/utils";
+import { Marcellus } from "next/font/google";
 import type { ReactNode } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
+
+const marcellus = Marcellus({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-serif",
+  display: "swap",
+});
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
@@ -14,7 +22,8 @@ export const metadata = {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
   },
-  description: "Pulse oximeters and health essentials, shipped worldwide.",
+  description:
+    "Elevating your daily health routine with reliable monitors and conscious, quality essentials.",
   robots: {
     follow: true,
     index: true,
@@ -27,12 +36,12 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html
       lang="en"
-      className={GeistSans.variable}
+      className={marcellus.variable}
     >
-      <body className="bg-white text-neutral-950 antialiased selection:bg-neutral-200">
+      <body>
         <CartProvider cartPromise={cart}>
           <Navbar />
-          <main>{children}</main>
+          <MainShell>{children}</MainShell>
           <Toaster
             closeButton
             position="bottom-right"

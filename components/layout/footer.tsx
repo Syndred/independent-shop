@@ -29,6 +29,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/pulse-oximeter-wholesale"
+                  className="transition hover:text-foreground"
+                >
+                  Pulse Oximeter Wholesale
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/search/seasonal-hot-deals"
                   className="transition hover:text-foreground"
                 >
@@ -63,11 +71,21 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-secondary-foreground/80">
               <li>
                 <a
-                  href={whatsappOrderUrl(`Hi, I have a question about ${siteConfig.name}.`)}
+                  href={whatsappOrderUrl(
+                    `Hi, I have a question about ${siteConfig.name}.`,
+                  )}
                   className="transition hover:text-foreground"
                 >
                   WhatsApp
                 </a>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="transition hover:text-foreground"
+                >
+                  Request Quote
+                </Link>
               </li>
               <li>
                 <a
@@ -82,7 +100,8 @@ export default function Footer() {
           <div>
             <p className="mb-6 font-serif text-lg">Contact</p>
             <p className="text-sm leading-relaxed text-secondary-foreground/80">
-              Elevating your daily health routine with reliable monitors and essentials.
+              Elevating your daily health routine with reliable monitors and
+              essentials.
             </p>
           </div>
         </div>

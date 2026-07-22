@@ -1,7 +1,11 @@
 import type { Collection } from "lib/shopify/types";
 import Link from "next/link";
 
-export function CollectionShowcase({ collections }: { collections: Collection[] }) {
+export function CollectionShowcase({
+  collections,
+}: {
+  collections: Collection[];
+}) {
   const featured = collections.filter((c) => c.handle);
 
   if (!featured.length) return null;
@@ -9,7 +13,9 @@ export function CollectionShowcase({ collections }: { collections: Collection[] 
   return (
     <section className="container-site section-pad py-16 md:py-20">
       <div className="mb-10 max-w-2xl">
-        <h2 className="text-xl font-medium text-foreground md:text-2xl">Shop by category</h2>
+        <h2 className="text-xl font-medium text-foreground md:text-2xl">
+          Shop by category
+        </h2>
         <p className="mt-3 text-muted-foreground">
           Browse health monitors for home use or check seasonal offers.
         </p>
@@ -29,7 +35,9 @@ export function CollectionShowcase({ collections }: { collections: Collection[] 
                 {collection.description}
               </p>
             ) : null}
-            <p className="mt-4 text-sm font-medium text-primary">Browse category</p>
+            <p className="mt-4 text-sm font-medium text-primary">
+              Browse category
+            </p>
           </Link>
         ))}
       </div>

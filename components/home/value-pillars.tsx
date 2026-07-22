@@ -27,18 +27,17 @@ export function ValuePillars() {
               Made for everyday monitoring
             </h2>
             <p className="mt-4 text-muted-foreground leading-relaxed">
-              We keep the catalog focused on pulse oximeters and related health essentials, so you
-              can compare models and order without clutter.
+              We keep the catalog focused on pulse oximeters and related health
+              essentials, so you can compare models and order without clutter.
             </p>
           </div>
           <ul className="divide-y divide-border border-y border-border">
             {pillars.map((pillar) => (
-              <li
-                key={pillar.title}
-                className="py-6 first:pt-6 last:pb-6"
-              >
+              <li key={pillar.title} className="py-6 first:pt-6 last:pb-6">
                 <h3 className="font-medium text-foreground">{pillar.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{pillar.body}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {pillar.body}
+                </p>
               </li>
             ))}
           </ul>

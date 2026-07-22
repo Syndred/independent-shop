@@ -23,29 +23,60 @@ export const metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description:
-    "Elevating your daily health routine with reliable monitors and conscious, quality essentials.",
+    "Wholesale health devices and sourcing support for clinics, distributors, pharmacies, and retailers worldwide.",
   robots: {
     follow: true,
     index: true,
   },
+  icons: {
+    icon: [
+      {
+        url: "/icon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    apple: [
+      {
+        url: "/apple-icon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+  },
 };
 
-export default async function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const cart = getCart();
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: siteConfig.companyName,
+    url: baseUrl,
+    email: siteConfig.supportEmail,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      availableLanguage: ["English"],
+      url: `https://wa.me/${siteConfig.whatsappNumber.replace(/\D/g, "")}`,
+    },
+  };
 
   return (
-    <html
-      lang="en"
-      className={marcellus.variable}
-    >
+    <html lang="en" className={marcellus.variable}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
         <CartProvider cartPromise={cart}>
           <Navbar />
           <MainShell>{children}</MainShell>
-          <Toaster
-            closeButton
-            position="bottom-right"
-          />
+          <Toaster closeButton position="bottom-right" />
         </CartProvider>
       </body>
     </html>

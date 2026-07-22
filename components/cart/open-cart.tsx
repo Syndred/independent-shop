@@ -19,10 +19,7 @@ export default function OpenCart({
           : "text-foreground/80 hover:text-primary",
       )}
     >
-      <ShoppingCartIcon
-        className={clsx("h-5", className)}
-        strokeWidth={1.5}
-      />
+      <ShoppingCartIcon className={clsx("h-5", className)} strokeWidth={1.5} />
 
       {quantity ? (
         <span

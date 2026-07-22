@@ -1,8 +1,8 @@
 export const siteConfig = {
-  name: process.env.SITE_NAME || "Independent Shop",
-  companyName: process.env.COMPANY_NAME || "Independent Shop",
+  name: process.env.SITE_NAME || "Health Home Wholesale",
+  companyName: process.env.COMPANY_NAME || "Health Home Wholesale",
   whatsappNumber: process.env.WHATSAPP_NUMBER || "8615014135583",
-  supportEmail: process.env.SUPPORT_EMAIL || "support@independent-shop.com",
+  supportEmail: process.env.SUPPORT_EMAIL || "sales@healthhomewholesale.com",
   currency: "USD",
 };
 

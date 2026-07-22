@@ -10,8 +10,8 @@ export function HomeHero({ heroProduct }: { heroProduct?: Product }) {
             Pulse oximeters for home and travel
           </h1>
           <p className="mt-5 max-w-[65ch] text-base leading-relaxed text-muted-foreground">
-            Reliable SpO2 and pulse readings for home, family care, and travel. Order through
-            checkout on this site or send your list on WhatsApp.
+            Reliable SpO2 and pulse readings for home, family care, and travel.
+            Order through checkout on this site or send your list on WhatsApp.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -20,10 +20,7 @@ export function HomeHero({ heroProduct }: { heroProduct?: Product }) {
             >
               Shop now
             </Link>
-            <Link
-              href="/search"
-              className="btn-secondary"
-            >
+            <Link href="/search" className="btn-secondary">
               View all
             </Link>
           </div>

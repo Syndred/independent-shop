@@ -12,7 +12,12 @@ type FadeInProps = {
   y?: number;
 };
 
-export function FadeIn({ children, className, delay = 0, y = 20 }: FadeInProps) {
+export function FadeIn({
+  children,
+  className,
+  delay = 0,
+  y = 20,
+}: FadeInProps) {
   const reduce = useReducedMotion();
 
   return (
@@ -27,7 +32,12 @@ export function FadeIn({ children, className, delay = 0, y = 20 }: FadeInProps) 
   );
 }
 
-export function RevealInView({ children, className, delay = 0, y = 24 }: FadeInProps) {
+export function RevealInView({
+  children,
+  className,
+  delay = 0,
+  y = 24,
+}: FadeInProps) {
   const reduce = useReducedMotion();
 
   return (

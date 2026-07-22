@@ -20,7 +20,8 @@ export function VariantSelector({
   const router = useRouter();
   const searchParams = useSearchParams();
   const hasNoOptionsOrJustOneOption =
-    !options.length || (options.length === 1 && options[0]?.values.length === 1);
+    !options.length ||
+    (options.length === 1 && options[0]?.values.length === 1);
 
   if (hasNoOptionsOrJustOneOption) {
     return null;
@@ -60,19 +61,27 @@ export function VariantSelector({
               searchParams.forEach((v, k) => (optionParams[k] = v));
               optionParams[optionNameLowerCase] = value;
 
-              const filtered = Object.entries(optionParams).filter(([key, val]) =>
-                options.find((opt) => opt.name.toLowerCase() === key && opt.values.includes(val)),
+              const filtered = Object.entries(optionParams).filter(
+                ([key, val]) =>
+                  options.find(
+                    (opt) =>
+                      opt.name.toLowerCase() === key &&
+                      opt.values.includes(val),
+                  ),
               );
               const isAvailableForSale = combinations.find((combination) =>
                 filtered.every(
-                  ([key, val]) => combination[key] === val && combination.availableForSale,
+                  ([key, val]) =>
+                    combination[key] === val && combination.availableForSale,
                 ),
               );
 
               const isActive = searchParams.get(optionNameLowerCase) === value;
               const variant = variants.find((v) =>
                 v.selectedOptions.some(
-                  (opt) => opt.name.toLowerCase() === optionNameLowerCase && opt.value === value,
+                  (opt) =>
+                    opt.name.toLowerCase() === optionNameLowerCase &&
+                    opt.value === value,
                 ),
               );
 
@@ -85,10 +94,14 @@ export function VariantSelector({
                   disabled={!isAvailableForSale}
                   title={`${option.name} ${value}${!isAvailableForSale ? " (Out of Stock)" : ""}`}
                   className={clsx("transition active:scale-[0.98]", {
-                    "min-h-10 min-w-10 rounded-full border px-4 py-2 text-sm": !variant?.image,
-                    "h-14 w-14 overflow-hidden rounded-xl border p-1": variant?.image,
-                    "border-accent bg-accent-muted ring-2 ring-accent/20": isActive,
-                    "border-neutral-300 hover:border-accent/50": !isActive && isAvailableForSale,
+                    "min-h-10 min-w-10 rounded-full border px-4 py-2 text-sm":
+                      !variant?.image,
+                    "h-14 w-14 overflow-hidden rounded-xl border p-1":
+                      variant?.image,
+                    "border-accent bg-accent-muted ring-2 ring-accent/20":
+                      isActive,
+                    "border-neutral-300 hover:border-accent/50":
+                      !isActive && isAvailableForSale,
                     "cursor-not-allowed border-neutral-200 opacity-40 line-through":
                       !isAvailableForSale,
                   })}

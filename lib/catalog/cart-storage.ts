@@ -21,7 +21,9 @@ export async function getStoredCartLines(): Promise<StoredCartLine[]> {
   }
 }
 
-export async function setStoredCartLines(lines: StoredCartLine[]): Promise<void> {
+export async function setStoredCartLines(
+  lines: StoredCartLine[],
+): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.set(CART_COOKIE, JSON.stringify(lines), {
     httpOnly: true,

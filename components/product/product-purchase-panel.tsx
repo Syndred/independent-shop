@@ -13,11 +13,13 @@ export function ProductPurchasePanel({ product }: { product: Product }) {
   const selectedVariant = useMemo(() => {
     const matched = product.variants.find((variant) =>
       variant.selectedOptions.every(
-        (option) => option.value === searchParams.get(option.name.toLowerCase()),
+        (option) =>
+          option.value === searchParams.get(option.name.toLowerCase()),
       ),
     );
     return matched ?? product.variants[0];
   }, [product.variants, searchParams]);
+  const model = selectedVariant?.sku.split("-")[0] ?? product.handle;
 
   return (
     <div>
@@ -27,23 +29,37 @@ export function ProductPurchasePanel({ product }: { product: Product }) {
 
       <div className="mt-5 border-b border-border pb-5">
         <p className="text-3xl font-medium text-foreground">${price}</p>
-        <p className="mt-1 text-sm text-muted-foreground">Price before tax</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Wholesale lot price / 50 units
+        </p>
       </div>
 
       <dl className="mt-5 space-y-2 border-b border-border pb-5 text-sm">
         <div className="flex gap-2">
           <dt className="w-24 shrink-0 text-muted-foreground">SKU</dt>
-          <dd className="font-medium text-foreground">{selectedVariant?.sku ?? "N/A"}</dd>
+          <dd className="font-medium text-foreground">
+            {selectedVariant?.sku ?? "N/A"}
+          </dd>
         </div>
         <div className="flex gap-2">
           <dt className="w-24 shrink-0 text-muted-foreground">Availability</dt>
-          <dd className={product.availableForSale ? "text-primary" : "text-muted-foreground"}>
+          <dd
+            className={
+              product.availableForSale
+                ? "text-primary"
+                : "text-muted-foreground"
+            }
+          >
             {product.availableForSale ? "In stock" : "Out of stock"}
           </dd>
         </div>
         <div className="flex gap-2">
           <dt className="w-24 shrink-0 text-muted-foreground">Model</dt>
-          <dd className="text-foreground">{product.handle}</dd>
+          <dd className="text-foreground">{model}</dd>
+        </div>
+        <div className="flex gap-2">
+          <dt className="w-24 shrink-0 text-muted-foreground">MOQ</dt>
+          <dd className="text-foreground">50 units</dd>
         </div>
       </dl>
 

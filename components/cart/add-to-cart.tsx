@@ -1,6 +1,10 @@
 "use client";
 
-import { MinusIcon, PlusIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
+import {
+  MinusIcon,
+  PlusIcon,
+  ShoppingCartIcon,
+} from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { addItem, buyNow } from "components/cart/actions";
 import { Product, ProductVariant } from "lib/shopify/types";
@@ -63,7 +67,8 @@ export function AddToCart({ product }: { product: Product }) {
   const selectedVariant = useMemo(() => {
     const matched = variants.find((variant: ProductVariant) =>
       variant.selectedOptions.every(
-        (option) => option.value === searchParams.get(option.name.toLowerCase()),
+        (option) =>
+          option.value === searchParams.get(option.name.toLowerCase()),
       ),
     );
     return matched || variants[0];
@@ -75,7 +80,9 @@ export function AddToCart({ product }: { product: Product }) {
     selectedVariantId,
     quantity,
   });
-  const finalVariant = variants.find((variant) => variant.id === selectedVariantId)!;
+  const finalVariant = variants.find(
+    (variant) => variant.id === selectedVariantId,
+  )!;
   const sku = selectedVariant?.sku || product.variants[0]?.sku || "";
   const unitPrice = Number(
     selectedVariant?.price.amount ?? product.priceRange.maxVariantPrice.amount,
@@ -86,7 +93,7 @@ export function AddToCart({ product }: { product: Product }) {
   return (
     <div>
       <div className="flex flex-wrap items-center gap-4 text-sm">
-        <span className="text-muted-foreground">Qty</span>
+        <span className="text-muted-foreground">Lots</span>
         <div className="flex h-10 items-stretch overflow-hidden border border-border">
           <button
             type="button"
@@ -112,8 +119,10 @@ export function AddToCart({ product }: { product: Product }) {
           </button>
         </div>
         <span className="text-muted-foreground">
-          Total <strong className="font-medium text-foreground">${totalPrice}</strong>
+          Total{" "}
+          <strong className="font-medium text-foreground">${totalPrice}</strong>
         </span>
+        <span className="text-muted-foreground">1 lot = 50 units</span>
       </div>
 
       <div className="mt-5 flex gap-3">
@@ -132,11 +141,7 @@ export function AddToCart({ product }: { product: Product }) {
             availableForSale={availableForSale}
             selectedVariantId={selectedVariantId}
           />
-          <p
-            aria-live="polite"
-            className="sr-only"
-            role="status"
-          >
+          <p aria-live="polite" className="sr-only" role="status">
             {message}
           </p>
         </form>
@@ -149,11 +154,7 @@ export function AddToCart({ product }: { product: Product }) {
             name="selectedVariantId"
             value={selectedVariantId ?? ""}
           />
-          <input
-            type="hidden"
-            name="quantity"
-            value={quantity}
-          />
+          <input type="hidden" name="quantity" value={quantity} />
           <button
             type="submit"
             disabled={!canPurchase}
@@ -169,7 +170,7 @@ export function AddToCart({ product }: { product: Product }) {
         </form>
         <a
           href={whatsappOrderUrl(
-            `Hi, I'd like to order ${product.title}${sku ? ` (${sku})` : ""} x${quantity}.`,
+            `Hi, I'd like to order ${product.title}${sku ? ` (${sku})` : ""}. Quantity: ${quantity} lot(s), 50 units per lot.`,
           )}
           className="flex h-11 items-center justify-center border border-border text-sm font-medium uppercase tracking-widest text-foreground transition hover:border-primary hover:text-primary"
         >

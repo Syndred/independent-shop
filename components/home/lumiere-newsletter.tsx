@@ -17,12 +17,17 @@ export function LumiereNewsletter() {
       className="bg-primary px-4 py-24 text-center text-primary-foreground"
     >
       <div className="mx-auto max-w-2xl">
-        <h2 className="mb-4 font-serif text-3xl md:text-4xl">Join the {siteConfig.name} Club</h2>
+        <h2 className="mb-4 font-serif text-3xl md:text-4xl">
+          Join the {siteConfig.name} Club
+        </h2>
         <p className="mb-8 text-primary-foreground/90">
-          Subscribe for product updates, care tips, and early access to seasonal offers.
+          Subscribe for product updates, care tips, and early access to seasonal
+          offers.
         </p>
         {submitted ? (
-          <p className="text-sm uppercase tracking-widest">Thank you for subscribing.</p>
+          <p className="text-sm uppercase tracking-widest">
+            Thank you for subscribing.
+          </p>
         ) : (
           <form
             className="mx-auto flex max-w-md flex-col gap-4 sm:flex-row"

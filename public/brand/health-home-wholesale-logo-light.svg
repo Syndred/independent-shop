@@ -1,0 +1,11 @@
+<svg width="152" height="40" viewBox="0 0 152 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Health Home Wholesale</title>
+  <desc id="desc">Light HHW logo with a medical cross and wholesale wordmark</desc>
+  <rect x="0.75" y="0.75" width="38.5" height="38.5" rx="8.25" fill="rgba(248,245,238,0.92)" stroke="rgba(255,255,255,0.72)" stroke-width="1.5"/>
+  <path d="M20 9.5V30.5" stroke="#292522" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M9.5 20H30.5" stroke="#292522" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M13 12.5V27.5" stroke="#C48F80" stroke-width="2" stroke-linecap="round"/>
+  <path d="M27 12.5V27.5" stroke="#C48F80" stroke-width="2" stroke-linecap="round"/>
+  <text x="49" y="19" fill="#FFFFFF" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="1.2">HHW</text>
+  <text x="49" y="31" fill="rgba(255,255,255,0.78)" font-family="Helvetica, Arial, sans-serif" font-size="8.5" font-weight="600" letter-spacing="1.6">WHOLESALE</text>
+</svg>

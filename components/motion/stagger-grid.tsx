@@ -24,10 +24,7 @@ export function AnimatedProductGrid({
     return (
       <div className={className}>
         {products.map((product) => (
-          <ProductCard
-            key={product.handle}
-            product={product}
-          />
+          <ProductCard key={product.handle} product={product} />
         ))}
       </div>
     );

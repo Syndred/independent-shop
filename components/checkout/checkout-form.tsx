@@ -109,16 +109,9 @@ export function CheckoutForm({ cart }: { cart: Cart }) {
         </div>
       </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="mt-8 grid gap-4"
-      >
+      <form onSubmit={handleSubmit} className="mt-8 grid gap-4">
         <Field label="Full name">
-          <input
-            name="fullName"
-            className={inputClassName}
-            required
-          />
+          <input name="fullName" className={inputClassName} required />
         </Field>
         <Field label="Email">
           <input
@@ -129,50 +122,25 @@ export function CheckoutForm({ cart }: { cart: Cart }) {
           />
         </Field>
         <Field label="Phone">
-          <input
-            name="phone"
-            type="tel"
-            className={inputClassName}
-            required
-          />
+          <input name="phone" type="tel" className={inputClassName} required />
         </Field>
         <Field label="Address">
-          <input
-            name="address"
-            className={inputClassName}
-            required
-          />
+          <input name="address" className={inputClassName} required />
         </Field>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="City">
-            <input
-              name="city"
-              className={inputClassName}
-              required
-            />
+            <input name="city" className={inputClassName} required />
           </Field>
           <Field label="Postal code">
-            <input
-              name="postalCode"
-              className={inputClassName}
-              required
-            />
+            <input name="postalCode" className={inputClassName} required />
           </Field>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="State">
-            <input
-              name="state"
-              className={inputClassName}
-              required
-            />
+            <input name="state" className={inputClassName} required />
           </Field>
           <Field label="Country">
-            <input
-              name="country"
-              className={inputClassName}
-              required
-            />
+            <input name="country" className={inputClassName} required />
           </Field>
         </div>
         <Field label="Notes (optional)">

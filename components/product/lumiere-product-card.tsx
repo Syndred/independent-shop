@@ -14,7 +14,10 @@ export function LumiereProductCard({ product }: { product: Product }) {
   const category = product.tags.includes("health") ? "Health & Care" : "Shop";
 
   const addItemAction = defaultVariant
-    ? formAction.bind(null, { selectedVariantId: defaultVariant.id, quantity: 1 })
+    ? formAction.bind(null, {
+        selectedVariantId: defaultVariant.id,
+        quantity: 1,
+      })
     : null;
 
   const handleQuickAdd = () => {
@@ -49,15 +52,14 @@ export function LumiereProductCard({ product }: { product: Product }) {
             Add to Cart
           </button>
         </div>
-        <p
-          className="sr-only"
-          role="status"
-        >
+        <p className="sr-only" role="status">
           {message}
         </p>
       </div>
       <div className="mt-4 space-y-1">
-        <p className="text-xs uppercase tracking-wider text-muted-foreground">{category}</p>
+        <p className="text-xs uppercase tracking-wider text-muted-foreground">
+          {category}
+        </p>
         <Link
           href={`/product/${product.handle}`}
           className="font-serif text-lg text-foreground transition hover:text-primary"
@@ -65,6 +67,7 @@ export function LumiereProductCard({ product }: { product: Product }) {
           {product.title}
         </Link>
         <p className="text-sm text-foreground">${price}</p>
+        <p className="text-xs text-muted-foreground">50-unit wholesale lot</p>
       </div>
     </article>
   );

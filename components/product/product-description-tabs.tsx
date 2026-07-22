@@ -11,7 +11,8 @@ const tabs = [
 ] as const;
 
 export function ProductDescriptionTabs({ product }: { product: Product }) {
-  const [activeTab, setActiveTab] = useState<(typeof tabs)[number]["id"]>("description");
+  const [activeTab, setActiveTab] =
+    useState<(typeof tabs)[number]["id"]>("description");
   const reduce = useReducedMotion();
 
   return (
@@ -75,15 +76,25 @@ export function ProductDescriptionTabs({ product }: { product: Product }) {
                     label: "SKU options",
                     value: product.variants.map((v) => v.sku).join(", "),
                   },
-                  { label: "Main images", value: String(product.media.main.length) },
-                  { label: "Style variants", value: String(product.media.sku.length) },
+                  {
+                    label: "Main images",
+                    value: String(product.media.main.length),
+                  },
+                  {
+                    label: "Style variants",
+                    value: String(product.media.sku.length),
+                  },
                 ].map((spec) => (
                   <div
                     key={spec.label}
                     className="border border-border bg-card p-5"
                   >
-                    <dt className="text-sm text-muted-foreground">{spec.label}</dt>
-                    <dd className="mt-2 text-base font-medium text-foreground">{spec.value}</dd>
+                    <dt className="text-sm text-muted-foreground">
+                      {spec.label}
+                    </dt>
+                    <dd className="mt-2 text-base font-medium text-foreground">
+                      {spec.value}
+                    </dd>
                   </div>
                 ))}
               </dl>

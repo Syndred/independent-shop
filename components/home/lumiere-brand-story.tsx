@@ -14,10 +14,7 @@ const STORY_IMAGE = publicSrc("four/main/主图1.jpg");
 
 export function LumiereBrandStory() {
   return (
-    <section
-      id="brand-story"
-      className="bg-secondary py-24 md:py-28"
-    >
+    <section id="brand-story" className="bg-secondary py-24 md:py-28">
       <div className="container-site section-pad">
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16">
           <div className="flex items-center justify-center border border-border/60 bg-background p-8 md:p-12">
@@ -38,9 +35,10 @@ export function LumiereBrandStory() {
               Uncompromised Quality.
             </h2>
             <p className="mb-8 leading-relaxed text-foreground/80">
-              We believe monitoring your health should be simple, accurate, and accessible. Our
-              pulse oximeters combine thoughtful design with dependable performance for daily
-              routines, family care, and travel.
+              We believe monitoring your health should be simple, accurate, and
+              accessible. Our pulse oximeters combine thoughtful design with
+              dependable performance for daily routines, family care, and
+              travel.
             </p>
             <Link
               href="/search"

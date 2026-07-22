@@ -1,4 +1,9 @@
-const items = ["Fast SpO2 readings", "Ships worldwide", "One-button use", "WhatsApp support"];
+const items = [
+  "Fast SpO2 readings",
+  "Ships worldwide",
+  "One-button use",
+  "WhatsApp support",
+];
 
 export function TrustStrip() {
   return (

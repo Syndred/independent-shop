@@ -10,11 +10,12 @@ type Route = {
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-
-  const routesMap = [""].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date().toISOString(),
-  }));
+  const routesMap = ["", "/pulse-oximeter-wholesale", "/contact"].map(
+    (route) => ({
+      url: `${baseUrl}${route}`,
+      lastModified: new Date().toISOString(),
+    }),
+  );
 
   const collectionsPromise = getCollections().then((collections) =>
     collections.map((collection) => ({

@@ -23,7 +23,9 @@ export async function generateMetadata(props: {
   };
 }
 
-export default async function Page(props: { params: Promise<{ page: string }> }) {
+export default async function Page(props: {
+  params: Promise<{ page: string }>;
+}) {
   const params = await props.params;
   const page = await getPage(params.page);
 
@@ -37,12 +39,13 @@ export default async function Page(props: { params: Promise<{ page: string }> })
 
   return (
     <FadeIn>
-      <h1 className="text-3xl font-medium tracking-tight text-ink md:text-4xl">{page.title}</h1>
-      <Prose
-        className="mt-8"
-        html={page.body}
-      />
-      <p className="mt-8 text-sm text-ink-muted">Last updated {updatedLabel}.</p>
+      <h1 className="text-3xl font-medium tracking-tight text-ink md:text-4xl">
+        {page.title}
+      </h1>
+      <Prose className="mt-8" html={page.body} />
+      <p className="mt-8 text-sm text-ink-muted">
+        Last updated {updatedLabel}.
+      </p>
     </FadeIn>
   );
 }

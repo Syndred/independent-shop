@@ -46,16 +46,22 @@ export function buildProductMedia(
   productTitle: string,
 ): ProductMedia {
   const main = mainFiles[folder].map((file, index) =>
-    publicImage(`${folder}/main/${file}`, `${productTitle} main image ${index + 1}`),
+    publicImage(
+      `${folder}/main/${file}`,
+      `${productTitle} main image ${index + 1}`,
+    ),
   );
 
   const skuCount = skuCounts[folder];
   const sku =
     skuCount > 0
       ? Array.from({ length: skuCount }, (_, index) => {
-        const num = index + 1;
-        return publicImage(`${folder}/sku/${num}.jpg`, `${productTitle} SKU ${num}`);
-      })
+          const num = index + 1;
+          return publicImage(
+            `${folder}/sku/${num}.jpg`,
+            `${productTitle} SKU ${num}`,
+          );
+        })
       : [];
 
   const detail = publicImage(`${folder}/detail.jpg`, `${productTitle} detail`);

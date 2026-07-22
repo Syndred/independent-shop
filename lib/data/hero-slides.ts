@@ -8,21 +8,39 @@ function encodePublicPath(path: string): string {
   );
 }
 
-/** Hero carousel — product main images only (no detail / long-page crops) */
-const mainImagePaths = [
-  "four/main/主图1.jpg",
-  "four/main/主图2.jpg",
-  "four/main/主图3.jpg",
-  "four/main/主图4.jpg",
-  "four/main/主图5.jpg",
-  "four/main/主图6.jpg",
-  "one/main/主图1.jpg",
-  "one/main/主图2.jpg",
-  "two/main/主图1.jpg",
-  "three/main/主图1.jpg",
+type HeroSlide = {
+  path: string;
+  alt: string;
+  kicker: string;
+  title: string;
+  body: string;
+};
+
+const slides: [HeroSlide, ...HeroSlide[]] = [
+  {
+    path: "four/main/主图2.jpg",
+    alt: "Wholesale nebulizer product hero image",
+    kicker: "Wholesale health devices",
+    title: "Reliable Devices for Clinics and Distributors",
+    body: "Source compact monitors and respiratory care products with low MOQ, quick catalog support, and export-ready communication.",
+  },
+  {
+    path: "one/main/主图1.jpg",
+    alt: "Portable mesh nebulizer hero image",
+    kicker: "Export-ready catalog",
+    title: "Health Essentials Built for Repeat Orders",
+    body: "Browse practical home-care devices and request bulk pricing through WhatsApp when you are ready to compare models.",
+  },
+  {
+    path: "two/main/主图1.jpg",
+    alt: "Family respiratory device hero image",
+    kicker: "Fast sourcing support",
+    title: "Simple Procurement for Growing Sellers",
+    body: "Tell us your destination market and quantity. We will help match the right product line, MOQ, and shipping path.",
+  },
 ];
 
-export const heroSlides = mainImagePaths.map((path, index) => ({
-  src: encodePublicPath(path),
-  alt: `Product main image ${index + 1}`,
+export const heroSlides = slides.map((slide) => ({
+  ...slide,
+  src: encodePublicPath(slide.path),
 }));

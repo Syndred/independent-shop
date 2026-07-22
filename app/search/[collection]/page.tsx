@@ -2,7 +2,11 @@ import Footer from "components/layout/footer";
 import { FadeIn } from "components/motion/fade-in";
 import { AnimatedProductGrid } from "components/motion/stagger-grid";
 import { CollectionPills } from "components/search/collection-pills";
-import { getCollection, getCollectionProducts, getCollections } from "lib/shopify";
+import {
+  getCollection,
+  getCollectionProducts,
+  getCollections,
+} from "lib/shopify";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -17,14 +21,20 @@ export async function generateMetadata(props: {
   return {
     title: collection.seo?.title || collection.title,
     description:
-      collection.seo?.description || collection.description || `${collection.title} products`,
+      collection.seo?.description ||
+      collection.description ||
+      `${collection.title} products`,
   };
 }
 
-export default async function CategoryPage(props: { params: Promise<{ collection: string }> }) {
+export default async function CategoryPage(props: {
+  params: Promise<{ collection: string }>;
+}) {
   const params = await props.params;
   const collection = await getCollection(params.collection);
-  const products = await getCollectionProducts({ collection: params.collection });
+  const products = await getCollectionProducts({
+    collection: params.collection,
+  });
   const collections = await getCollections();
 
   if (!collection) return notFound();
@@ -37,7 +47,9 @@ export default async function CategoryPage(props: { params: Promise<{ collection
             {collection.title}
           </h1>
           {collection.description ? (
-            <p className="mt-3 max-w-xl text-ink-muted">{collection.description}</p>
+            <p className="mt-3 max-w-xl text-ink-muted">
+              {collection.description}
+            </p>
           ) : null}
         </FadeIn>
 

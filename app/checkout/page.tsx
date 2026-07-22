@@ -22,8 +22,12 @@ export default async function CheckoutPage() {
       <div className="container-site section-pad pb-12 md:pb-14">
         <div className="mx-auto max-w-lg">
           <FadeIn>
-            <h1 className="text-3xl font-medium tracking-tight text-ink md:text-4xl">Checkout</h1>
-            <p className="mt-2 text-ink-muted">Shipping details and order confirmation.</p>
+            <h1 className="text-3xl font-medium tracking-tight text-ink md:text-4xl">
+              Checkout
+            </h1>
+            <p className="mt-2 text-ink-muted">
+              Shipping details and order confirmation.
+            </p>
           </FadeIn>
           <FadeIn delay={0.08}>
             <CheckoutForm cart={cart} />

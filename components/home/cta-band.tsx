@@ -11,19 +11,18 @@ export function CtaBand() {
               Ready to order a pulse oximeter?
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Your health essentials. Your preferred channel. Checkout on the site or message us on
-              WhatsApp.
+              Your health essentials. Your preferred channel. Checkout on the
+              site or message us on WhatsApp.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Link
-              href="/search"
-              className="btn-primary"
-            >
+            <Link href="/search" className="btn-primary">
               Shop now
             </Link>
             <a
-              href={whatsappOrderUrl(`Hi, I'd like to order from ${siteConfig.name}.`)}
+              href={whatsappOrderUrl(
+                `Hi, I'd like to order from ${siteConfig.name}.`,
+              )}
               className="btn-accent"
             >
               Order on WhatsApp

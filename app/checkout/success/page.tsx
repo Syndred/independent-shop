@@ -49,10 +49,7 @@ function SuccessContent() {
     return (
       <FadeIn className="text-center">
         <h1 className="text-2xl font-medium text-ink">Order not found</h1>
-        <Link
-          href="/search/health-care"
-          className="btn-primary mt-8"
-        >
+        <Link href="/search/health-care" className="btn-primary mt-8">
           Continue shopping
         </Link>
       </FadeIn>
@@ -73,12 +70,15 @@ function SuccessContent() {
         <div className="mt-10 space-y-8 border-t border-neutral-200 pt-10">
           <div className="text-sm">
             <p className="text-ink-muted">Ship to</p>
-            <p className="mt-2 font-medium text-ink">{order.checkout.fullName}</p>
+            <p className="mt-2 font-medium text-ink">
+              {order.checkout.fullName}
+            </p>
             <p className="text-ink-muted">{order.checkout.email}</p>
             <p className="text-ink-muted">{order.checkout.phone}</p>
             <p className="mt-2 text-ink-muted">
-              {order.checkout.address}, {order.checkout.city}, {order.checkout.state}{" "}
-              {order.checkout.postalCode}, {order.checkout.country}
+              {order.checkout.address}, {order.checkout.city},{" "}
+              {order.checkout.state} {order.checkout.postalCode},{" "}
+              {order.checkout.country}
             </p>
           </div>
 
@@ -110,10 +110,7 @@ function SuccessContent() {
         </div>
       ) : null}
 
-      <Link
-        href="/search/health-care"
-        className="btn-primary mt-10"
-      >
+      <Link href="/search/health-care" className="btn-primary mt-10">
         Continue shopping
       </Link>
     </FadeIn>

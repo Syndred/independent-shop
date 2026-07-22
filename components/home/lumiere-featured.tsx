@@ -12,25 +12,21 @@ export function LumiereFeatured({ products }: { products: Product[] }) {
     >
       <div className="mb-12 flex flex-col items-end justify-between gap-6 md:flex-row">
         <div>
-          <h2 className="mb-4 font-serif text-3xl md:text-4xl">Curated Essentials</h2>
+          <h2 className="mb-4 font-serif text-3xl md:text-4xl">
+            Curated Essentials
+          </h2>
           <p className="max-w-md text-muted-foreground">
-            Discover our most loved products, chosen for reliable readings and everyday care at
-            home.
+            Discover our most loved products, chosen for reliable readings and
+            everyday care at home.
           </p>
         </div>
-        <Link
-          href="/search"
-          className="link-underline whitespace-nowrap"
-        >
+        <Link href="/search" className="link-underline whitespace-nowrap">
           View All Products
         </Link>
       </div>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {featured.map((product) => (
-          <LumiereProductCard
-            key={product.handle}
-            product={product}
-          />
+          <LumiereProductCard key={product.handle} product={product} />
         ))}
       </div>
     </section>

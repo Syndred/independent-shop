@@ -4,7 +4,10 @@ import {
   removeLineFromCart,
   updateLineQuantity,
 } from "lib/catalog/cart";
-import { collections, getCollectionProductsByHandle } from "lib/data/collections";
+import {
+  collections,
+  getCollectionProductsByHandle,
+} from "lib/data/collections";
 import { menu } from "lib/data/menu";
 import { pages } from "lib/data/pages";
 import { products } from "lib/data/products";

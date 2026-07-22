@@ -29,9 +29,7 @@ export function buildOrderMessage(
     })
     .join("\n");
 
-  const notes = form.notes?.trim()
-    ? `\n\nNotes:\n${form.notes.trim()}`
-    : "";
+  const notes = form.notes?.trim() ? `\n\nNotes:\n${form.notes.trim()}` : "";
 
   return [
     `New order from ${siteConfig.name}`,

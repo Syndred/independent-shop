@@ -47,20 +47,11 @@ export default function CartModal({ light = false }: { light?: boolean }) {
 
   return (
     <>
-      <button
-        aria-label="Open cart"
-        onClick={openCart}
-      >
-        <OpenCart
-          quantity={cart?.totalQuantity}
-          light={light}
-        />
+      <button aria-label="Open cart" onClick={openCart}>
+        <OpenCart quantity={cart?.totalQuantity} light={light} />
       </button>
       <Transition show={isOpen}>
-        <Dialog
-          onClose={closeCart}
-          className="relative z-50"
-        >
+        <Dialog onClose={closeCart} className="relative z-50">
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
@@ -70,10 +61,7 @@ export default function CartModal({ light = false }: { light?: boolean }) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div
-              className="fixed inset-0 bg-black/20"
-              aria-hidden="true"
-            />
+            <div className="fixed inset-0 bg-black/20" aria-hidden="true" />
           </Transition.Child>
           <Transition.Child
             as={Fragment}
@@ -87,10 +75,7 @@ export default function CartModal({ light = false }: { light?: boolean }) {
             <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col bg-white p-6 shadow-2xl md:w-[380px]">
               <div className="flex items-center justify-between border-b border-neutral-200 pb-4">
                 <p className="text-sm font-medium text-ink">Cart</p>
-                <button
-                  aria-label="Close cart"
-                  onClick={closeCart}
-                >
+                <button aria-label="Close cart" onClick={closeCart}>
                   <CloseCart />
                 </button>
               </div>
@@ -101,7 +86,9 @@ export default function CartModal({ light = false }: { light?: boolean }) {
                     className="h-10 text-neutral-300"
                     strokeWidth={1}
                   />
-                  <p className="mt-4 text-sm text-ink-muted">Your cart is empty</p>
+                  <p className="mt-4 text-sm text-ink-muted">
+                    Your cart is empty
+                  </p>
                   <Link
                     href="/search/health-care"
                     onClick={closeCart}
@@ -115,16 +102,22 @@ export default function CartModal({ light = false }: { light?: boolean }) {
                   <ul className="grow overflow-auto">
                     {cart.lines
                       .sort((a, b) =>
-                        a.merchandise.product.title.localeCompare(b.merchandise.product.title),
+                        a.merchandise.product.title.localeCompare(
+                          b.merchandise.product.title,
+                        ),
                       )
                       .map((item, i) => {
-                        const merchandiseSearchParams = {} as MerchandiseSearchParams;
+                        const merchandiseSearchParams =
+                          {} as MerchandiseSearchParams;
 
-                        item.merchandise.selectedOptions.forEach(({ name, value }) => {
-                          if (value !== DEFAULT_OPTION) {
-                            merchandiseSearchParams[name.toLowerCase()] = value;
-                          }
-                        });
+                        item.merchandise.selectedOptions.forEach(
+                          ({ name, value }) => {
+                            if (value !== DEFAULT_OPTION) {
+                              merchandiseSearchParams[name.toLowerCase()] =
+                                value;
+                            }
+                          },
+                        );
 
                         const merchandiseUrl = createUrl(
                           `/product/${item.merchandise.product.handle}`,
@@ -149,10 +142,12 @@ export default function CartModal({ light = false }: { light?: boolean }) {
                                   width={64}
                                   height={64}
                                   alt={
-                                    item.merchandise.product.featuredImage.altText ||
-                                    item.merchandise.product.title
+                                    item.merchandise.product.featuredImage
+                                      .altText || item.merchandise.product.title
                                   }
-                                  src={item.merchandise.product.featuredImage.url}
+                                  src={
+                                    item.merchandise.product.featuredImage.url
+                                  }
                                 />
                               </div>
                               <div className="flex min-w-0 flex-1 flex-col justify-between">
@@ -170,7 +165,9 @@ export default function CartModal({ light = false }: { light?: boolean }) {
                                       type="minus"
                                       optimisticUpdate={updateCartItem}
                                     />
-                                    <span className="w-6 text-center text-xs">{item.quantity}</span>
+                                    <span className="w-6 text-center text-xs">
+                                      {item.quantity}
+                                    </span>
                                     <EditItemQuantityButton
                                       item={item}
                                       type="plus"
@@ -180,7 +177,9 @@ export default function CartModal({ light = false }: { light?: boolean }) {
                                   <Price
                                     className="text-sm text-ink"
                                     amount={item.cost.totalAmount.amount}
-                                    currencyCode={item.cost.totalAmount.currencyCode}
+                                    currencyCode={
+                                      item.cost.totalAmount.currencyCode
+                                    }
                                   />
                                 </div>
                               </div>

@@ -55,8 +55,7 @@ function buildCartFromLines(lines: StoredCartLine[]): Cart {
     (sum, item) => sum + Number(item.cost.totalAmount.amount),
     0,
   );
-  const currencyCode =
-    cartLines[0]?.cost.totalAmount.currencyCode ?? "USD";
+  const currencyCode = cartLines[0]?.cost.totalAmount.currencyCode ?? "USD";
 
   return {
     id: "local-cart",
@@ -95,10 +94,10 @@ export async function addLineToCart(variantId: string): Promise<Cart> {
 
   const nextLines = existing
     ? lines.map((line) =>
-      line.variantId === variantId
-        ? { ...line, quantity: line.quantity + 1 }
-        : line,
-    )
+        line.variantId === variantId
+          ? { ...line, quantity: line.quantity + 1 }
+          : line,
+      )
     : [...lines, { variantId, quantity: 1 }];
 
   await setStoredCartLines(nextLines);
@@ -122,8 +121,8 @@ export async function updateLineQuantity(
     quantity <= 0
       ? lines.filter((line) => line.variantId !== variantId)
       : lines.map((line) =>
-        line.variantId === variantId ? { ...line, quantity } : line,
-      );
+          line.variantId === variantId ? { ...line, quantity } : line,
+        );
 
   await setStoredCartLines(nextLines);
   return buildCartFromLines(nextLines);

@@ -33,12 +33,11 @@ export function SupportInfo() {
         </div>
         <div className="grid gap-6 md:grid-cols-2">
           {items.map((item) => (
-            <div
-              key={item.title}
-              className="border border-border bg-card p-6"
-            >
+            <div key={item.title} className="border border-border bg-card p-6">
               <h3 className="font-medium text-foreground">{item.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                {item.body}
+              </p>
             </div>
           ))}
         </div>
@@ -52,7 +51,9 @@ export function SupportInfo() {
           </a>
           {" · "}
           <a
-            href={whatsappOrderUrl(`Hi, I have a question about ${siteConfig.name}.`)}
+            href={whatsappOrderUrl(
+              `Hi, I have a question about ${siteConfig.name}.`,
+            )}
             className="text-foreground underline-offset-4 hover:underline"
           >
             WhatsApp

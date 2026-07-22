@@ -23,7 +23,9 @@ export async function generateMetadata(props: {
   };
 }
 
-export default async function ProductPage(props: { params: Promise<{ handle: string }> }) {
+export default async function ProductPage(props: {
+  params: Promise<{ handle: string }>;
+}) {
   const params = await props.params;
   const product = await getProduct(params.handle);
 
@@ -56,12 +58,11 @@ export default async function ProductPage(props: { params: Promise<{ handle: str
 
         {relatedProducts.length ? (
           <RevealInView className="mt-16 border-t border-border pt-12">
-            <h2 className="font-serif text-xl text-foreground md:text-2xl">You may also like</h2>
+            <h2 className="font-serif text-xl text-foreground md:text-2xl">
+              You may also like
+            </h2>
             <div className="mt-8">
-              <AnimatedProductGrid
-                products={relatedProducts}
-                columns={4}
-              />
+              <AnimatedProductGrid products={relatedProducts} columns={4} />
             </div>
           </RevealInView>
         ) : null}

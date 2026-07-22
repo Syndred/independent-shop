@@ -2,12 +2,14 @@
 
 import CartModal from "components/cart/modal";
 import { siteConfig } from "lib/site-config";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const navItems = [
   { title: "Shop All", path: "/search" },
+  { title: "Wholesale", path: "/pulse-oximeter-wholesale" },
   { title: "Health & Care", path: "/search/health-care" },
   { title: "Deals", path: "/search/seasonal-hot-deals" },
   { title: "About", path: "/#brand-story" },
@@ -35,18 +37,16 @@ export function NavbarShell() {
   }, [menuOpen]);
 
   const linkClass = onLightHero
-    ? "text-sm font-medium uppercase tracking-wider text-white/90 transition hover:text-white"
-    : "text-sm font-medium uppercase tracking-wider text-foreground/80 transition hover:text-primary";
+    ? "whitespace-nowrap text-xs font-semibold uppercase tracking-[0.14em] text-white/90 transition hover:text-white lg:text-sm"
+    : "whitespace-nowrap text-xs font-semibold uppercase tracking-[0.14em] text-foreground/80 transition hover:text-primary lg:text-sm";
 
   const iconClass = onLightHero
     ? "text-white/90 transition hover:text-white"
     : "text-foreground/80 transition hover:text-primary";
 
-  const logoClass = onLightHero
-    ? "font-serif text-xl tracking-widest text-white drop-shadow-sm md:text-2xl"
-    : "font-serif text-xl tracking-widest text-foreground md:text-2xl";
-
-  const menuButtonClass = onLightHero ? "text-white md:hidden" : "text-foreground md:hidden";
+  const menuButtonClass = onLightHero
+    ? "text-white md:hidden"
+    : "text-foreground md:hidden";
 
   return (
     <header
@@ -59,8 +59,8 @@ export function NavbarShell() {
       }`}
     >
       <div className="container-site section-pad">
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-          <div className="flex items-center gap-6 md:gap-8">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex min-w-0 flex-1 items-center gap-3 md:flex-none">
             <button
               type="button"
               className={menuButtonClass}
@@ -91,28 +91,35 @@ export function NavbarShell() {
                 </svg>
               )}
             </button>
-
-            <nav className="hidden items-center gap-6 md:flex lg:gap-8">
-              {navItems.map((item) => (
-                <Link
-                  key={item.title}
-                  href={item.path}
-                  className={linkClass}
-                >
-                  {item.title}
-                </Link>
-              ))}
-            </nav>
+            <Link
+              href="/"
+              className="inline-flex shrink-0 items-center"
+              aria-label={`${siteConfig.name} home`}
+            >
+              <Image
+                src={
+                  onLightHero
+                    ? "/brand/health-home-wholesale-logo-light.svg"
+                    : "/brand/health-home-wholesale-logo.svg"
+                }
+                alt={siteConfig.name}
+                width={152}
+                height={40}
+                priority
+                className="h-9 w-auto"
+              />
+            </Link>
           </div>
 
-          <Link
-            href="/"
-            className={`${logoClass} text-center`}
-          >
-            {siteConfig.name.toUpperCase()}
-          </Link>
+          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-4 md:flex lg:gap-7">
+            {navItems.map((item) => (
+              <Link key={item.title} href={item.path} className={linkClass}>
+                {item.title}
+              </Link>
+            ))}
+          </nav>
 
-          <div className="flex items-center justify-end gap-4 md:gap-6">
+          <div className="flex flex-1 items-center justify-end gap-4 md:flex-none md:gap-6">
             <Link
               href="/search"
               className={`hidden sm:block ${iconClass}`}
@@ -126,11 +133,7 @@ export function NavbarShell() {
                 stroke="currentColor"
                 strokeWidth="1.5"
               >
-                <circle
-                  cx="11"
-                  cy="11"
-                  r="7"
-                />
+                <circle cx="11" cy="11" r="7" />
                 <path d="M20 20l-3-3" />
               </svg>
             </Link>

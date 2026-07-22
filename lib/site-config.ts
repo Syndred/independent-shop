@@ -2,7 +2,7 @@ export const siteConfig = {
   name: process.env.SITE_NAME || "Health Home Wholesale",
   companyName: process.env.COMPANY_NAME || "Health Home Wholesale",
   whatsappNumber: process.env.WHATSAPP_NUMBER || "8615014135583",
-  supportEmail: process.env.SUPPORT_EMAIL || "sales@healthhomewholesale.com",
+  supportEmail: process.env.SUPPORT_EMAIL || "sales@homehealthwholesale.com",
   currency: "USD",
 };
 

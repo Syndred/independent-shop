@@ -1,4 +1,5 @@
 import { getCollections, getPages, getProducts } from "lib/shopify";
+import { indexedOfferSlugs } from "lib/offer";
 import { baseUrl } from "lib/utils";
 import { MetadataRoute } from "next";
 
@@ -16,6 +17,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date().toISOString(),
     }),
   );
+  const offerRoutes = indexedOfferSlugs().map((slug) => ({
+    url: `${baseUrl}/offer/${slug}`,
+    lastModified: new Date().toISOString(),
+  }));
 
   const collectionsPromise = getCollections().then((collections) =>
     collections.map((collection) => ({
@@ -48,5 +53,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     throw JSON.stringify(error, null, 2);
   }
 
-  return [...routesMap, ...fetchedRoutes];
+  return [...routesMap, ...offerRoutes, ...fetchedRoutes];
 }

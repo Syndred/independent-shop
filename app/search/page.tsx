@@ -18,7 +18,8 @@ export default async function SearchPage() {
             All products
           </h1>
           <p className="mt-3 max-w-xl text-ink-muted">
-            Pulse oximeters and health essentials, ready to ship.
+            Wholesale health products available for sourcing discussion;
+            availability is confirmed with each quote.
           </p>
         </FadeIn>
 

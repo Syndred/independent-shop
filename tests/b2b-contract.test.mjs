@@ -44,8 +44,20 @@ test("CRM tracking is HTTPS and allowlist gated", async () => {
   assert.match(config, /endpoint\.protocol === "https:"/);
   assert.match(config, /isLoopback\(endpoint\.hostname\)/);
   assert.match(config, /authorization: secure && token/);
-  assert.match(route, /if \(!response\.ok\)/);
+  assert.match(route, /if \(response\.ok\) return/);
   assert.match(route, /redirect: "error"/);
+  assert.match(route, /after\(\(\) => sendTrackingEvent\(event\)\)/);
+  assert.match(route, /attempt <= 3/);
+  assert.match(route, /eventId: randomUUID\(\)/);
+  const readme = await read("README.md");
+  const env = await read(".env.example");
+  assert.match(`${readme}\n${env}`, /\/api\/tracking\/ingest/);
+});
+
+test("public copy does not promise unverified stock", async () => {
+  const search = await read("app/search/page.tsx");
+  assert.doesNotMatch(search, /ready to ship|in stock/i);
+  assert.match(search, /availability is confirmed with each quote/i);
 });
 
 test("offer routes reject unknown suffixes and expose a finite sitemap set", async () => {

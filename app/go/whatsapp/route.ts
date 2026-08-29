@@ -1,12 +1,12 @@
 import { products } from "lib/data/products";
 import { getCrmTrackingConfig } from "lib/crm-tracking";
 import { siteConfig } from "lib/site-config";
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 
 const MAX_PARAM_LENGTH = 160;
 const MAX_MESSAGE_LENGTH = 1_200;
-const TRACKING_TIMEOUT_MS = 800;
+const TRACKING_TIMEOUT_MS = 2_000;
 const allowedIntents = new Set(["quote", "sample", "moq", "general"]);
 
 function cleanParam(
@@ -88,24 +88,27 @@ async function sendTrackingEvent(event: TrackingEvent): Promise<void> {
   const headers: HeadersInit = { "content-type": "application/json" };
   if (config.authorization) headers.authorization = config.authorization;
 
-  try {
-    const response = await fetch(config.endpoint, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(event),
-      signal: AbortSignal.timeout(TRACKING_TIMEOUT_MS),
-      cache: "no-store",
-      redirect: "error",
-    });
-    if (!response.ok) {
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      const response = await fetch(config.endpoint, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(event),
+        signal: AbortSignal.timeout(TRACKING_TIMEOUT_MS),
+        cache: "no-store",
+        redirect: "error",
+      });
+      if (response.ok) return;
       console.warn(
-        `[crm-tracking] delivery failed with status ${response.status}`,
+        `[crm-tracking] delivery attempt ${attempt} failed with status ${response.status}`,
       );
+    } catch {
+      console.warn(`[crm-tracking] delivery attempt ${attempt} failed`);
     }
-  } catch {
-    // Tracking must never prevent a buyer from reaching WhatsApp.
-    console.warn("[crm-tracking] delivery failed");
+    if (attempt < 3)
+      await new Promise((resolve) => setTimeout(resolve, attempt * 250));
   }
+  console.warn(`[crm-tracking] exhausted retries for event ${event.eventId}`);
 }
 
 export async function GET(request: NextRequest) {
@@ -153,7 +156,9 @@ export async function GET(request: NextRequest) {
     utm_content: cleanParam(params.get("utm_content")) || intent,
   };
 
-  await sendTrackingEvent(event);
+  // Next.js keeps the serverless invocation alive after the redirect. Retries reuse eventId,
+  // so the CRM ingest endpoint can safely deduplicate a delayed or repeated delivery.
+  after(() => sendTrackingEvent(event));
 
   const destination = new URL(`https://wa.me/${number}`);
   destination.searchParams.set("text", message);

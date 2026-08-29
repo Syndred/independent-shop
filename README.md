@@ -33,7 +33,7 @@ Offer 的规范格式是：
 跨站事件默认关闭。启用时必须同时配置：
 
 ```bash
-CRM_TRACKING_ENDPOINT="https://crm.example.com/api/tracking"
+CRM_TRACKING_ENDPOINT="https://crm.example.com/api/tracking/ingest"
 CRM_TRACKING_ALLOWED_ORIGINS="https://crm.example.com"
 CRM_TRACKING_TOKEN="replace-me"
 ```

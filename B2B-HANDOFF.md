@@ -14,7 +14,7 @@
 ## 上线前配置
 
 1. 在生产环境配置真实 `SITE_URL`、`WHATSAPP_NUMBER` 与 `SUPPORT_EMAIL`。
-2. 如需把 WhatsApp 点击归因回 CRM，同时配置 `CRM_TRACKING_ENDPOINT`、`CRM_TRACKING_ALLOWED_ORIGINS`、`CRM_TRACKING_TOKEN`，其中 endpoint 必须是 HTTPS。
+2. 如需把 WhatsApp 点击归因回 CRM，同时配置 `CRM_TRACKING_ENDPOINT`、`CRM_TRACKING_ALLOWED_ORIGINS`、`CRM_TRACKING_TOKEN`，其中 endpoint 必须是完整 HTTPS `/api/tracking/ingest` 地址。
 3. 用真实目标域名检查 `/sitemap.xml`、任一规范 Offer URL、商品 CTA 和 WhatsApp 跳转。
 4. 商品供应状态、认证、MOQ、价格、样品、运输和付款条款仍须在每次报价前人工确认；站点文案不替代供应链证据。
 

@@ -3,19 +3,19 @@ import { siteConfig, whatsappOrderUrl } from "lib/site-config";
 const items = [
   {
     title: "Shipping",
-    body: "Orders ship worldwide. Share your full address during checkout or in your WhatsApp message.",
+    body: "Share the destination and order quantity so available shipping routes and trade terms can be quoted.",
   },
   {
-    title: "Payment",
-    body: "Pay through the site checkout flow, or confirm payment details with our team on WhatsApp.",
+    title: "Quotation",
+    body: "Current pricing, MOQ, availability, and payment terms are confirmed in a written quotation.",
   },
   {
     title: "Product help",
     body: "Not sure which oximeter fits your needs? Ask about specs, accessories, or bulk pricing.",
   },
   {
-    title: "After you order",
-    body: "We confirm receipt, share tracking when available, and stay reachable if something needs attention.",
+    title: "Before you order",
+    body: "We confirm specifications, samples, lead time, compliance documents, and destination requirements before acceptance.",
   },
 ];
 
@@ -25,10 +25,11 @@ export function SupportInfo() {
       <div className="container-site section-pad py-16 md:py-20">
         <div className="mb-10 max-w-2xl">
           <h2 className="text-xl font-medium text-foreground md:text-2xl">
-            Shipping, payment, and help
+            Shipping, quotation, and help
           </h2>
           <p className="mt-3 text-muted-foreground">
-            Practical details before you place an order with {siteConfig.name}.
+            Practical details before you confirm an order with {siteConfig.name}
+            .
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-2">

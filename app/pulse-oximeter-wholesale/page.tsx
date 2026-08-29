@@ -20,14 +20,14 @@ const pagePath = "/pulse-oximeter-wholesale";
 const canonicalUrl = `${baseUrl}${pagePath}/`;
 
 export const metadata: Metadata = {
-  title: "Pulse Oximeter Wholesale - Bulk Orders from Manufacturer",
+  title: "Pulse Oximeter Wholesale Sourcing and Quotations",
   description:
-    "Pulse oximeter wholesale supplier. Pediatric pulse oximeter and rechargeable models, 50-unit MOQ, global shipping. WhatsApp for bulk pricing.",
+    "Pulse oximeter wholesale sourcing for pediatric and rechargeable models. Request current pricing, MOQ, samples, and destination terms.",
   alternates: {
     canonical: canonicalUrl,
   },
   openGraph: {
-    title: "Pulse Oximeter Wholesale - Direct Supplier",
+    title: "Pulse Oximeter Wholesale Sourcing",
     description:
       "Bulk pulse oximeter sourcing for clinics, distributors, pharmacies, and retailers worldwide.",
     url: canonicalUrl,
@@ -47,8 +47,8 @@ const products = [
       "Built-in lithium battery",
       "Rechargeable format",
       "SpO2 and pulse rate",
-      "50-unit lot: $188",
-      "Standard MOQ: 50 units",
+      "Wholesale pricing by quote",
+      "MOQ confirmed for your order",
       "Compliance documents on request",
     ],
     detailHref: "/product/premium-pulse-oximeter",
@@ -62,9 +62,9 @@ const products = [
       "Child-friendly finger chamber",
       "Compact display layout",
       "SpO2 and pulse rate",
-      "50-unit lot: $150",
-      "Standard MOQ: 50 units",
-      "OEM packaging available",
+      "Wholesale pricing by quote",
+      "MOQ confirmed for your order",
+      "Packaging options confirmed by quote",
     ],
     detailHref: "/product/kids-pulse-oximeter",
   },
@@ -76,8 +76,8 @@ const products = [
     specs: [
       "Mini handheld nebulizer line",
       "Rechargeable health device",
-      "50-unit lot: $158",
-      "Standard MOQ: 50 units",
+      "Wholesale pricing by quote",
+      "MOQ confirmed for your order",
       "Final specs confirmed by quote",
     ],
     detailHref: "/product/mini-speaker",
@@ -90,8 +90,8 @@ const products = [
     specs: [
       "Advanced pulse oximeter line",
       "Clinic and distributor sourcing",
-      "50-unit lot: $150",
-      "Standard MOQ: 50 units",
+      "Wholesale pricing by quote",
+      "MOQ confirmed for your order",
       "Final specs confirmed by quote",
     ],
     detailHref: "/product/advanced-pulse-oximeter",
@@ -101,8 +101,8 @@ const products = [
 const trustItems = [
   {
     icon: Factory,
-    title: "Direct Manufacturer",
-    text: "Factory-direct sourcing support with fewer middle layers and flexible order planning.",
+    title: "Supplier Coordination",
+    text: "Sourcing support for specifications, quotations, order planning, and supplier confirmation.",
   },
   {
     icon: ShieldCheck,
@@ -111,8 +111,8 @@ const trustItems = [
   },
   {
     icon: PackageCheck,
-    title: "Low MOQ",
-    text: "Start from 50 units on listed wholesale lots, with sample discussions available before bulk purchase.",
+    title: "MOQ and Samples",
+    text: "Discuss current MOQ and sample availability before considering a bulk order.",
   },
   {
     icon: Globe2,
@@ -152,9 +152,15 @@ const comparisonRows: ComparisonRow[] = [
     "Rechargeable options",
     "Battery options",
   ],
-  ["MOQ", "50 units", "50 units", "50 units", "50 units"],
-  ["Wholesale lot", "$188 / 50", "$150 / 50", "$158 / 50", "$150 / 50"],
-  ["OEM available", "Yes", "Yes", "By request", "Yes"],
+  [
+    "MOQ",
+    "Quote confirmed",
+    "Quote confirmed",
+    "Quote confirmed",
+    "Quote confirmed",
+  ],
+  ["Wholesale price", "By quote", "By quote", "By quote", "By quote"],
+  ["Packaging options", "By request", "By request", "By request", "By request"],
   [
     "Compliance",
     "Quote confirmed",
@@ -168,7 +174,7 @@ const faqs = [
   {
     question: "What is the minimum order quantity (MOQ)?",
     answer:
-      "Current listed wholesale products start from 50 units per lot. OEM orders and larger distributor orders are quoted separately.",
+      "MOQ depends on the current supplier, selected model, configuration, and destination. It is confirmed in each quotation.",
   },
   {
     question: "Do you supply pediatric pulse oximeter models?",
@@ -183,22 +189,22 @@ const faqs = [
   {
     question: "How long does shipping take?",
     answer:
-      "Standard international shipping usually takes 7-15 business days. Express courier options such as DHL or FedEx usually take 3-7 business days depending on destination.",
+      "Lead time and shipping time depend on the selected model, available stock, destination, and shipping route. They are confirmed in the quotation.",
   },
   {
     question: "Can I get a sample before placing a bulk order?",
     answer:
-      "Yes. Sample orders are available for qualified buyers. Sample costs can be credited against the first confirmed bulk order when agreed in advance.",
+      "Sample availability, cost, freight, and any bulk-order credit are confirmed for the selected model before payment.",
   },
   {
     question: "Do you offer warranty?",
     answer:
-      "Warranty terms are confirmed by model and order size. Standard wholesale orders can include replacement support for verified defective units.",
+      "Warranty and replacement terms are confirmed by model, supplier, and order size in the quotation.",
   },
   {
     question: "How do I pay?",
     answer:
-      "Bulk orders usually support T/T bank transfer. Sample orders may support PayPal or other agreed payment methods. Payment terms are confirmed in the proforma invoice.",
+      "Available payment methods and terms are confirmed in the written quotation or proforma invoice. This website does not take checkout payments.",
   },
 ];
 
@@ -232,12 +238,6 @@ export default function PulseOximeterWholesalePage() {
         ? "Medical Device > Nebulizer"
         : "Medical Device > Pulse Oximeter",
       image: `${baseUrl}${product.image}`,
-      offers: {
-        "@type": "AggregateOffer",
-        priceCurrency: siteConfig.currency,
-        offerCount: "1",
-        availability: "https://schema.org/InStock",
-      },
     })),
   };
 
@@ -299,15 +299,13 @@ export default function PulseOximeterWholesalePage() {
                   B2B medical device sourcing
                 </p>
                 <h1 className="max-w-3xl text-4xl leading-tight text-foreground md:text-6xl">
-                  Pulse Oximeter Wholesale - Direct from Supplier
+                  Pulse Oximeter Wholesale Sourcing
                 </h1>
                 <p className="mt-6 max-w-2xl text-base leading-8 text-ink-muted md:text-lg">
-                  Your trusted source for pulse oximeters in bulk. We supply
-                  fingertip, pediatric, handheld, wrist-worn, and veterinary
-                  pulse oximeter lines to clinics, distributors, pharmacies, and
-                  retailers worldwide. Low minimum order quantities, OEM/private
-                  label discussion, fast international shipping. Contact us on
-                  WhatsApp for wholesale pricing.
+                  Compare available fingertip, pediatric, and handheld product
+                  lines for clinics, distributors, pharmacies, and retailers.
+                  Share your destination, quantity, and documentation needs so
+                  current supplier options can be checked before quotation.
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <a
@@ -497,11 +495,10 @@ export default function PulseOximeterWholesalePage() {
                 OEM & Private Label Services
               </h2>
               <p className="mt-5 text-sm leading-7 text-ink-muted">
-                We offer OEM and private label support for pulse oximeter bulk
-                orders. Common options include custom logo printing, device
-                color combinations, packaging design, user manual localization,
-                and drop shipping for qualified partners. Send your requirements
-                on WhatsApp for a tailored quote and catalog recommendation.
+                Logo, color, packaging, manual, and fulfillment options vary by
+                model and supplier. Send your requirements on WhatsApp so each
+                requested capability can be confirmed before it appears in a
+                quotation.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -551,7 +548,7 @@ export default function PulseOximeterWholesalePage() {
         <section className="section-pad border-y border-border bg-foreground py-16 text-background md:py-20">
           <div className="container-site text-center">
             <h2 className="mx-auto max-w-3xl text-3xl text-background md:text-5xl">
-              Ready to Order Pulse Oximeters in Bulk?
+              Ready to Request a Wholesale Quotation?
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-background/75 md:text-base">
               Send us a message on WhatsApp for the latest wholesale price list

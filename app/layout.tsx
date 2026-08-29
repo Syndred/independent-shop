@@ -1,7 +1,5 @@
-import { CartProvider } from "components/cart/cart-context";
 import { MainShell } from "components/layout/main-shell";
 import { Navbar } from "components/layout/navbar";
-import { getCart } from "lib/shopify";
 import { siteConfig } from "lib/site-config";
 import { baseUrl } from "lib/utils";
 import { Marcellus } from "next/font/google";
@@ -49,7 +47,6 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  const cart = getCart();
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -73,11 +70,9 @@ export default async function RootLayout({
             __html: JSON.stringify(organizationSchema),
           }}
         />
-        <CartProvider cartPromise={cart}>
-          <Navbar />
-          <MainShell>{children}</MainShell>
-          <Toaster closeButton position="bottom-right" />
-        </CartProvider>
+        <Navbar />
+        <MainShell>{children}</MainShell>
+        <Toaster closeButton position="bottom-right" />
       </body>
     </html>
   );

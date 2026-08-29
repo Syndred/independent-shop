@@ -45,9 +45,9 @@ export const products: Product[] = [
     availableForSale: true,
     title: "Premium Pulse Oximeter",
     description:
-      "SY108 rechargeable lithium-battery pulse oximeter supplied in 50-unit wholesale lots.",
+      "SY108 rechargeable lithium-battery pulse oximeter for wholesale sourcing discussions.",
     descriptionHtml:
-      "<p>SY108 rechargeable lithium-battery pulse oximeter for wholesale buyers, clinics, distributors, and online sellers.</p><ul><li>Built-in rechargeable lithium battery</li><li>50-unit wholesale lot: $188</li><li>Compact pulse oximeter format for catalog sourcing</li></ul>",
+      "<p>SY108 rechargeable lithium-battery pulse oximeter for wholesale buyers, clinics, distributors, and online sellers.</p><ul><li>Built-in rechargeable lithium battery</li><li>MOQ and pricing confirmed by quotation</li><li>Compact pulse oximeter format for catalog sourcing</li></ul>",
     options: oneVariants.options,
     priceRange: {
       maxVariantPrice: money("188.00"),
@@ -60,7 +60,7 @@ export const products: Product[] = [
     seo: {
       title: "Premium Pulse Oximeter SY108 Wholesale",
       description:
-        "SY108 rechargeable pulse oximeter wholesale lot. Built-in lithium battery, 50 units from $188.",
+        "SY108 rechargeable pulse oximeter for wholesale sourcing. Request current pricing, MOQ, samples, and destination terms.",
     },
     tags: ["health", "featured"],
     updatedAt: new Date().toISOString(),
@@ -73,7 +73,7 @@ export const products: Product[] = [
     description:
       "ZS101 pediatric pulse oximeter for child-friendly wholesale catalog sourcing.",
     descriptionHtml:
-      "<p>ZS101 pediatric pulse oximeter for clinics, pharmacies, distributors, and retailers sourcing child-friendly pulse oximeter models.</p><ul><li>Pediatric pulse oximeter keyword-focused product line</li><li>50-unit wholesale lot: $150</li><li>Compact display and child-friendly positioning</li></ul>",
+      "<p>ZS101 pediatric pulse oximeter for clinics, pharmacies, distributors, and retailers sourcing child-friendly pulse oximeter models.</p><ul><li>Pediatric pulse oximeter keyword-focused product line</li><li>MOQ and pricing confirmed by quotation</li><li>Compact display and child-friendly positioning</li></ul>",
     options: twoVariants.options,
     priceRange: {
       maxVariantPrice: money("150.00"),
@@ -86,7 +86,7 @@ export const products: Product[] = [
     seo: {
       title: "Pediatric Pulse Oximeter ZS101 Wholesale",
       description:
-        "Pediatric pulse oximeter ZS101 for wholesale buyers. 50-unit bulk lot from $150.",
+        "Pediatric pulse oximeter ZS101 for wholesale buyers. Request current pricing, MOQ, samples, and destination terms.",
     },
     tags: ["health"],
     updatedAt: new Date().toISOString(),
@@ -97,9 +97,9 @@ export const products: Product[] = [
     availableForSale: true,
     title: "Mini Handheld Nebulizer",
     description:
-      "ZS102 mini handheld nebulizer supplied in 50-unit wholesale lots.",
+      "ZS102 mini handheld nebulizer for wholesale sourcing discussions.",
     descriptionHtml:
-      "<p>ZS102 mini handheld nebulizer for health-device catalog sourcing and wholesale orders.</p><ul><li>Rechargeable mini handheld nebulizer line</li><li>50-unit wholesale lot: $158</li><li>Suitable for respiratory care product catalogs</li></ul>",
+      "<p>ZS102 mini handheld nebulizer for health-device catalog sourcing and wholesale orders.</p><ul><li>Rechargeable mini handheld nebulizer line</li><li>MOQ and pricing confirmed by quotation</li><li>Suitable for respiratory care product catalogs</li></ul>",
     options: threeVariants.options,
     priceRange: {
       maxVariantPrice: money("158.00"),
@@ -112,7 +112,7 @@ export const products: Product[] = [
     seo: {
       title: "Mini Handheld Nebulizer ZS102 Wholesale",
       description:
-        "ZS102 mini handheld nebulizer wholesale lot. 50 units from $158 for health product sourcing.",
+        "ZS102 mini handheld nebulizer for wholesale sourcing. Request current pricing, MOQ, samples, and destination terms.",
     },
     tags: ["health", "featured"],
     updatedAt: new Date().toISOString(),
@@ -123,9 +123,9 @@ export const products: Product[] = [
     availableForSale: true,
     title: "Advanced Pulse Oximeter",
     description:
-      "ZS103 advanced pulse oximeter supplied in 50-unit wholesale lots.",
+      "ZS103 advanced pulse oximeter for wholesale sourcing discussions.",
     descriptionHtml:
-      "<p>ZS103 advanced pulse oximeter for wholesale buyers comparing compact SpO2 monitor options.</p><ul><li>Advanced pulse oximeter sourcing line</li><li>50-unit wholesale lot: $150</li><li>Catalog-ready product images and specification support</li></ul>",
+      "<p>ZS103 advanced pulse oximeter for wholesale buyers comparing compact SpO2 monitor options.</p><ul><li>Advanced pulse oximeter sourcing line</li><li>MOQ and pricing confirmed by quotation</li><li>Catalog-ready product images and specification support</li></ul>",
     options: fourVariants.options,
     priceRange: {
       maxVariantPrice: money("150.00"),
@@ -138,7 +138,7 @@ export const products: Product[] = [
     seo: {
       title: "Advanced Pulse Oximeter ZS103 Wholesale",
       description:
-        "ZS103 advanced pulse oximeter wholesale lot. 50 units from $150 for distributors and clinics.",
+        "ZS103 advanced pulse oximeter for distributors and clinics. Request current pricing, MOQ, samples, and destination terms.",
     },
     tags: ["health", "featured"],
     updatedAt: new Date().toISOString(),

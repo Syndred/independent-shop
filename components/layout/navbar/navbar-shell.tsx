@@ -1,6 +1,5 @@
 "use client";
 
-import CartModal from "components/cart/modal";
 import { siteConfig } from "lib/site-config";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,10 +7,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const navItems = [
-  { title: "Shop All", path: "/search" },
+  { title: "Products", path: "/search" },
   { title: "Wholesale", path: "/pulse-oximeter-wholesale" },
   { title: "Health & Care", path: "/search/health-care" },
-  { title: "Deals", path: "/search/seasonal-hot-deals" },
+  { title: "Request a Quote", path: "/contact" },
   { title: "About", path: "/#brand-story" },
 ];
 
@@ -137,7 +136,16 @@ export function NavbarShell() {
                 <path d="M20 20l-3-3" />
               </svg>
             </Link>
-            <CartModal light={onLightHero} />
+            <Link
+              href="/contact"
+              className={`hidden border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition sm:inline-flex ${
+                onLightHero
+                  ? "border-white/70 text-white hover:border-white"
+                  : "border-foreground/70 text-foreground hover:border-primary hover:text-primary"
+              }`}
+            >
+              Get a Quote
+            </Link>
           </div>
         </div>
       </div>

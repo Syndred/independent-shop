@@ -5,6 +5,7 @@ import { ProductDescriptionTabs } from "components/product/product-description-t
 import { ProductGallery } from "components/product/product-gallery";
 import { ProductPurchasePanel } from "components/product/product-purchase-panel";
 import { getProduct, getProductRecommendations } from "lib/shopify";
+import { baseUrl } from "lib/utils";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -17,9 +18,28 @@ export async function generateMetadata(props: {
 
   if (!product) return notFound();
 
+  const canonicalUrl = `${baseUrl}/product/${product.handle}`;
+  const featuredImageUrl = product.featuredImage
+    ? new URL(product.featuredImage.url, baseUrl).toString()
+    : undefined;
   return {
     title: product.seo.title || product.title,
     description: product.seo.description || product.description,
+    alternates: { canonical: canonicalUrl },
+    openGraph: {
+      title: product.seo.title || product.title,
+      description: product.seo.description || product.description,
+      url: canonicalUrl,
+      type: "website",
+      images: featuredImageUrl
+        ? [
+            {
+              url: featuredImageUrl,
+              alt: product.featuredImage.altText || product.title,
+            },
+          ]
+        : undefined,
+    },
   };
 }
 
@@ -32,9 +52,55 @@ export default async function ProductPage(props: {
   if (!product) return notFound();
 
   const relatedProducts = await getProductRecommendations(product.id);
+  const canonicalUrl = `${baseUrl}/product/${product.handle}`;
+  const productImages = product.images.map((image) =>
+    new URL(image.url, baseUrl).toString(),
+  );
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    description: product.description,
+    image: productImages,
+    sku: product.variants[0]?.sku,
+    category: "Health and care wholesale product",
+    url: canonicalUrl,
+  };
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${baseUrl}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Products",
+        item: `${baseUrl}/search`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: product.title,
+        item: canonicalUrl,
+      },
+    ],
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="container-site section-pad pb-8 md:pb-10">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,380px)] lg:items-start lg:gap-10 xl:gap-14">
           <div className="min-w-0 lg:col-start-1 lg:row-start-1">

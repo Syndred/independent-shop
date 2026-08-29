@@ -6,12 +6,12 @@ const steps = [
     body: "Compare models, photos, and specifications on the product page.",
   },
   {
-    title: "Place your order",
-    body: "Use checkout on the site or send your order details on WhatsApp.",
+    title: "Request a quotation",
+    body: "Share quantity, destination, and configuration requirements on WhatsApp.",
   },
   {
-    title: "We confirm shipping",
-    body: "We reply with order confirmation and shipping details after payment.",
+    title: "Confirm terms",
+    body: "We confirm current pricing, MOQ, sample options, lead time, and shipping terms before an order is accepted.",
   },
 ];
 
@@ -20,11 +20,11 @@ export function OrderSteps() {
     <section className="container-site section-pad py-16 md:py-20">
       <div className="mb-10 max-w-2xl">
         <h2 className="text-xl font-medium text-foreground md:text-2xl">
-          How ordering works
+          How wholesale sourcing works
         </h2>
         <p className="mt-3 text-muted-foreground">
-          Two ways to buy: standard checkout or a direct WhatsApp message with
-          your items.
+          Every order starts with a quotation so product, quantity, destination,
+          and documentation requirements can be confirmed.
         </p>
       </div>
       <ol className="grid gap-6 md:grid-cols-3">
@@ -42,7 +42,7 @@ export function OrderSteps() {
       </ol>
       <div className="mt-8 flex flex-wrap gap-3">
         <Link href="/search" className="btn-primary">
-          Start shopping
+          View Products
         </Link>
         <Link href="/search/health-care" className="btn-secondary">
           Health & Care

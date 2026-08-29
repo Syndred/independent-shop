@@ -14,7 +14,7 @@ export function CollectionShowcase({
     <section className="container-site section-pad py-16 md:py-20">
       <div className="mb-10 max-w-2xl">
         <h2 className="text-xl font-medium text-foreground md:text-2xl">
-          Shop by category
+          Source by category
         </h2>
         <p className="mt-3 text-muted-foreground">
           Browse health monitors for home use or check seasonal offers.
@@ -36,7 +36,7 @@ export function CollectionShowcase({
               </p>
             ) : null}
             <p className="mt-4 text-sm font-medium text-primary">
-              Browse category
+              View category
             </p>
           </Link>
         ))}

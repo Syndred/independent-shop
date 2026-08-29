@@ -1,30 +1,9 @@
-"use client";
-
-import { addItem } from "components/cart/actions";
-import { useCart } from "components/cart/cart-context";
 import type { Product } from "lib/shopify/types";
+import { whatsappTrackingUrl } from "lib/site-config";
 import Link from "next/link";
-import { useActionState } from "react";
 
 export function LumiereProductCard({ product }: { product: Product }) {
-  const { addCartItem } = useCart();
-  const [message, formAction] = useActionState(addItem, null);
-  const price = product.priceRange.maxVariantPrice.amount;
-  const defaultVariant = product.variants[0];
   const category = product.tags.includes("health") ? "Health & Care" : "Shop";
-
-  const addItemAction = defaultVariant
-    ? formAction.bind(null, {
-        selectedVariantId: defaultVariant.id,
-        quantity: 1,
-      })
-    : null;
-
-  const handleQuickAdd = () => {
-    if (!defaultVariant || !addItemAction) return;
-    addCartItem(defaultVariant, product);
-    addItemAction();
-  };
 
   return (
     <article className="group">
@@ -44,17 +23,19 @@ export function LumiereProductCard({ product }: { product: Product }) {
           />
         </Link>
         <div className="absolute bottom-0 left-0 w-full translate-y-full p-4 transition-transform duration-300 group-hover:translate-y-0">
-          <button
-            type="button"
-            onClick={handleQuickAdd}
+          <a
+            href={whatsappTrackingUrl({
+              product: product.handle,
+              source: "product_card",
+              intent: "quote",
+              utmCampaign: `${product.handle}_quote`,
+              utmContent: "quick_quote",
+            })}
             className="w-full bg-foreground py-3 text-sm uppercase tracking-widest text-background transition hover:bg-primary"
           >
-            Add to Cart
-          </button>
+            Request a Quote
+          </a>
         </div>
-        <p className="sr-only" role="status">
-          {message}
-        </p>
       </div>
       <div className="mt-4 space-y-1">
         <p className="text-xs uppercase tracking-wider text-muted-foreground">
@@ -66,8 +47,10 @@ export function LumiereProductCard({ product }: { product: Product }) {
         >
           {product.title}
         </Link>
-        <p className="text-sm text-foreground">${price}</p>
-        <p className="text-xs text-muted-foreground">50-unit wholesale lot</p>
+        <p className="text-sm text-foreground">Wholesale pricing by quote</p>
+        <p className="text-xs text-muted-foreground">
+          Ask about samples, MOQ, and destination terms
+        </p>
       </div>
     </article>
   );

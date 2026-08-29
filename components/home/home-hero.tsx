@@ -11,17 +11,18 @@ export function HomeHero({ heroProduct }: { heroProduct?: Product }) {
           </h1>
           <p className="mt-5 max-w-[65ch] text-base leading-relaxed text-muted-foreground">
             Reliable SpO2 and pulse readings for home, family care, and travel.
-            Order through checkout on this site or send your list on WhatsApp.
+            Compare models, then request wholesale pricing, samples, MOQ, and
+            destination terms from our sourcing team.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href={heroProduct ? `/product/${heroProduct.handle}` : "/search"}
               className="btn-primary"
             >
-              Shop now
+              View Product
             </Link>
             <Link href="/search" className="btn-secondary">
-              View all
+              View All Products
             </Link>
           </div>
         </div>

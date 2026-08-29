@@ -2,8 +2,6 @@ import type { Product } from "lib/shopify/types";
 import Link from "next/link";
 
 export function ProductCard({ product }: { product: Product }) {
-  const price = product.priceRange.maxVariantPrice.amount;
-
   return (
     <Link href={`/product/${product.handle}`} className="group block">
       <div className="aspect-square border border-border bg-card p-6 transition group-hover:border-foreground/30">
@@ -14,15 +12,13 @@ export function ProductCard({ product }: { product: Product }) {
           className="h-full w-full object-contain"
         />
       </div>
-      <div className="mt-4 flex items-baseline justify-between gap-4">
+      <div className="mt-4">
         <h2 className="text-base font-medium text-foreground">
           {product.title}
         </h2>
-        <p className="shrink-0 text-sm text-foreground">${price}</p>
       </div>
-      <p className="mt-1 text-xs text-muted-foreground">
-        50-unit wholesale lot
-      </p>
+      <p className="mt-1 text-sm text-foreground">Wholesale pricing by quote</p>
+      <p className="mt-1 text-xs text-muted-foreground">Quote · Sample · MOQ</p>
     </Link>
   );
 }

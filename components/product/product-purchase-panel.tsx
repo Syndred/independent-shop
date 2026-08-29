@@ -1,14 +1,14 @@
 "use client";
 
-import { AddToCart } from "components/cart/add-to-cart";
 import { VariantSelector } from "components/product/variant-selector";
+import { whatsappTrackingUrl } from "lib/site-config";
 import type { Product } from "lib/shopify/types";
+import { ClipboardList, MessageCircle, PackageCheck } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 
 export function ProductPurchasePanel({ product }: { product: Product }) {
   const searchParams = useSearchParams();
-  const price = product.priceRange.maxVariantPrice.amount;
 
   const selectedVariant = useMemo(() => {
     const matched = product.variants.find((variant) =>
@@ -28,9 +28,12 @@ export function ProductPurchasePanel({ product }: { product: Product }) {
       </h1>
 
       <div className="mt-5 border-b border-border pb-5">
-        <p className="text-3xl font-medium text-foreground">${price}</p>
+        <p className="text-2xl font-medium text-foreground">
+          Wholesale pricing by quote
+        </p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Wholesale lot price / 50 units
+          Pricing depends on quantity, destination, configuration, and current
+          supplier confirmation.
         </p>
       </div>
 
@@ -43,15 +46,7 @@ export function ProductPurchasePanel({ product }: { product: Product }) {
         </div>
         <div className="flex gap-2">
           <dt className="w-24 shrink-0 text-muted-foreground">Availability</dt>
-          <dd
-            className={
-              product.availableForSale
-                ? "text-primary"
-                : "text-muted-foreground"
-            }
-          >
-            {product.availableForSale ? "In stock" : "Out of stock"}
-          </dd>
+          <dd className="text-foreground">Confirmed with your quotation</dd>
         </div>
         <div className="flex gap-2">
           <dt className="w-24 shrink-0 text-muted-foreground">Model</dt>
@@ -59,7 +54,7 @@ export function ProductPurchasePanel({ product }: { product: Product }) {
         </div>
         <div className="flex gap-2">
           <dt className="w-24 shrink-0 text-muted-foreground">MOQ</dt>
-          <dd className="text-foreground">50 units</dd>
+          <dd className="text-foreground">Discussed for your order</dd>
         </div>
       </dl>
 
@@ -70,8 +65,55 @@ export function ProductPurchasePanel({ product }: { product: Product }) {
         />
       </div>
 
-      <div className="mt-6">
-        <AddToCart product={product} />
+      <div className="mt-6 grid gap-3">
+        <a
+          href={whatsappTrackingUrl({
+            product: product.handle,
+            variant: selectedVariant?.sku,
+            source: "product_page",
+            intent: "quote",
+            utmCampaign: `${product.handle}_quote`,
+            utmContent: "get_wholesale_price",
+          })}
+          className="flex h-12 items-center justify-center gap-2 bg-[#1f8f4d] px-4 text-sm font-semibold uppercase tracking-widest text-white transition hover:bg-[#176f3b]"
+        >
+          <MessageCircle className="size-4" />
+          Get Wholesale Price
+        </a>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <a
+            href={whatsappTrackingUrl({
+              product: product.handle,
+              variant: selectedVariant?.sku,
+              source: "product_page",
+              intent: "sample",
+              utmCampaign: `${product.handle}_sample`,
+              utmContent: "request_sample",
+            })}
+            className="flex h-11 items-center justify-center gap-2 border border-border px-3 text-sm font-medium uppercase tracking-widest text-foreground transition hover:border-primary hover:text-primary"
+          >
+            <PackageCheck className="size-4" />
+            Request a Sample
+          </a>
+          <a
+            href={whatsappTrackingUrl({
+              product: product.handle,
+              variant: selectedVariant?.sku,
+              source: "product_page",
+              intent: "moq",
+              utmCampaign: `${product.handle}_moq`,
+              utmContent: "ask_moq",
+            })}
+            className="flex h-11 items-center justify-center gap-2 border border-border px-3 text-sm font-medium uppercase tracking-widest text-foreground transition hover:border-primary hover:text-primary"
+          >
+            <ClipboardList className="size-4" />
+            Ask MOQ
+          </a>
+        </div>
+        <p className="text-xs leading-5 text-muted-foreground">
+          Final price, MOQ, availability, lead time, and compliance documents
+          are confirmed for your destination before an order is accepted.
+        </p>
       </div>
     </div>
   );

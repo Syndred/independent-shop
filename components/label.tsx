@@ -1,15 +1,11 @@
 import clsx from "clsx";
-import Price from "./price";
-
 const Label = ({
   title,
-  amount,
-  currencyCode,
+  subtitle = "Wholesale pricing by quote",
   position = "bottom",
 }: {
   title: string;
-  amount: string;
-  currencyCode: string;
+  subtitle?: string;
   position?: "bottom" | "center";
 }) => {
   return (
@@ -21,16 +17,13 @@ const Label = ({
         },
       )}
     >
-      <div className="flex items-center rounded-full border bg-white/70 p-1 text-xs font-semibold text-black backdrop-blur-md dark:border-neutral-800 dark:bg-black/70 dark:text-white">
+      <div className="flex max-w-full items-center gap-3 rounded-full border bg-white/80 p-1 text-xs font-semibold text-black backdrop-blur-md dark:border-neutral-800 dark:bg-black/80 dark:text-white">
         <h3 className="mr-4 line-clamp-2 grow pl-2 leading-none tracking-tight">
           {title}
         </h3>
-        <Price
-          className="flex-none rounded-full bg-blue-600 p-2 text-white"
-          amount={amount}
-          currencyCode={currencyCode}
-          currencyCodeClassName="hidden @[275px]/label:inline"
-        />
+        <span className="flex-none rounded-full bg-blue-600 p-2 text-white">
+          {subtitle}
+        </span>
       </div>
     </div>
   );

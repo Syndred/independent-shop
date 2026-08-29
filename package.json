@@ -6,7 +6,7 @@
     "start": "next start",
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
-    "test": "pnpm prettier:check"
+    "test": "pnpm prettier:check && node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

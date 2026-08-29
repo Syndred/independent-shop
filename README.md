@@ -1,75 +1,54 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fcommerce&project-name=commerce&repo-name=commerce&demo-title=Next.js%20Commerce&demo-url=https%3A%2F%2Fdemo.vercel.store&demo-image=https%3A%2F%2Fbigcommerce-demo-asset-ksvtgfvnd.vercel.app%2Fbigcommerce.png&env=COMPANY_NAME,SHOPIFY_REVALIDATION_SECRET,SHOPIFY_STORE_DOMAIN,SHOPIFY_STOREFRONT_ACCESS_TOKEN,SITE_NAME)
+# Health Home Wholesale
 
-# Next.js Commerce
+基于 Next.js App Router 的 B2B 健康产品询盘站。站点用于展示商品、收集报价/样品/MOQ 需求，并把 WhatsApp 点击归因回内部 CRM；它不是零售商城，不提供购物车、固定价格或在线付款。
 
-A high-performance, server-rendered Next.js App Router ecommerce application.
-
-This template uses React Server Components, Server Actions, `Suspense`, `useOptimistic`, and more.
-
-<h3 id="v1-note"></h3>
-
-> Note: Looking for Next.js Commerce v1? View the [code](https://github.com/vercel/commerce/tree/v1), [demo](https://commerce-v1.vercel.store), and [release notes](https://github.com/vercel/commerce/releases/tag/v1).
-
-## Providers
-
-Vercel will only be actively maintaining a Shopify version [as outlined in our vision and strategy for Next.js Commerce](https://github.com/vercel/commerce/pull/966).
-
-Vercel is happy to partner and work with any commerce provider to help them get a similar template up and running and listed below. Alternative providers should be able to fork this repository and swap out the `lib/shopify` file with their own implementation while leaving the rest of the template mostly unchanged.
-
-- Shopify (this repository)
-- [BigCommerce](https://github.com/bigcommerce/nextjs-commerce) ([Demo](https://next-commerce-v2.vercel.app/))
-- [Ecwid by Lightspeed](https://github.com/Ecwid/ecwid-nextjs-commerce/) ([Demo](https://ecwid-nextjs-commerce.vercel.app/))
-- [Geins](https://github.com/geins-io/vercel-nextjs-commerce) ([Demo](https://geins-nextjs-commerce-starter.vercel.app/))
-- [Medusa](https://github.com/medusajs/vercel-commerce) ([Demo](https://medusa-nextjs-commerce.vercel.app/))
-- [Prodigy Commerce](https://github.com/prodigycommerce/nextjs-commerce) ([Demo](https://prodigy-nextjs-commerce.vercel.app/))
-- [Saleor](https://github.com/saleor/nextjs-commerce) ([Demo](https://saleor-commerce.vercel.app/))
-- [Shopware](https://github.com/shopwareLabs/vercel-commerce) ([Demo](https://shopware-vercel-commerce-react.vercel.app/))
-- [Swell](https://github.com/swellstores/verswell-commerce) ([Demo](https://verswell-commerce.vercel.app/))
-- [Umbraco](https://github.com/umbraco/Umbraco.VercelCommerce.Demo) ([Demo](https://vercel-commerce-demo.umbraco.com/))
-- [Wix](https://github.com/wix/headless-templates/tree/main/nextjs/commerce) ([Demo](https://wix-nextjs-commerce.vercel.app/))
-- [Fourthwall](https://github.com/FourthwallHQ/vercel-commerce) ([Demo](https://vercel-storefront.fourthwall.app/))
-
-> Note: Providers, if you are looking to use similar products for your demo, you can [download these assets](https://drive.google.com/file/d/1q_bKerjrwZgHwCw0ovfUMW6He9VtepO_/view?usp=sharing).
-
-## Integrations
-
-Integrations enable upgraded or additional functionality for Next.js Commerce
-
-- [Orama](https://github.com/oramasearch/nextjs-commerce) ([Demo](https://vercel-commerce.oramasearch.com/))
-
-  - Upgrades search to include typeahead with dynamic re-rendering, vector-based similarity search, and JS-based configuration.
-  - Search runs entirely in the browser for smaller catalogs or on a CDN for larger.
-
-- [React Bricks](https://github.com/ReactBricks/nextjs-commerce-rb) ([Demo](https://nextjs-commerce.reactbricks.com/))
-  - Edit pages, product details, and footer content visually using [React Bricks](https://www.reactbricks.com) visual headless CMS.
-
-## Running locally
-
-You will need to use the environment variables [defined in `.env.example`](.env.example) to run Next.js Commerce. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/concepts/projects/environment-variables) for this, but a `.env` file is all that is necessary.
-
-> Note: You should not commit your `.env` file or it will expose secrets that will allow others to control your Shopify store.
-
-1. Install Vercel CLI: `npm i -g vercel`
-2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
-3. Download your environment variables: `vercel env pull`
+## 本地运行
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Your app should now be running on [localhost:3000](http://localhost:3000/).
+默认地址为 `http://localhost:3000`。复制 `.env.example` 为本地环境文件并按需配置站点名称、域名、WhatsApp 和支持邮箱；不要提交真实密钥。
 
-<details>
-  <summary>Expand if you work at Vercel and want to run locally and / or contribute</summary>
+## B2B 路径
 
-1. Run `vc link`.
-1. Select the `Vercel Solutions` scope.
-1. Connect to the existing `commerce-shopify` project.
-1. Run `vc env pull` to get environment variables.
-1. Run `pnpm dev` to ensure everything is working correctly.
-</details>
+- `/search`：产品目录，统一显示 `Wholesale pricing by quote`。
+- `/product/[handle]`：商品详情，提供报价、样品与 MOQ 三类询盘入口。
+- `/pulse-oximeter-wholesale`：批发采购落地页。
+- `/offer/[slug]`：产品 × 国家 × 买家类型的有限个性化落地页。
+- `/go/whatsapp`：内部 WhatsApp 跳转和可选 CRM 归因。
+- `/checkout` 与 `/checkout/success`：保留旧链接兼容，但只重定向到批发询盘页，不渲染结账或付款。
 
-## Vercel, Next.js Commerce, and Shopify Integration Guide
+Offer 的规范格式是：
 
-You can use this comprehensive [integration guide](https://vercel.com/docs/integrations/ecommerce/shopify) with step-by-step instructions on how to configure Shopify as a headless CMS using Next.js Commerce as your headless Shopify storefront on Vercel.
+```text
+/offer/{product-handle}-{known-country}-{known-buyer-type}
+```
+
+未知组合返回 404；合法但顺序不规范或省略维度的旧链接会永久重定向到唯一 canonical。只有 `lib/offer.ts` 中选定的有限组合进入 sitemap，其余合法个性化页为 `noindex,follow`。
+
+## CRM 追踪安全
+
+跨站事件默认关闭。启用时必须同时配置：
+
+```bash
+CRM_TRACKING_ENDPOINT="https://crm.example.com/api/tracking"
+CRM_TRACKING_ALLOWED_ORIGINS="https://crm.example.com"
+CRM_TRACKING_TOKEN="replace-me"
+```
+
+- 生产环境只接受 HTTPS endpoint。
+- HTTP 只允许开发环境的 loopback 地址，并且不会附带 bearer token。
+- endpoint origin 必须出现在 allowlist 中；重定向和非 2xx 响应都视为投递失败。
+- 追踪失败不会阻断买家跳转 WhatsApp，也不会在日志中输出 token 或事件详情。
+
+## 验证
+
+```bash
+pnpm test
+pnpm exec tsc --noEmit
+pnpm build
+```
+
+`pnpm test` 包含格式检查与 B2B 路径安全契约回归。

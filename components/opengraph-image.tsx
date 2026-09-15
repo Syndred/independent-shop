@@ -1,32 +1,44 @@
 import { ImageResponse } from "next/og";
-import LogoIcon from "./icons/logo";
 import { join } from "path";
 import { readFile } from "fs/promises";
+import { siteConfig } from "lib/site-config";
 
-export type Props = {
-  title?: string;
-};
+export type Props = { title?: string };
 
 export default async function OpengraphImage(
   props?: Props,
 ): Promise<ImageResponse> {
-  const { title } = {
-    ...{
-      title: process.env.SITE_NAME || "Health Home Wholesale",
-    },
-    ...props,
-  };
-
   const file = await readFile(join(process.cwd(), "./fonts/Inter-Bold.ttf"));
-  const font = Uint8Array.from(file).buffer;
-
   return new ImageResponse(
     (
-      <div tw="flex h-full w-full flex-col items-center justify-center bg-black">
-        <div tw="flex flex-none items-center justify-center border border-neutral-700 h-[160px] w-[160px] rounded-3xl">
-          <LogoIcon width="64" height="58" fill="white" />
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          height: "100%",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          background: "#f8f8f4",
+          color: "#285447",
+          padding: "64px",
+        }}
+      >
+        <div style={{ display: "flex", fontSize: 26 }}>
+          {siteConfig.name} · Shenzhen
         </div>
-        <p tw="mt-12 text-6xl font-bold text-white">{title}</p>
+        <div
+          style={{
+            display: "flex",
+            fontSize: 58,
+            lineHeight: 1.15,
+            maxWidth: 1040,
+          }}
+        >
+          {props?.title || "Home health devices. Wholesale sourcing."}
+        </div>
+        <div style={{ display: "flex", fontSize: 24, color: "#53685f" }}>
+          Product catalog · Samples & MOQ by inquiry · Request a quote
+        </div>
       </div>
     ),
     {
@@ -35,7 +47,7 @@ export default async function OpengraphImage(
       fonts: [
         {
           name: "Inter",
-          data: font,
+          data: Uint8Array.from(file).buffer,
           style: "normal",
           weight: 700,
         },

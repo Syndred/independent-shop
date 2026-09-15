@@ -26,6 +26,20 @@ test("public shopping surfaces expose quotation CTAs, not cart or fixed prices",
   assert.match(source, /Ask MOQ/);
 });
 
+test("homepage includes the complete original supplier photo library", async () => {
+  const homepage = await readFile(
+    new URL("../app/page.tsx", import.meta.url),
+    "utf8",
+  );
+  assert.match(homepage, /NebulizerPhotoRange/);
+  const photoManifest = await readFile(
+    new URL("../lib/data/product-images.ts", import.meta.url),
+    "utf8",
+  );
+  assert.match(photoManifest, /"detail\.jpg"/);
+  assert.match(photoManifest, /"新对话 \(1\)\.png"/);
+});
+
 test("checkout routes cannot render a payment flow", async () => {
   const checkout = await read("app/checkout/page.tsx");
   const success = await read("app/checkout/success/page.tsx");

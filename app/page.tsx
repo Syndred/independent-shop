@@ -1,6 +1,7 @@
 import Footer from "components/layout/footer";
 import { LumiereProductCard } from "components/product/lumiere-product-card";
 import { QuoteBand } from "components/b2b/quote-band";
+import { NebulizerPhotoRange } from "components/b2b/nebulizer-photo-range";
 import { products } from "lib/data/products";
 import { collections } from "lib/data/collections";
 import { baseUrl } from "lib/utils";
@@ -104,6 +105,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      <div className="container-site section-pad pb-14">
+        <NebulizerPhotoRange />
+      </div>
       <section className="container-site section-pad grid gap-8 py-10 md:grid-cols-3">
         {[
           {

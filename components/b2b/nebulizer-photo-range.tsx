@@ -10,10 +10,12 @@ export function NebulizerPhotoRange() {
       id="supplier-photos"
       className="mt-14 border-t border-border pt-10"
     >
-      <h2 className="text-3xl">Explore the nebulizer range</h2>
+      <h2 className="text-3xl">All original supplier product photos</h2>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-ink-muted">
-        Browse supplier catalog photos and color options. Include the design you
-        prefer in your inquiry so we can confirm the model and configuration.
+        Browse all 50 original images from the four supplied product folders,
+        including main images, color options and detail pages. Include the
+        design you prefer in your inquiry so we can confirm the model and
+        configuration.
       </p>
       <div className="mt-7 grid gap-6 md:grid-cols-2">
         {nebulizerPhotos.map((group) => (

@@ -1,17 +1,10 @@
 import Footer from "components/layout/footer";
-import { LumiereProductCard } from "components/product/lumiere-product-card";
 import { QuoteBand } from "components/b2b/quote-band";
 import { NebulizerPhotoRange } from "components/b2b/nebulizer-photo-range";
 import { products } from "lib/data/products";
 import { collections } from "lib/data/collections";
 import { baseUrl } from "lib/utils";
-import {
-  ArrowUpRight,
-  Package,
-  ClipboardCheck,
-  Building2,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowUpRight, Package, ClipboardCheck, Building2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { nebulizerPhotos } from "lib/data/product-images";
@@ -147,19 +140,51 @@ export default function HomePage() {
               The product catalog
             </p>
             <h2 className="text-3xl md:text-4xl">
-              A focused range for your next order.
+              Six sourcing lines, clearly separated.
             </h2>
           </div>
-          <Link
-            href="/search"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
-          >
-            View catalog <ArrowRight size={17} aria-hidden="true" />
-          </Link>
         </div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((product) => (
-            <LumiereProductCard key={product.handle} product={product} />
+        <div className="grid gap-5 md:grid-cols-3">
+          {collections.slice(1).map((category, index) => (
+            <article
+              key={category.handle}
+              className="rounded-xl border border-border bg-card p-6"
+            >
+              <div className="flex items-center justify-between gap-4 border-b border-border pb-5">
+                <span className="text-xs text-ink-muted">0{index + 1}</span>
+                <Link
+                  href={category.path}
+                  className="text-xs font-semibold uppercase tracking-widest text-primary"
+                >
+                  View category
+                </Link>
+              </div>
+              <h3 className="mt-6 text-2xl">{category.title}</h3>
+              <ul className="mt-5 divide-y divide-border">
+                {products
+                  .filter((product) => product.category === category.handle)
+                  .map((product) => (
+                    <li key={product.handle}>
+                      <Link
+                        href={`/product/${product.handle}`}
+                        className="flex min-h-14 items-center justify-between gap-4 py-3 text-sm font-semibold hover:text-primary"
+                      >
+                        {product.title}
+                        <ArrowUpRight
+                          size={16}
+                          className="shrink-0"
+                          aria-hidden="true"
+                        />
+                      </Link>
+                    </li>
+                  ))}
+              </ul>
+              <p className="mt-5 text-xs leading-5 text-ink-muted">
+                {category.handle === "mesh-nebulizers"
+                  ? "Original supplier photos are shown above."
+                  : "Current product photos will be added after supplier matching."}
+              </p>
+            </article>
           ))}
         </div>
       </section>

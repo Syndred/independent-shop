@@ -32,6 +32,7 @@ test("homepage includes the complete original supplier photo library", async () 
     "utf8",
   );
   assert.match(homepage, /NebulizerPhotoRange/);
+  assert.doesNotMatch(homepage, /LumiereProductCard/);
   const photoManifest = await readFile(
     new URL("../lib/data/product-images.ts", import.meta.url),
     "utf8",

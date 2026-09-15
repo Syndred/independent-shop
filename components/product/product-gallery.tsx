@@ -4,6 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import type { ProductMedia } from "lib/shopify/types";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -113,11 +114,12 @@ export function ProductGallery({ media }: { media: ProductMedia }) {
                     : "border-neutral-200 hover:border-accent/40",
                 )}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={image.url}
                   alt={image.altText}
-                  loading="lazy"
+                  width={64}
+                  height={64}
+                  loading="eager"
                   className="h-full w-full object-contain"
                 />
               </button>

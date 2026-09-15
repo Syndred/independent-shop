@@ -14,6 +14,7 @@ assert.ok(
 const forbidden =
   /Direct Manufacturer|Ships to 50\+|trusted.{0,20}worldwide|Add to Cart|Thank you for subscribing|ZS102|ZS103/i;
 const localLinks = new Set();
+const assets = new Set();
 for (const url of urls) {
   const pathname = new URL(url).pathname;
   const response = await fetch(`${origin}${pathname}`);
@@ -57,12 +58,21 @@ for (const url of urls) {
     )
       localLinks.add(href.split("#")[0]);
   }
+  for (const match of html.matchAll(/(?:src|href)="(\/_next\/static\/[^"]+)"/g))
+    assets.add(match[1]);
   checked.push({
     path: pathname,
     status: response.status,
     canonical,
     schemas: schemas.map((s) => s["@type"]),
   });
+}
+for (const path of assets) {
+  const response = await fetch(origin + path);
+  assert.equal(response.status, 200, `Missing deployment asset ${path}`);
+  if (path.endsWith(".css")) {
+    assert.match(await response.text(), /bg-primary/);
+  }
 }
 for (const path of localLinks) {
   const response = await fetch(origin + path);
@@ -95,7 +105,8 @@ const offer = await fetch(origin + "/offer/lk87-pulse-oximeter-usa-wholesaler");
 assert.equal(offer.status, 200);
 assert.match(await offer.text(), /noindex/);
 const wa = await fetch(
-  origin + "/go/whatsapp?product=sy108-mesh-nebulizer&intent=sample",
+  origin +
+    "/go/whatsapp?product=sy108-mesh-nebulizer&intent=sample&source=qa_validation",
   { redirect: "manual" },
 );
 assert.equal(wa.status, 302);
@@ -116,6 +127,7 @@ await writeFile(
       origin,
       pages: checked,
       internalLinks: localLinks.size,
+      staticAssets: assets.size,
       checks: [
         "canonical",
         "sitemap",

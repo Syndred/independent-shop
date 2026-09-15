@@ -13,6 +13,16 @@
 - 菜单：点击打开显示 Headless UI 对话框；Esc 关闭后焦点回到 Open menu 按钮。
 - 修复后再次查看 320px SY108 页面截图，标题与 Request a Quote 位于规格列表前；桌面保留左右两栏。
 
+## 真实生产域名（homehealthwholesale.com）
+
+- Vercel 面板确认 `7e77f353` 为 Production / Ready，部署 ID `6i2ZWCbCjhSJg7CdQXAmk7SVCFC3`。
+- 实际点击首页 LK89 产品，再点击 Request a Quote，RFQ 预选 LK89 Fingertip Pulse Oximeter。
+- 填写 QA Buyer、Example Trading - QA only、Singapore、buyer@example.com、120 和两行需求后，显示 “Request prepared — not sent yet”。预览完整保留产品、数量、联系方式、换行与 & 符号。
+- 可见 WhatsApp 链接为 `wa.me/8615014135583`；邮件草稿收件人为 `sales@homehealthwholesale.com`，两者消息与预览一致。没有点击外部发送。
+- 390px 截图中字段正常，文档宽度实测 390px。验收后撤销尺寸覆盖，浏览器保留真实域名首页。
+- 部署切换中曾见旧 HTML 与新样式版本不一致、一次 React 418；重新加载最终部署后首页完整显示。进一步 HTTP 检查所有 18 个静态资源为 200，CSS 包含当前主题。
+- 在线 HTTP 报告 `production-http.json`：21 个页面、30 个站内链接、18 个静态资源及元数据、跳转、404、六产品接口检查通过。
+
 ## 验收边界
 
 这验证的是实际网页交互、请求内容和发送入口，未发送业务消息，未验证真实邮件/WhatsApp 收件。图片、设备规格和合规资料等待供应商确认。SEO 检查不等于 Google 已收录或取得排名。

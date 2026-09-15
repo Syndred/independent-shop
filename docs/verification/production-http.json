@@ -1,5 +1,5 @@
 {
-  "at": "2026-09-15T07:39:43.687Z",
+  "at": "2026-09-15T08:19:47.902Z",
   "origin": "https://homehealthwholesale.com",
   "pages": [
     {
@@ -129,8 +129,9 @@
       "schemas": ["Organization", "BreadcrumbList"]
     }
   ],
-  "internalLinks": 30,
-  "staticAssets": 18,
+  "internalLinks": 31,
+  "staticAssets": 20,
+  "renderedPhotoUrls": 6,
   "checks": [
     "canonical",
     "sitemap",

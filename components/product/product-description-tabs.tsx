@@ -1,107 +1,39 @@
-"use client";
-
-import clsx from "clsx";
 import type { Product } from "lib/shopify/types";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useState } from "react";
-
-const tabs = [
-  { id: "description", label: "Description" },
-  { id: "specification", label: "Specification" },
-] as const;
-
+import Link from "next/link";
 export function ProductDescriptionTabs({ product }: { product: Product }) {
-  const [activeTab, setActiveTab] =
-    useState<(typeof tabs)[number]["id"]>("description");
-  const reduce = useReducedMotion();
-
   return (
-    <section>
-      <div className="flex gap-1 border-b border-border">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            onClick={() => setActiveTab(tab.id)}
-            className={clsx(
-              "relative px-5 py-3 text-sm font-medium transition",
-              activeTab === tab.id
-                ? "text-foreground"
-                : "text-muted-foreground hover:text-foreground",
-            )}
-          >
-            {tab.label}
-            {activeTab === tab.id ? (
-              <motion.span
-                layoutId="product-tab-indicator"
-                className="absolute inset-x-0 -bottom-px h-0.5 bg-accent"
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              />
-            ) : null}
-          </button>
+    <section className="mt-8">
+      <h2 className="text-2xl">Product details</h2>
+      <dl className="mt-5 divide-y divide-border">
+        {[
+          ["Product type", product.format || product.title],
+          ["Model", product.model || "Exact model: please confirm by inquiry"],
+          ["Manufacturer", "Please confirm by inquiry"],
+          ["MOQ & sample cost", "Please confirm by inquiry"],
+          ["OEM / ODM", "Feasibility and MOQ confirmed by inquiry"],
+          ["Packaging, lead time & warranty", "Please confirm by inquiry"],
+          [
+            "Certificates & test reports",
+            "Not verified; request model-specific documents",
+          ],
+        ].map(([label, value]) => (
+          <div key={label} className="grid gap-2 py-4 sm:grid-cols-2">
+            <dt className="text-sm text-ink-muted">{label}</dt>
+            <dd className="text-sm font-medium">{value}</dd>
+          </div>
         ))}
-      </div>
-
-      <div className="py-8">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? undefined : { opacity: 0, y: -8 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {activeTab === "description" ? (
-              <div className="space-y-8">
-                {product.media.detail ? (
-                  <div className="border border-border bg-card p-4 sm:p-6">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={product.media.detail.url}
-                      alt={product.media.detail.altText}
-                      className="mx-auto w-full h-auto max-w-full object-contain"
-                    />
-                  </div>
-                ) : null}
-                <div
-                  className="prose prose-neutral max-w-none text-sm prose-p:text-muted-foreground"
-                  dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-                />
-              </div>
-            ) : (
-              <dl className="grid gap-4 sm:grid-cols-2">
-                {[
-                  { label: "Product", value: product.title },
-                  {
-                    label: "SKU options",
-                    value: product.variants.map((v) => v.sku).join(", "),
-                  },
-                  {
-                    label: "Main images",
-                    value: String(product.media.main.length),
-                  },
-                  {
-                    label: "Style variants",
-                    value: String(product.media.sku.length),
-                  },
-                ].map((spec) => (
-                  <div
-                    key={spec.label}
-                    className="border border-border bg-card p-5"
-                  >
-                    <dt className="text-sm text-muted-foreground">
-                      {spec.label}
-                    </dt>
-                    <dd className="mt-2 text-base font-medium text-foreground">
-                      {spec.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </div>
+      </dl>
+      <h2 className="mt-9 text-2xl">Confirm with your quotation</h2>
+      <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-6 text-ink-muted">
+        {product.confirmationItems?.map((item) => <li key={item}>{item}</li>)}
+      </ul>
+      <p className="mt-6 text-sm leading-6 text-ink-muted">
+        Product identity is based on the supplied 1688 catalog. Current model
+        photos and specifications are awaiting confirmation.{" "}
+        <Link className="text-primary underline" href="/quality-compliance">
+          Review our documentation checklist.
+        </Link>
+      </p>
     </section>
   );
 }

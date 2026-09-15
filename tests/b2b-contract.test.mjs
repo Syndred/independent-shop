@@ -57,20 +57,18 @@ test("CRM tracking is HTTPS and allowlist gated", async () => {
 test("public copy does not promise unverified stock", async () => {
   const search = await read("app/search/page.tsx");
   assert.doesNotMatch(search, /ready to ship|in stock/i);
-  assert.match(search, /availability is confirmed with each quote/i);
+  assert.match(
+    search.replace(/\s+/g, " "),
+    /availability is confirmed with each quote/i,
+  );
 });
 
-test("offer routes reject unknown suffixes and expose a finite sitemap set", async () => {
+test("personalized offers are excluded from search indexing", async () => {
   const offer = await read("lib/offer.ts");
   const page = await read("app/offer/[slug]/page.tsx");
   const sitemap = await read("app/sitemap.ts");
-  const middleware = await read("middleware.ts");
-
   assert.match(offer, /if \(!valid\) return undefined/);
-  assert.match(offer, /const indexedContexts = \[/);
-  assert.match(page, /permanentRedirect\(`\/offer\/\$\{offer\.slug\}`\)/);
-  assert.match(page, /notFound\(\)/);
-  assert.match(sitemap, /indexedOfferSlugs\(\)/);
-  assert.match(middleware, /status: 404/);
-  assert.match(middleware, /NextResponse\.redirect\(canonical, 308\)/);
+  assert.match(offer, /return false/);
+  assert.match(page, /index: false/);
+  assert.doesNotMatch(sitemap, /offer/);
 });

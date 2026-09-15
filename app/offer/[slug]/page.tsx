@@ -19,7 +19,7 @@ type OfferPageProps = {
 };
 
 // Resolve validity and canonical redirects before any response body is streamed.
-export const experimental_ppr = false;
+
 export const dynamic = "force-dynamic";
 
 function firstParam(
@@ -117,8 +117,8 @@ export default async function OfferPage({
   return (
     <>
       <JsonLd data={breadcrumb} />
-      <main className="bg-background">
-        <section className="section-pad border-b border-border pt-28 pb-14 md:pt-36 md:pb-20">
+      <div className="bg-background">
+        <section className="section-pad border-b border-border pt-12 pb-14 md:pt-16 md:pb-20">
           <div className="container-site">
             <nav
               aria-label="Breadcrumb"
@@ -330,7 +330,7 @@ export default async function OfferPage({
             </p>
           </div>
         </section>
-      </main>
+      </div>
       <Footer />
     </>
   );

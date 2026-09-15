@@ -200,23 +200,12 @@ export function resolveOffer(slug: string): OfferContext | undefined {
   };
 }
 
-const indexedContexts = [
-  ["global", "distributor"],
-  ["uae", "distributor"],
-  ["usa", "wholesaler"],
-] as const;
-
-/** A deliberately finite set; other valid personalized offers remain noindex. */
+/** Personalized sales links are retained for CRM continuity, never indexed. */
 export function indexedOfferSlugs(): string[] {
-  return products.flatMap((product) =>
-    indexedContexts.map(
-      ([country, buyerType]) => `${product.handle}-${country}-${buyerType}`,
-    ),
-  );
+  return [];
 }
-
-export function isIndexedOffer(slug: string): boolean {
-  return indexedOfferSlugs().includes(slug);
+export function isIndexedOffer(_slug: string): boolean {
+  return false;
 }
 
 export function supportedOfferCountries(): OfferCountry[] {

@@ -1,67 +1,73 @@
 import Footer from "components/layout/footer";
-import { FadeIn } from "components/motion/fade-in";
-import { AnimatedProductGrid } from "components/motion/stagger-grid";
+import { Breadcrumbs } from "components/b2b/breadcrumbs";
+import { LumiereProductCard } from "components/product/lumiere-product-card";
 import { CollectionPills } from "components/search/collection-pills";
 import {
-  getCollection,
-  getCollectionProducts,
-  getCollections,
-} from "lib/shopify";
-import type { Metadata } from "next";
+  collections,
+  getCollectionProductsByHandle,
+} from "lib/data/collections";
+import { baseUrl } from "lib/utils";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-
-export async function generateMetadata(props: {
-  params: Promise<{ collection: string }>;
-}): Promise<Metadata> {
-  const params = await props.params;
-  const collection = await getCollection(params.collection);
-
-  if (!collection) return notFound();
-
-  return {
-    title: collection.seo?.title || collection.title,
-    description:
-      collection.seo?.description ||
-      collection.description ||
-      `${collection.title} products`,
-  };
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return collections
+    .filter((c) => c.handle)
+    .map((c) => ({ collection: c.handle }));
 }
-
-export default async function CategoryPage(props: {
+export async function generateMetadata({
+  params,
+}: {
   params: Promise<{ collection: string }>;
 }) {
-  const params = await props.params;
-  const collection = await getCollection(params.collection);
-  const products = await getCollectionProducts({
-    collection: params.collection,
-  });
-  const collections = await getCollections();
-
-  if (!collection) return notFound();
-
+  const { collection: handle } = await params;
+  const c = collections.find((c) => c.handle === handle);
+  if (!c) notFound();
+  return {
+    title: c.seo.title,
+    description: c.description,
+    alternates: { canonical: `${baseUrl}${c.path}` },
+  };
+}
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<{ collection: string }>;
+}) {
+  const { collection: handle } = await params;
+  const c = collections.find((c) => c.handle === handle);
+  if (!c) notFound();
+  const guides: Record<string, string> = {
+    "pulse-oximeters": "/pulse-oximeter-wholesale",
+    "mesh-nebulizers": "/mesh-nebulizer-supplier",
+    "blood-pressure-monitors": "/blood-pressure-monitor-wholesale",
+  };
   return (
     <>
-      <div className="container-site section-pad pb-8 md:pb-10">
-        <FadeIn>
-          <h1 className="text-3xl font-medium tracking-tight text-ink md:text-4xl">
-            {collection.title}
-          </h1>
-          {collection.description ? (
-            <p className="mt-3 max-w-xl text-ink-muted">
-              {collection.description}
-            </p>
-          ) : null}
-        </FadeIn>
-
+      <div className="container-site section-pad py-12 md:py-16">
+        <Breadcrumbs
+          items={[
+            { name: "Products", path: "/search" },
+            { name: c.title, path: c.path },
+          ]}
+        />
+        <h1 className="text-4xl md:text-5xl">{c.title}</h1>
+        <p className="mt-5 max-w-2xl leading-7 text-ink-muted">
+          {c.description}
+        </p>
+        <Link
+          href={guides[c.handle]!}
+          className="mt-5 inline-block font-semibold text-primary underline underline-offset-4"
+        >
+          Read the wholesale buying guide
+        </Link>
         <div className="mt-8">
-          <CollectionPills
-            collections={collections}
-            activePath={collection.path}
-          />
+          <CollectionPills collections={collections} activePath={c.path} />
         </div>
-
-        <div className="mt-10">
-          <AnimatedProductGrid products={products} />
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {getCollectionProductsByHandle(c.handle).map((p) => (
+            <LumiereProductCard key={p.handle} product={p} />
+          ))}
         </div>
       </div>
       <Footer />

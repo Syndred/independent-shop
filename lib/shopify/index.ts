@@ -86,9 +86,9 @@ export async function getMenu(): Promise<Menu[]> {
   return menu;
 }
 
-export async function getPage(handle: string): Promise<Page> {
+export async function getPage(handle: string): Promise<Page | undefined> {
   const page = pages.find((item) => item.handle === handle);
-  if (!page) throw new Error(`Page not found: ${handle}`);
+
   return page;
 }
 

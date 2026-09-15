@@ -1,13 +1,13 @@
 import OpengraphImage from "components/opengraph-image";
-import { getCollection } from "lib/shopify";
-
+import { collections } from "lib/data/collections";
+import { notFound } from "next/navigation";
 export default async function Image({
   params,
 }: {
-  params: { collection: string };
+  params: Promise<{ collection: string }>;
 }) {
-  const collection = await getCollection(params.collection);
-  const title = collection?.seo?.title || collection?.title;
-
-  return await OpengraphImage({ title });
+  const { collection: handle } = await params;
+  const collection = collections.find((c) => c.handle === handle);
+  if (!collection) notFound();
+  return OpengraphImage({ title: collection.title });
 }

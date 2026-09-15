@@ -1,39 +1,44 @@
 import type { Collection } from "lib/shopify/types";
 import { products } from "./products";
-
 export const collections: Collection[] = [
   {
     handle: "",
-    title: "All",
-    description: "All products",
-    seo: { title: "All", description: "All products" },
+    title: "All products",
+    description:
+      "Six home health product lines for wholesale sourcing. Request current MOQ, samples and quotations.",
     path: "/search",
-    updatedAt: new Date().toISOString(),
   },
   {
-    handle: "health-care",
-    title: "Health & Care",
-    description: "Pulse oximeters for home and family care",
-    seo: { title: "Health & Care", description: "Health products" },
-    path: "/search/health-care",
-    updatedAt: new Date().toISOString(),
+    handle: "blood-pressure-monitors",
+    title: "Blood Pressure Monitors",
+    description:
+      "Compare upper-arm and wrist blood pressure monitor sourcing options. Confirm cuff sizes, exact models and documentation before ordering.",
+    path: "/search/blood-pressure-monitors",
   },
   {
-    handle: "seasonal-hot-deals",
-    title: "Seasonal Hot Deals",
-    description: "Limited-time offers",
-    seo: { title: "Seasonal Hot Deals", description: "Hot deals" },
-    path: "/search/seasonal-hot-deals",
-    updatedAt: new Date().toISOString(),
+    handle: "pulse-oximeters",
+    title: "Pulse Oximeters",
+    description:
+      "Compare LK87 and LK89 fingertip pulse oximeters for wholesale sourcing. Confirm display configuration, intended users and documents by quotation.",
+    path: "/search/pulse-oximeters",
   },
-];
-
+  {
+    handle: "mesh-nebulizers",
+    title: "Mesh Nebulizers",
+    description:
+      "Source SY108 and ZS101 handheld mesh nebulizers. Request specification sheets, accessories, sample costs and destination terms.",
+    path: "/search/mesh-nebulizers",
+  },
+].map((item) => ({
+  ...item,
+  seo: {
+    title: `${item.title} Wholesale Catalog`,
+    description: item.description,
+  },
+  updatedAt: "2026-09-15T00:00:00.000Z",
+}));
 export function getCollectionProductsByHandle(collection: string) {
-  if (collection === "health-care") {
-    return products.filter((product) => product.tags.includes("health"));
-  }
-  if (collection === "seasonal-hot-deals") {
-    return products.filter((product) => product.tags.includes("seasonal"));
-  }
-  return products;
+  return collection
+    ? products.filter((product) => product.category === collection)
+    : products;
 }

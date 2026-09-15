@@ -1,173 +1,94 @@
 "use client";
-
-import { siteConfig } from "lib/site-config";
-import Image from "next/image";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+import { menu } from "lib/data/menu";
 import Link from "next/link";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-
-const navItems = [
-  { title: "Products", path: "/search" },
-  { title: "Wholesale", path: "/pulse-oximeter-wholesale" },
-  { title: "Health & Care", path: "/search/health-care" },
-  { title: "Request a Quote", path: "/contact" },
-  { title: "About", path: "/#brand-story" },
-];
-
 export function NavbarShell() {
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const onHomeHero = pathname === "/";
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const onLightHero = onHomeHero && !scrolled && !menuOpen;
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [menuOpen]);
-
-  const linkClass = onLightHero
-    ? "whitespace-nowrap text-xs font-semibold uppercase tracking-[0.14em] text-white/90 transition hover:text-white lg:text-sm"
-    : "whitespace-nowrap text-xs font-semibold uppercase tracking-[0.14em] text-foreground/80 transition hover:text-primary lg:text-sm";
-
-  const iconClass = onLightHero
-    ? "text-white/90 transition hover:text-white"
-    : "text-foreground/80 transition hover:text-primary";
-
-  const menuButtonClass = onLightHero
-    ? "text-white md:hidden"
-    : "text-foreground md:hidden";
-
   return (
-    <header
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-        scrolled || menuOpen
-          ? "border-b border-border bg-background/95 py-4 backdrop-blur-md"
-          : onLightHero
-            ? "bg-black/20 py-5 backdrop-blur-[2px]"
-            : "border-b border-transparent bg-background/80 py-5 backdrop-blur-sm"
-      }`}
-    >
-      <div className="container-site section-pad">
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex min-w-0 flex-1 items-center gap-3 md:flex-none">
-            <button
-              type="button"
-              className={menuButtonClass}
-              aria-label="Toggle menu"
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              {menuOpen ? (
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <path d="M6 6l12 12M18 6L6 18" />
-                </svg>
-              ) : (
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <path d="M4 7h16M4 12h16M4 17h16" />
-                </svg>
-              )}
-            </button>
+    <header className="border-b border-border bg-background">
+      <div className="container-site section-pad flex min-h-24 items-center justify-between gap-4">
+        <Link
+          href="/"
+          aria-label="Health Home Wholesale home"
+          className="text-primary"
+        >
+          <span className="block font-serif text-xl font-semibold leading-tight">
+            Health Home
+          </span>
+          <span className="block text-[10px] font-semibold uppercase tracking-[0.26em]">
+            Wholesale · Shenzhen
+          </span>
+        </Link>
+        <nav
+          aria-label="Main navigation"
+          className="hidden items-center gap-6 lg:flex"
+        >
+          {menu.map((item) => (
             <Link
-              href="/"
-              className="inline-flex shrink-0 items-center"
-              aria-label={`${siteConfig.name} home`}
-            >
-              <Image
-                src={
-                  onLightHero
-                    ? "/brand/health-home-wholesale-logo-light.svg"
-                    : "/brand/health-home-wholesale-logo.svg"
-                }
-                alt={siteConfig.name}
-                width={152}
-                height={40}
-                priority
-                className="h-9 w-auto"
-              />
-            </Link>
-          </div>
-
-          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-4 md:flex lg:gap-7">
-            {navItems.map((item) => (
-              <Link key={item.title} href={item.path} className={linkClass}>
-                {item.title}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex flex-1 items-center justify-end gap-4 md:flex-none md:gap-6">
-            <Link
-              href="/search"
-              className={`hidden sm:block ${iconClass}`}
-              aria-label="Search"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <circle cx="11" cy="11" r="7" />
-                <path d="M20 20l-3-3" />
-              </svg>
-            </Link>
-            <Link
-              href="/contact"
-              className={`hidden border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition sm:inline-flex ${
-                onLightHero
-                  ? "border-white/70 text-white hover:border-white"
-                  : "border-foreground/70 text-foreground hover:border-primary hover:text-primary"
-              }`}
-            >
-              Get a Quote
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      <div
-        className={`fixed inset-0 z-40 bg-background pt-24 transition-transform duration-300 ease-in-out md:hidden ${
-          menuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <nav className="container-site section-pad flex flex-col gap-6">
-          {navItems.map((item) => (
-            <Link
-              key={item.title}
+              key={item.path}
               href={item.path}
-              className="text-lg uppercase tracking-wider text-foreground"
-              onClick={() => setMenuOpen(false)}
+              aria-current={pathname === item.path ? "page" : undefined}
+              className="text-sm hover:text-primary"
             >
               {item.title}
             </Link>
           ))}
         </nav>
+        <div className="flex items-center gap-2">
+          <Link
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-primary px-3 text-xs font-semibold text-white sm:px-5 sm:text-sm"
+            href="/contact"
+          >
+            Request quote{" "}
+            <ArrowUpRight
+              className="hidden sm:block"
+              size={16}
+              aria-hidden="true"
+            />
+          </Link>
+          <button
+            className="flex size-11 items-center justify-center lg:hidden"
+            aria-label="Open menu"
+            aria-expanded={open}
+            onClick={() => setOpen(true)}
+          >
+            <Menu aria-hidden="true" />
+          </button>
+        </div>
       </div>
+      <Dialog open={open} onClose={setOpen} className="relative z-50">
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+        <DialogPanel className="fixed inset-y-0 right-0 w-full max-w-sm overflow-y-auto bg-background p-6">
+          <div className="flex items-center justify-between">
+            <DialogTitle className="font-serif text-2xl">Explore</DialogTitle>
+            <button
+              aria-label="Close menu"
+              className="flex size-11 items-center justify-center"
+              onClick={() => setOpen(false)}
+            >
+              <X aria-hidden="true" />
+            </button>
+          </div>
+          <nav aria-label="Mobile navigation" className="mt-10 grid gap-2">
+            {[...menu, { title: "Request a Quote", path: "/contact" }].map(
+              (item) => (
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  onClick={() => setOpen(false)}
+                  className="border-b border-border py-4 text-lg"
+                >
+                  {item.title}
+                </Link>
+              ),
+            )}
+          </nav>
+        </DialogPanel>
+      </Dialog>
     </header>
   );
 }

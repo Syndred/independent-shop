@@ -9,10 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 const configuredBaseUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
   process.env.SITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "https://homehealthwholesale.com");
-
+  "https://homehealthwholesale.com";
 export const baseUrl = configuredBaseUrl.replace(/\/$/, "");
 
 export const createUrl = (

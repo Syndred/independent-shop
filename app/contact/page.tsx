@@ -1,110 +1,86 @@
 import Footer from "components/layout/footer";
-import { siteConfig, whatsappOrderUrl } from "lib/site-config";
+import { Breadcrumbs } from "components/b2b/breadcrumbs";
+import { RfqForm } from "components/b2b/rfq-form";
+import { products } from "lib/data/products";
+import { siteConfig } from "lib/site-config";
 import { baseUrl } from "lib/utils";
-import { Mail, MessageCircle, PackageCheck } from "lucide-react";
-import type { Metadata } from "next";
-import Link from "next/link";
-
-const contactUrl = `${baseUrl}/contact/`;
-
-export const metadata: Metadata = {
-  title: "Request Wholesale Quote",
+export const metadata = {
+  title: "Request a Wholesale Quote",
   description:
-    "Contact Health Home Wholesale for pulse oximeter bulk pricing, catalog details, MOQ, shipping, OEM packaging, and wholesale sourcing support.",
-  alternates: {
-    canonical: contactUrl,
-  },
+    "Send your company, destination, product, quantity and requirements. Prepare a wholesale RFQ for blood pressure monitors, pulse oximeters or mesh nebulizers.",
+  alternates: { canonical: `${baseUrl}/contact` },
 };
-
-const quoteMessage = `Hi, I'd like to request a wholesale quote.
-
-Product name:
-My country:
-Estimated order quantity:
-OEM/private label needed:`;
-
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ product?: string }>;
+}) {
+  const query = await searchParams;
+  const selected = products.some((p) => p.handle === query.product)
+    ? query.product!
+    : "";
   return (
     <>
-      <main className="section-pad bg-background pt-28 pb-16 md:pt-36 md:pb-24">
-        <div className="container-site">
-          <nav
-            aria-label="Breadcrumb"
-            className="mb-8 flex items-center gap-2 text-xs uppercase tracking-widest text-ink-muted"
-          >
-            <Link href="/" className="transition hover:text-foreground">
-              Home
-            </Link>
-            <span>/</span>
-            <span className="text-foreground">Request Quote</span>
-          </nav>
-
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(360px,1fr)] lg:items-start">
-            <div>
-              <p className="mb-4 text-sm uppercase tracking-widest text-primary">
-                Wholesale inquiry
-              </p>
-              <h1 className="max-w-3xl text-4xl leading-tight text-foreground md:text-6xl">
-                Request a Wholesale Quote
-              </h1>
-              <p className="mt-6 max-w-2xl text-base leading-8 text-ink-muted md:text-lg">
-                Send your product, destination country, estimated quantity, and
-                OEM requirements. We will reply with suitable catalog options,
-                MOQ, shipping route, and quotation details during business
-                hours.
-              </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+      <div className="container-site section-pad py-12 md:py-16">
+        <Breadcrumbs items={[{ name: "Request a Quote", path: "/contact" }]} />
+        <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr]">
+          <div>
+            <p className="mb-4 text-xs uppercase tracking-widest text-primary">
+              Let's talk sourcing
+            </p>
+            <h1 className="text-4xl leading-tight md:text-5xl">
+              Your next order starts here.
+            </h1>
+            <p className="mt-6 leading-7 text-ink-muted">
+              Share your product, destination and planned quantity. Ask about
+              standard configurations, low MOQ options, samples, OEM/ODM
+              feasibility and the documents you need.
+            </p>
+            <div className="mt-8 rounded-xl bg-secondary/50 p-6">
+              <h2 className="text-xl">Prefer to contact us directly?</h2>
+              <div className="mt-5 grid gap-4 text-sm">
                 <a
-                  href={whatsappOrderUrl(quoteMessage)}
-                  className="inline-flex items-center justify-center gap-2 bg-[#1f8f4d] px-6 py-4 text-sm font-semibold uppercase tracking-widest text-white transition hover:bg-[#176f3b]"
+                  className="font-semibold text-primary underline underline-offset-4"
+                  href={`https://wa.me/${siteConfig.whatsappNumber.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <MessageCircle className="size-4" />
-                  WhatsApp Quote
+                  WhatsApp +{siteConfig.whatsappNumber.replace(/\D/g, "")}
                 </a>
                 <a
-                  href={`mailto:${siteConfig.supportEmail}?subject=Wholesale%20Quote%20Request`}
-                  className="inline-flex items-center justify-center gap-2 border border-foreground px-6 py-4 text-sm font-semibold uppercase tracking-widest text-foreground transition hover:border-primary hover:text-primary"
+                  className="break-all font-semibold text-primary underline underline-offset-4"
+                  href={`mailto:${siteConfig.supportEmail}`}
                 >
-                  <Mail className="size-4" />
-                  Email Sales
+                  {siteConfig.supportEmail}
                 </a>
               </div>
+              <p className="mt-5 text-sm leading-6 text-ink-muted">
+                Sales and sourcing inquiries · Shenzhen, China
+              </p>
             </div>
-
-            <section className="border border-border bg-card p-6 md:p-8">
-              <h2 className="text-2xl text-foreground">Quote Checklist</h2>
-              <div className="mt-6 grid gap-4">
-                {[
-                  "Product line or model you need",
-                  "Destination country and shipping preference",
-                  "Estimated order quantity",
-                  "Compliance documents required",
-                  "OEM logo, color, manual, or packaging needs",
-                ].map((item) => (
-                  <div
-                    key={item}
-                    className="flex items-center gap-3 border border-border bg-background p-4 text-sm text-foreground"
-                  >
-                    <PackageCheck className="size-4 shrink-0 text-primary" />
-                    {item}
-                  </div>
-                ))}
-              </div>
-              <p className="mt-6 text-sm leading-7 text-ink-muted">
-                For pulse oximeter wholesale orders, you can also start from the
-                dedicated sourcing page and inquire about a specific product
-                line.
-              </p>
-              <Link
-                href="/pulse-oximeter-wholesale"
-                className="mt-5 inline-flex text-sm font-semibold uppercase tracking-widest text-foreground transition hover:text-primary"
-              >
-                View Pulse Oximeter Wholesale
-              </Link>
-            </section>
+            <h2 className="mt-8 text-xl">What happens next</h2>
+            <ol className="mt-4 list-decimal space-y-3 pl-5 text-sm leading-6 text-ink-muted">
+              <li>Complete the form and review the prepared message.</li>
+              <li>Choose WhatsApp or email and send it in that app.</li>
+              <li>
+                Discuss the exact configuration, current MOQ, sample and
+                quotation terms with sales.
+              </li>
+            </ol>
+          </div>
+          <div>
+            <RfqForm
+              products={products.map((p) => ({
+                handle: p.handle,
+                title: p.title,
+              }))}
+              selectedProduct={selected}
+              email={siteConfig.supportEmail}
+              whatsapp={siteConfig.whatsappNumber}
+            />
           </div>
         </div>
-      </main>
+      </div>
       <Footer />
     </>
   );

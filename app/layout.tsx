@@ -2,17 +2,10 @@ import { MainShell } from "components/layout/main-shell";
 import { Navbar } from "components/layout/navbar";
 import { siteConfig } from "lib/site-config";
 import { baseUrl } from "lib/utils";
-import { Marcellus } from "next/font/google";
+import { JsonLd } from "components/b2b/breadcrumbs";
 import type { ReactNode } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
-
-const marcellus = Marcellus({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-serif",
-  display: "swap",
-});
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
@@ -21,7 +14,7 @@ export const metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description:
-    "Wholesale health devices and sourcing support for clinics, distributors, pharmacies, and retailers worldwide.",
+    "Wholesale sourcing for blood pressure monitors, fingertip pulse oximeters and mesh nebulizers. Request MOQ, samples and current product information.",
   robots: {
     follow: true,
     index: true,
@@ -50,7 +43,8 @@ export default async function RootLayout({
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: siteConfig.companyName,
+    name: siteConfig.name,
+    "@id": `${baseUrl}/#organization`,
     url: baseUrl,
     email: siteConfig.supportEmail,
     contactPoint: {
@@ -62,14 +56,15 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="en" className={marcellus.variable}>
+    <html lang="en">
       <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
-          }}
-        />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-4"
+        >
+          Skip to content
+        </a>
+        <JsonLd data={organizationSchema} />
         <Navbar />
         <MainShell>{children}</MainShell>
         <Toaster closeButton position="bottom-right" />

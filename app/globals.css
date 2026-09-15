@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -10,13 +9,13 @@
 :root {
   --background: hsl(45, 29%, 97%);
   --foreground: hsl(15, 4%, 16%);
-  --card: hsl(45, 29%, 97%);
+  --card: #ffffff;
   --card-foreground: hsl(15, 4%, 16%);
   --popover: hsl(45, 29%, 97%);
   --popover-foreground: hsl(15, 4%, 16%);
-  --primary: hsl(12, 31%, 76%);
+  --primary: #285447;
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(32, 24%, 88%);
+  --secondary: #e5ece5;
   --secondary-foreground: hsl(15, 4%, 16%);
   --muted: hsl(32, 24%, 88%);
   --muted-foreground: hsl(15, 4%, 40%);
@@ -24,9 +23,9 @@
   --accent-foreground: hsl(0, 0%, 100%);
   --destructive: hsl(0, 84%, 60%);
   --destructive-foreground: hsl(0, 0%, 100%);
-  --border: hsl(32, 24%, 88%);
+  --border: #d6ded5;
   --input: hsl(32, 24%, 88%);
-  --ring: hsl(12, 31%, 76%);
+  --ring: #285447;
   --chart-1: hsl(12, 31%, 76%);
   --chart-2: hsl(35, 38%, 64%);
   --chart-3: hsl(32, 24%, 88%);
@@ -41,7 +40,7 @@
   --sidebar-border: hsl(32, 24%, 88%);
   --sidebar-ring: hsl(12, 31%, 76%);
   --font-sans: Helvetica, Arial, sans-serif;
-  --font-serif: Marcellus, Georgia, serif;
+  --font-serif: Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --radius: 0rem;
   --tracking-normal: 0em;
@@ -128,6 +127,8 @@
 
 a,
 input,
+select,
+textarea,
 button {
   @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
 }
@@ -163,5 +164,22 @@ button {
 
   .link-underline {
     @apply border-b border-foreground pb-1 text-sm uppercase tracking-widest transition hover:border-primary hover:text-primary;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #285447;
+  outline-offset: 4px;
+}
+html {
+  scroll-padding-top: 1rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

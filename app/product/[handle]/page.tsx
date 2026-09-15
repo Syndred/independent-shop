@@ -1,137 +1,95 @@
 import Footer from "components/layout/footer";
-import { RevealInView } from "components/motion/fade-in";
-import { AnimatedProductGrid } from "components/motion/stagger-grid";
 import { ProductDescriptionTabs } from "components/product/product-description-tabs";
-import { ProductGallery } from "components/product/product-gallery";
 import { ProductPurchasePanel } from "components/product/product-purchase-panel";
-import { getProduct, getProductRecommendations } from "lib/shopify";
+import { ProductVisual } from "components/b2b/product-visual";
+import { Breadcrumbs, JsonLd } from "components/b2b/breadcrumbs";
+import { LumiereProductCard } from "components/product/lumiere-product-card";
+import { products } from "lib/data/products";
+import { collections } from "lib/data/collections";
 import { baseUrl } from "lib/utils";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
-
-export async function generateMetadata(props: {
+export function generateStaticParams() {
+  return products.map((p) => ({ handle: p.handle }));
+}
+export async function generateMetadata({
+  params,
+}: {
   params: Promise<{ handle: string }>;
 }): Promise<Metadata> {
-  const params = await props.params;
-  const product = await getProduct(params.handle);
-
-  if (!product) return notFound();
-
-  const canonicalUrl = `${baseUrl}/product/${product.handle}`;
-  const featuredImageUrl = product.featuredImage
-    ? new URL(product.featuredImage.url, baseUrl).toString()
-    : undefined;
+  const { handle } = await params;
+  const product = products.find((p) => p.handle === handle);
+  if (!product) notFound();
   return {
-    title: product.seo.title || product.title,
-    description: product.seo.description || product.description,
-    alternates: { canonical: canonicalUrl },
+    title: product.seo.title,
+    description: product.description,
+    alternates: { canonical: `${baseUrl}/product/${product.handle}` },
     openGraph: {
-      title: product.seo.title || product.title,
-      description: product.seo.description || product.description,
-      url: canonicalUrl,
+      title: product.title,
+      description: product.description,
+      url: `${baseUrl}/product/${product.handle}`,
       type: "website",
-      images: featuredImageUrl
-        ? [
-            {
-              url: featuredImageUrl,
-              alt: product.featuredImage.altText || product.title,
-            },
-          ]
-        : undefined,
     },
   };
 }
-
-export default async function ProductPage(props: {
+export default async function ProductPage({
+  params,
+}: {
   params: Promise<{ handle: string }>;
 }) {
-  const params = await props.params;
-  const product = await getProduct(params.handle);
-
-  if (!product) return notFound();
-
-  const relatedProducts = await getProductRecommendations(product.id);
-  const canonicalUrl = `${baseUrl}/product/${product.handle}`;
-  const productImages = product.images.map((image) =>
-    new URL(image.url, baseUrl).toString(),
+  const { handle } = await params;
+  const product = products.find((p) => p.handle === handle);
+  if (!product) notFound();
+  const category = collections.find((c) => c.handle === product.category)!;
+  const related = products.filter(
+    (p) => p.category === product.category && p.handle !== product.handle,
   );
-  const productSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.title,
-    description: product.description,
-    image: productImages,
-    sku: product.variants[0]?.sku,
-    category: "Health and care wholesale product",
-    url: canonicalUrl,
-  };
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: `${baseUrl}/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Products",
-        item: `${baseUrl}/search`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: product.title,
-        item: canonicalUrl,
-      },
-    ],
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: product.title,
+          description: product.description,
+          ...(product.model ? { model: product.model } : {}),
+          category: category.title,
+          url: `${baseUrl}/product/${product.handle}`,
+        }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <div className="container-site section-pad pb-8 md:pb-10">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,380px)] lg:items-start lg:gap-10 xl:gap-14">
-          <div className="min-w-0 lg:col-start-1 lg:row-start-1">
-            <Suspense fallback={null}>
-              <ProductGallery media={product.media} />
-            </Suspense>
-          </div>
-
-          <aside className="min-w-0 lg:sticky lg:top-32 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start">
-            <div className="border border-border bg-card p-6 md:p-8">
-              <Suspense fallback={null}>
-                <ProductPurchasePanel product={product} />
-              </Suspense>
-            </div>
+      <div className="container-site section-pad py-10 md:py-14">
+        <Breadcrumbs
+          items={[
+            { name: "Products", path: "/search" },
+            { name: category.title, path: category.path },
+            { name: product.title, path: `/product/${product.handle}` },
+          ]}
+        />
+        <div className="grid items-start gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
+          <aside className="rounded-xl border border-border bg-card p-6 md:p-8 lg:sticky lg:top-6 lg:col-start-2 lg:row-start-1 lg:row-span-2">
+            <ProductPurchasePanel product={product} />
           </aside>
-
+          <div className="min-w-0 lg:col-start-1 lg:row-start-1">
+            <div className="overflow-hidden rounded-xl border border-border">
+              <ProductVisual product={product} />
+            </div>
+            <p className="mt-3 text-xs leading-5 text-ink-muted">
+              Current product photo and exact configuration to be confirmed. Ask
+              for model-specific images with your inquiry.
+            </p>
+          </div>
           <div className="min-w-0 lg:col-start-1 lg:row-start-2">
             <ProductDescriptionTabs product={product} />
           </div>
         </div>
-
-        {relatedProducts.length ? (
-          <RevealInView className="mt-16 border-t border-border pt-12">
-            <h2 className="font-serif text-xl text-foreground md:text-2xl">
-              You may also like
-            </h2>
-            <div className="mt-8">
-              <AnimatedProductGrid products={relatedProducts} columns={4} />
-            </div>
-          </RevealInView>
-        ) : null}
+        <section className="mt-16 border-t border-border pt-10">
+          <h2 className="mb-6 text-2xl">Compare in this category</h2>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => (
+              <LumiereProductCard key={p.handle} product={p} />
+            ))}
+          </div>
+        </section>
       </div>
       <Footer />
     </>

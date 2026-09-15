@@ -79,6 +79,11 @@ export type Product = Omit<ShopifyProduct, "variants" | "images"> & {
   variants: ProductVariant[];
   images: Image[];
   media: ProductMedia;
+  model?: string | null;
+  category?: string;
+  format?: string;
+  confirmationItems?: string[];
+  photoVerified?: boolean;
 };
 
 export type ProductOption = {

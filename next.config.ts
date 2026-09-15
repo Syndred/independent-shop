@@ -1,21 +1,51 @@
-export default {
-  experimental: {
-    ppr: true,
-    inlineCss: true,
-    useCache: true,
+import type { NextConfig } from "next";
+const config: NextConfig = {
+  images: { formats: ["image/webp"] },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+        ],
+      },
+    ];
   },
-  images: {
-    formats: ["image/avif", "image/webp"],
-    remotePatterns: [
+  async redirects() {
+    return [
       {
-        protocol: "https",
-        hostname: "cdn.shopify.com",
-        pathname: "/s/files/**",
+        source: "/product/premium-pulse-oximeter",
+        destination: "/product/sy108-mesh-nebulizer",
+        permanent: true,
       },
       {
-        protocol: "https",
-        hostname: "images.unsplash.com",
+        source: "/product/kids-pulse-oximeter",
+        destination: "/product/zs101-mesh-nebulizer",
+        permanent: true,
       },
-    ],
+      {
+        source: "/product/mini-speaker",
+        destination: "/search/mesh-nebulizers",
+        permanent: true,
+      },
+      {
+        source: "/product/advanced-pulse-oximeter",
+        destination: "/search/mesh-nebulizers",
+        permanent: true,
+      },
+      {
+        source: "/search/health-care",
+        destination: "/search",
+        permanent: true,
+      },
+      {
+        source: "/search/seasonal-hot-deals",
+        destination: "/search",
+        permanent: true,
+      },
+      { source: "/products", destination: "/search", permanent: true },
+    ];
   },
 };
+export default config;

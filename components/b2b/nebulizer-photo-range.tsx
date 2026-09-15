@@ -35,6 +35,9 @@ export function NebulizerPhotoRange() {
               <ProductGallery media={group.media} />
             </Suspense>
             <h3 className="mt-5 text-xl">{group.title}</h3>
+            <p className="mt-1 text-xs text-ink-muted">
+              {group.media.main.length} original images
+            </p>
             <Link
               href={group.href}
               className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-primary underline underline-offset-4"

@@ -81,7 +81,7 @@ for (const path of assets) {
 }
 assert.ok(
   productPhotos.size >= 4,
-  "Supplier photos must remain visible in rendered pages",
+  "Supplier photo groups must remain visible in server-rendered pages",
 );
 for (const path of productPhotos) {
   const response = await fetch(origin + path);

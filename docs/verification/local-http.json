@@ -1,132 +1,200 @@
 {
-  "at": "2026-09-15T08:17:23.368Z",
+  "at": "2026-09-15T12:06:16.179Z",
   "origin": "http://localhost:3100",
   "pages": [
     {
       "path": "/",
       "status": 200,
       "canonical": "https://homehealthwholesale.com",
-      "schemas": ["Organization"]
+      "schemas": [
+        "Organization"
+      ]
     },
     {
       "path": "/contact",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/contact",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/search",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/search",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/search/blood-pressure-monitors",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/search/blood-pressure-monitors",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/search/pulse-oximeters",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/search/pulse-oximeters",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/search/mesh-nebulizers",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/search/mesh-nebulizers",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/product/upper-arm-blood-pressure-monitor",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/product/upper-arm-blood-pressure-monitor",
-      "schemas": ["Organization", "Product", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "Product",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/product/wrist-blood-pressure-monitor",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/product/wrist-blood-pressure-monitor",
-      "schemas": ["Organization", "Product", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "Product",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/product/lk87-pulse-oximeter",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/product/lk87-pulse-oximeter",
-      "schemas": ["Organization", "Product", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "Product",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/product/lk89-pulse-oximeter",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/product/lk89-pulse-oximeter",
-      "schemas": ["Organization", "Product", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "Product",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/product/sy108-mesh-nebulizer",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/product/sy108-mesh-nebulizer",
-      "schemas": ["Organization", "Product", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "Product",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/product/zs101-mesh-nebulizer",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/product/zs101-mesh-nebulizer",
-      "schemas": ["Organization", "Product", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "Product",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/about",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/about",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/quality-compliance",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/quality-compliance",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/shipping",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/shipping",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/privacy",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/privacy",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/terms",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/terms",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/pulse-oximeter-wholesale",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/pulse-oximeter-wholesale",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/mesh-nebulizer-supplier",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/mesh-nebulizer-supplier",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/blood-pressure-monitor-wholesale",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/blood-pressure-monitor-wholesale",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     },
     {
       "path": "/low-moq-home-health-devices",
       "status": 200,
       "canonical": "https://homehealthwholesale.com/low-moq-home-health-devices",
-      "schemas": ["Organization", "BreadcrumbList"]
+      "schemas": [
+        "Organization",
+        "BreadcrumbList"
+      ]
     }
   ],
   "internalLinks": 31,

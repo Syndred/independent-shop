@@ -74,6 +74,7 @@ export function ProductGallery({ media }: { media: ProductMedia }) {
             <img
               src={activeImage.url}
               alt={activeImage.altText}
+              loading="eager"
               className="max-h-full max-w-full object-contain"
             />
           </motion.div>
@@ -116,6 +117,7 @@ export function ProductGallery({ media }: { media: ProductMedia }) {
                 <img
                   src={image.url}
                   alt={image.altText}
+                  loading="lazy"
                   className="h-full w-full object-contain"
                 />
               </button>

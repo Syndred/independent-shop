@@ -2,6 +2,8 @@ import Footer from "components/layout/footer";
 import { ProductDescriptionTabs } from "components/product/product-description-tabs";
 import { ProductPurchasePanel } from "components/product/product-purchase-panel";
 import { ProductVisual } from "components/b2b/product-visual";
+import { ProductGallery } from "components/product/product-gallery";
+import { Suspense } from "react";
 import { Breadcrumbs, JsonLd } from "components/b2b/breadcrumbs";
 import { LumiereProductCard } from "components/product/lumiere-product-card";
 import { products } from "lib/data/products";
@@ -71,11 +73,18 @@ export default async function ProductPage({
           </aside>
           <div className="min-w-0 lg:col-start-1 lg:row-start-1">
             <div className="overflow-hidden rounded-xl border border-border">
-              <ProductVisual product={product} />
+              {product.images.length ? (
+                <Suspense fallback={<ProductVisual product={product} />}>
+                  <ProductGallery media={product.media} />
+                </Suspense>
+              ) : (
+                <ProductVisual product={product} />
+              )}
             </div>
             <p className="mt-3 text-xs leading-5 text-ink-muted">
-              Current product photo and exact configuration to be confirmed. Ask
-              for model-specific images with your inquiry.
+              {product.images.length
+                ? "Supplier catalog photos. Confirm your preferred color, model label and included accessories with your quotation."
+                : "Ask for current product photos and the exact configuration with your inquiry."}
             </p>
           </div>
           <div className="min-w-0 lg:col-start-1 lg:row-start-2">

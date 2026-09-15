@@ -28,8 +28,8 @@ export function ProductDescriptionTabs({ product }: { product: Product }) {
         {product.confirmationItems?.map((item) => <li key={item}>{item}</li>)}
       </ul>
       <p className="mt-6 text-sm leading-6 text-ink-muted">
-        Product identity is based on the supplied 1688 catalog. Current model
-        photos and specifications are awaiting confirmation.{" "}
+        Product identity is based on the supplied 1688 catalog. Confirm the
+        current configuration and specifications with your quotation.{" "}
         <Link className="text-primary underline" href="/quality-compliance">
           Review our documentation checklist.
         </Link>

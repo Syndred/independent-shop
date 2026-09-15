@@ -12,6 +12,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import { nebulizerPhotos } from "lib/data/product-images";
 export const metadata = {
   title: "Home Health Devices Wholesale | Low MOQ Sourcing",
   description:
@@ -51,6 +53,24 @@ export default function HomePage() {
             </div>
           </div>
           <div className="overflow-hidden rounded-2xl border border-border bg-card">
+            <Link
+              href="/search/mesh-nebulizers"
+              aria-label="Explore mesh nebulizer photos"
+              className="grid grid-cols-2 border-b border-border bg-white"
+            >
+              {nebulizerPhotos.slice(0, 2).map((group) => (
+                <Image
+                  key={group.title}
+                  src={group.media.main[0]!.url}
+                  alt={group.media.main[0]!.altText}
+                  width={800}
+                  height={800}
+                  priority
+                  sizes="(min-width: 1024px) 20vw, 45vw"
+                  className="aspect-[4/3] w-full object-contain p-3"
+                />
+              ))}
+            </Link>
             <div className="flex items-center justify-between border-b border-border px-6 py-5">
               <p className="text-xs font-semibold uppercase tracking-widest text-primary">
                 The sourcing desk

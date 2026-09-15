@@ -1,6 +1,20 @@
 import { Activity, Gauge, Wind } from "lucide-react";
 import type { Product } from "lib/shopify/types";
+import Image from "next/image";
 export function ProductVisual({ product }: { product: Product }) {
+  if (product.images.length) {
+    return (
+      <div className="relative aspect-[4/3] bg-white">
+        <Image
+          src={product.featuredImage.url}
+          alt={product.featuredImage.altText}
+          fill
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="object-contain p-4"
+        />
+      </div>
+    );
+  }
   const Icon =
     product.category === "mesh-nebulizers"
       ? Wind

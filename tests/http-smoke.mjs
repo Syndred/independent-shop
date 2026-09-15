@@ -15,6 +15,7 @@ const forbidden =
   /Direct Manufacturer|Ships to 50\+|trusted.{0,20}worldwide|Add to Cart|Thank you for subscribing|ZS102|ZS103/i;
 const localLinks = new Set();
 const assets = new Set();
+const productPhotos = new Set();
 for (const url of urls) {
   const pathname = new URL(url).pathname;
   const response = await fetch(`${origin}${pathname}`);
@@ -60,6 +61,10 @@ for (const url of urls) {
   }
   for (const match of html.matchAll(/(?:src|href)="(\/_next\/static\/[^"]+)"/g))
     assets.add(match[1]);
+  for (const match of html.matchAll(/<img\b[^>]*src="([^"]+)"/g)) {
+    const src = match[1].replace(/&amp;/g, "&");
+    if (src.startsWith("/")) productPhotos.add(src);
+  }
   checked.push({
     path: pathname,
     status: response.status,
@@ -73,6 +78,15 @@ for (const path of assets) {
   if (path.endsWith(".css")) {
     assert.match(await response.text(), /bg-primary/);
   }
+}
+assert.ok(
+  productPhotos.size >= 4,
+  "Supplier photos must remain visible in rendered pages",
+);
+for (const path of productPhotos) {
+  const response = await fetch(origin + path);
+  assert.equal(response.status, 200, `Missing catalog photo ${path}`);
+  assert.match(response.headers.get("content-type") || "", /^image\//);
 }
 for (const path of localLinks) {
   const response = await fetch(origin + path);
@@ -128,6 +142,7 @@ await writeFile(
       pages: checked,
       internalLinks: localLinks.size,
       staticAssets: assets.size,
+      renderedPhotoUrls: productPhotos.size,
       checks: [
         "canonical",
         "sitemap",

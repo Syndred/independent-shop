@@ -2,6 +2,7 @@ import Footer from "components/layout/footer";
 import { Breadcrumbs } from "components/b2b/breadcrumbs";
 import { LumiereProductCard } from "components/product/lumiere-product-card";
 import { CollectionPills } from "components/search/collection-pills";
+import { NebulizerPhotoRange } from "components/b2b/nebulizer-photo-range";
 import {
   collections,
   getCollectionProductsByHandle,
@@ -69,6 +70,7 @@ export default async function CategoryPage({
             <LumiereProductCard key={p.handle} product={p} />
           ))}
         </div>
+        {c.handle === "mesh-nebulizers" ? <NebulizerPhotoRange /> : null}
       </div>
       <Footer />
     </>

@@ -11,6 +11,7 @@ export function ProductGallery({ media }: { media: ProductMedia }) {
   const images = useMemo(() => [...media.main, ...media.sku], [media]);
   const [activeIndex, setActiveIndex] = useState(0);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const thumbStripRef = useRef<HTMLDivElement | null>(null);
   const searchParams = useSearchParams();
   const reduce = useReducedMotion();
 
@@ -29,12 +30,17 @@ export function ProductGallery({ media }: { media: ProductMedia }) {
   }, [searchParams, media.main.length, images.length]);
 
   useEffect(() => {
-    thumbRefs.current[activeIndex]?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "center",
+    const strip = thumbStripRef.current;
+    const thumb = thumbRefs.current[activeIndex];
+    if (!strip || !thumb) return;
+    const offset =
+      thumb.getBoundingClientRect().left - strip.getBoundingClientRect().left;
+    strip.scrollTo({
+      left:
+        strip.scrollLeft + offset - (strip.clientWidth - thumb.clientWidth) / 2,
+      behavior: reduce ? "instant" : "smooth",
     });
-  }, [activeIndex]);
+  }, [activeIndex, reduce]);
 
   if (!images.length) return null;
 
@@ -85,7 +91,10 @@ export function ProductGallery({ media }: { media: ProductMedia }) {
             <ChevronLeftIcon className="h-5 w-5" />
           </button>
 
-          <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto py-1">
+          <div
+            ref={thumbStripRef}
+            className="flex min-w-0 flex-1 gap-2 overflow-x-auto py-1"
+          >
             {images.map((image, index) => (
               <button
                 key={image.url}
@@ -95,6 +104,7 @@ export function ProductGallery({ media }: { media: ProductMedia }) {
                 }}
                 onClick={() => setActiveIndex(index)}
                 aria-label={`View image ${index + 1}`}
+                aria-pressed={index === activeIndex}
                 className={clsx(
                   "h-16 w-16 shrink-0 overflow-hidden rounded-xl border bg-white p-1 transition active:scale-[0.98]",
                   index === activeIndex

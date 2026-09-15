@@ -1,7 +1,9 @@
 import type { Product } from "lib/shopify/types";
+import { productMedia } from "./product-images";
 
 // Source: owner-supplied 1688 listing, reviewed 2026-09-15.
-// No image/model pairing, specification sheet, stock or export approval is verified.
+// Original supplier photos are restored; current configuration, specifications,
+// stock and export approval still require confirmation.
 const catalog = [
   {
     handle: "upper-arm-blood-pressure-monitor",
@@ -114,15 +116,15 @@ export const products: Product[] = catalog.map((item) => ({
     minVariantPrice: { amount: "0", currencyCode: "USD" },
     maxVariantPrice: { amount: "0", currencyCode: "USD" },
   },
-  featuredImage: {
+  featuredImage: productMedia[item.handle]?.main[0] ?? {
     url: "/catalog-photo-pending.svg",
     altText:
       "Product photo available on request; exact model image awaiting confirmation",
     width: 800,
     height: 600,
   },
-  images: [],
-  media: { main: [], sku: [], detail: null },
+  images: productMedia[item.handle]?.main ?? [],
+  media: productMedia[item.handle] ?? { main: [], sku: [], detail: null },
   seo: {
     title: `${item.title} Wholesale & Sample Inquiry`,
     description: item.description,

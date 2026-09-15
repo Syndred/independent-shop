@@ -1,5 +1,5 @@
 {
-  "at": "2026-09-15T07:36:27.098Z",
+  "at": "2026-09-15T08:17:23.368Z",
   "origin": "http://localhost:3100",
   "pages": [
     {
@@ -129,7 +129,9 @@
       "schemas": ["Organization", "BreadcrumbList"]
     }
   ],
-  "internalLinks": 30,
+  "internalLinks": 31,
+  "staticAssets": 20,
+  "renderedPhotoUrls": 6,
   "checks": [
     "canonical",
     "sitemap",

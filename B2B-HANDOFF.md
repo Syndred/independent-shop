@@ -1,27 +1,45 @@
-# 独立站 B2B 收口交接
+# B2B 改造进度交接
 
-更新时间：2026-08-29
+更新时间：2026-09-15
 
-## 已完成
+## 范围与依据
 
-- 全站导航、商品卡、网格与商品详情移除购物车、Quick Add 和固定价格展示。
-- 商品统一使用报价、样品、MOQ 三类 CTA；旧 checkout 路径只做兼容重定向。
-- 商品描述和批发落地页移除固定批发价及未经逐单确认的 MOQ/物流承诺。
-- WhatsApp 点击保留 CRM 归因能力，并加入生产 HTTPS、origin allowlist、禁止跨域重定向、非 2xx 检查和明文 HTTP 不带 token 的保护。
-- Offer 组合改为严格解析：未知后缀 404，非规范顺序永久跳转，有限组合进 sitemap，其余合法组合 noindex。
-- 新增 B2B 契约测试，并通过 TypeScript 与生产构建。
+- 原工作区：`/Users/syndred/Desktop/projects/IndependentShop`，`feature/mvp-setup`。
+- 本次独立工作区：`/Users/syndred/.codex/worktrees/b974/IndependentShop`，`codex/b2b-catalog-rebuild`。
+- 起点修正：新工作区原本来自原始 main 模板，现基于真实功能分支 `3f3dbc67` 继续，保留先前四个 B2B/CRM 提交。
+- Vercel 面板已确认 `syndreds-projects/independent-shop`，生产域名 homehealthwholesale.com，生产分支 feature/mvp-setup；改造前部署提交 `5e28de5`。
 
-## 上线前配置
+## 已完成实现
 
-1. 在生产环境配置真实 `SITE_URL`、`WHATSAPP_NUMBER` 与 `SUPPORT_EMAIL`。
-2. 如需把 WhatsApp 点击归因回 CRM，同时配置 `CRM_TRACKING_ENDPOINT`、`CRM_TRACKING_ALLOWED_ORIGINS`、`CRM_TRACKING_TOKEN`，其中 endpoint 必须是完整 HTTPS `/api/tracking/ingest` 地址。
-3. 用真实目标域名检查 `/sitemap.xml`、任一规范 Offer URL、商品 CTA 和 WhatsApp 跳转。
-4. 商品供应状态、认证、MOQ、价格、样品、运输和付款条款仍须在每次报价前人工确认；站点文案不替代供应链证据。
+1. 产品目录改为六款：上臂、腕式血压计，LK87/LK89 指夹血氧仪，SY108/ZS101 网式雾化器。
+2. 删除 SY108/ZS101 血氧仪错配与未经证实 ZS102/ZS103 产品；旧链接 308 到对应正确型号或雾化器分类。原图移到 docs/source-assets 备查，因四组全部是雾化器且未有可靠型号对应，公共页面改为明确图片待确认面板。
+3. 首页改为采购入口、三类供应目录、样品、低 MOQ 咨询和真实供应链说明。清除消费者购物语气、虚假订阅成功、无证据资质/国家/客户宣传。
+4. 建立公司与供应链说明、质量资料页、运输/隐私/询价条款，以及四篇有差异的采购指南。没有重复国家 SEO 页。
+5. RFQ 必填姓名、公司、目的地、产品、整数数量，邮箱/WhatsApp 至少一个。校验字符长度、邮箱、电话与产品白名单；预览保留换行；变更原表单会使旧预览失效。
+6. RFQ 提供 WhatsApp、邮件草稿和复制兜底。**目前为买家在外部应用最终发送，不是站内自动收件**；没有消息送达回执或数据库持久化，不能称为收到询盘。
+7. 每个公开页面 canonical、描述、sitemap/robots；Organization、六款 Product、Breadcrumb。无虚构价格、评分、Offer、证书或占位图 Product image。
+8. 个性化 Offer 全部 noindex，不进入 21 个规范页面的 sitemap；仍可用于既有 CRM 链路。
+9. 复用 Headless UI Dialog 完成手机菜单焦点管理、Esc 关闭和焦点恢复。修正手机产品页 CTA 顺序；分类页取消导致 SSR 正文缺失的客户端外壳。
+10. Next.js 更新到维护版 15.5.25、React 19.0.8；固定 Node 22 / pnpm 10.30.3。移除未使用的 shadcn CLI 依赖，保留模板组件；按依赖审计更新 postcss/nanoid/sharp。
 
-## 回归命令
+## 验证记录
 
-```bash
-pnpm test
-pnpm exec tsc --noEmit
-pnpm build
-```
+- 最终本地结果：pnpm test 9/9、pnpm build、pnpm typecheck 通过；生产依赖安全审计 0 已知漏洞。
+- HTTP：21 个规范页面、30 个站内链接、canonical/sitemap/robots/结构化数据/旧链接308/未知路由404/WhatsApp消息和六产品接口全部通过。
+- 320px 产品页 CTA 已前置；采购指南表格宽 288px，页面宽 320px，无横向溢出。
+- Product 只表达真实产品身份，没有捏造 Google 富结果要求的报价或评论；不宣称已获得商品富结果资格。
+- Chrome 实际验收：桌面首页、390px 分类 → SY108 产品 → RFQ 自动预选；无联系方式时报错；完整预览含名称/公司/国家/邮箱/型号/数量/多行需求；复制成功；修改数量后旧预览撤销。
+- 320px RFQ 页宽度等于 viewport，无横向溢出；菜单打开、Esc 关闭、焦点返回打开按钮已验证。
+- 首次 HTTP 全站检查发现分类 SSR 没有 H1/产品正文，已修复为服务端输出后重建。
+- 自动检查脚本 `tests/http-smoke.mjs`，最终报告保存在 `docs/verification/`。
+- 不代表真实业务消息送达、真实设备性能/认证或搜索收录已验收。
+
+## 唯一资料补充事项
+
+请集中提供六款产品的 1688 商品链接与当前原图对应、准确型号/配置/规格表、可提供文件以及网站实际运营主体。当前仅确认供应链来自“深圳市银珀科技有限公司”，不将其冒充已核验工厂或未经确认的网站运营主体。原店铺粉丝/回头率/入驻年限属于动态平台数据，本次不拿它们作客户信任或制造能力证明。
+
+资料到位后再替换占位面板、完善具体参数与文件，并重新核验图文对应；不要用 AI 产品图、别家图片、商城新人价格或通用证书填空。
+
+## 发布状态
+
+本地验收通过，准备推送已验证代码到生产分支；线上结果将在发布后补记。Vercel CLI 原登录失效，浏览器已有项目登录可用；已确定 Git 生产分支发布通道，不要求用户重新配置。
